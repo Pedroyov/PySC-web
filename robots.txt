@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pedroyov.github.io/PySC-web/sitemap.xml
