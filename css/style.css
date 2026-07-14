@@ -64,7 +64,7 @@ img {
 }
 
 .container {
-  width: min(1180px, calc(100% - 40px));
+  width: min(1040px, calc(100% - 40px));
   margin: 0 auto;
 }
 
@@ -933,7 +933,18 @@ el fondo seguirá viéndose azul gracias al color inferior.
   }
 }
 
-.hero h1 span {
+
+.hero-title-main,
+.hero-title-highlight {
+  display: block;
+}
+
+.hero-title-main {
+  color: #ffffff;
+  font-size: clamp(2.8rem, 4.2vw, 5.25rem);
+}
+
+.hero-title-highlight {
   color: var(--gold);
 }
 
@@ -1029,4 +1040,203 @@ el fondo seguirá viéndose azul gracias al color inferior.
   .featured-layout {
     grid-template-columns: 1fr;
   }
+}
+
+
+.about-preview {
+  background: #ffffff;
+}
+
+.about-preview-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.about-preview-image {
+  position: relative;
+}
+
+.about-preview-image::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  bottom: -18px;
+
+  width: 70%;
+  height: 70%;
+
+  background: var(--gold);
+  border-radius: 24px;
+}
+
+.about-preview-image img {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  min-height: 480px;
+  object-fit: cover;
+
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.about-preview-content h2 span {
+  color: var(--wine);
+}
+
+.about-preview-content p {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+@media (max-width: 900px) {
+  .about-preview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-preview-image img {
+    min-height: 360px;
+  }
+}
+
+/* =========================
+   PROYECTOS
+========================= */
+
+.projects-preview {
+    background: #fff;
+}
+
+.section-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:50px;
+    gap:20px;
+}
+
+.projects-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:28px;
+}
+
+.project-card{
+    background:#fff;
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    transition:.35s;
+}
+
+.project-card:hover{
+    transform:translateY(-8px);
+}
+
+.project-card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+}
+
+.project-card-content{
+    padding:30px;
+}
+
+.project-card-content span{
+    color:var(--wine);
+    font-size:.85rem;
+    font-weight:800;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
+
+.project-card-content h3{
+    margin:12px 0;
+    color:var(--navy);
+    font-family:"Montserrat";
+    font-size:1.8rem;
+}
+
+.project-card-content p{
+    color:var(--muted);
+    margin-bottom:18px;
+}
+
+/* =========================
+   GALERÍA
+========================= */
+
+.gallery-preview{
+  background:var(--bg);
+}
+
+.gallery-preview-grid{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:18px;
+}
+
+.gallery-preview-grid img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  border-radius:18px;
+  transition:.35s;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+.gallery-preview-grid img:hover{
+  transform:scale(1.03);
+}
+
+/* =========================
+   REDES SOCIALES
+========================= */
+
+.social{
+  background:#fff;
+  text-align:center;
+}
+
+.social p{
+  max-width:620px;
+  margin:20px auto 45px;
+  color:var(--muted);
+}
+
+.social-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+}
+
+.social-card{
+  background:var(--surface);
+  padding:34px;
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  transition:.35s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+}
+
+.social-card:hover{
+  transform:translateY(-8px);
+}
+
+.social-card i{
+  font-size:2.3rem;
+  color:var(--wine);
+}
+
+.social-card span{
+  font-weight:700;
 }
