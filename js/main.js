@@ -26,3 +26,808 @@ if (menuToggle && navLinks) {
     });
   });
 }
+
+const yearsActive = document.getElementById("yearsActive");
+
+if (yearsActive) {
+  const foundationDate = new Date(2009, 9, 17);
+  const today = new Date();
+
+  let years = today.getFullYear() - foundationDate.getFullYear();
+
+  const anniversaryThisYear = new Date(
+    today.getFullYear(),
+    foundationDate.getMonth(),
+    foundationDate.getDate()
+  );
+
+  if (today < anniversaryThisYear) {
+    years--;
+  }
+
+  yearsActive.textContent = `${years}+`;
+}
+
+const currentYear = document.getElementById("currentYear");
+
+if (currentYear) {
+  currentYear.textContent = new Date().getFullYear();
+}
+
+const agendaSheetUrl =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vT5frIUl9HsRVOBcBTw6EXj7bKtzhDUgieCfHXh7A7Bn1w7OE83Ld84_M7__7hlNSg6GvtjSrS6G61L/pub?gid=0&single=true&output=csv";
+
+const agendaGrid = document.getElementById("agendaGrid");
+
+const agendaTypes = {
+  evento: {
+    emoji: "🎭",
+    label: "Evento",
+    className: "agenda-event"
+  },
+  aviso: {
+    emoji: "⚠️",
+    label: "Aviso",
+    className: "agenda-notice"
+  },
+  convocatoria: {
+    emoji: "📣",
+    label: "Convocatoria",
+    className: "agenda-call"
+  },
+  cumpleanos: {
+    emoji: "🎂",
+    label: "Cumpleaños",
+    className: "agenda-birthday"
+  },
+  cumpleaños: {
+    emoji: "🎂",
+    label: "Cumpleaños",
+    className: "agenda-birthday"
+  },
+  taller: {
+    emoji: "🩰",
+    label: "Taller",
+    className: "agenda-workshop"
+  },
+  viaje: {
+    emoji: "✈️",
+    label: "Viaje",
+    className: "agenda-trip"
+  }
+};
+
+function parseCSV(csvText) {
+  const rows = [];
+  let row = [];
+  let value = "";
+  let insideQuotes = false;
+
+  for (let index = 0; index < csvText.length; index++) {
+    const character = csvText[index];
+    const nextCharacter = csvText[index + 1];
+
+    if (
+      character === '"' &&
+      insideQuotes &&
+      nextCharacter === '"'
+    ) {
+      value += '"';
+      index++;
+      continue;
+    }
+
+    if (character === '"') {
+      insideQuotes = !insideQuotes;
+      continue;
+    }
+
+    if (character === "," && !insideQuotes) {
+      row.push(value.trim());
+      value = "";
+      continue;
+    }
+
+    if (
+      (character === "\n" || character === "\r") &&
+      !insideQuotes
+    ) {
+      if (
+        character === "\r" &&
+        nextCharacter === "\n"
+      ) {
+        index++;
+      }
+
+      row.push(value.trim());
+
+      if (row.some((cell) => cell !== "")) {
+        rows.push(row);
+      }
+
+      row = [];
+      value = "";
+      continue;
+    }
+
+    value += character;
+  }
+
+  if (value !== "" || row.length > 0) {
+    row.push(value.trim());
+
+    if (row.some((cell) => cell !== "")) {
+      rows.push(row);
+    }
+  }
+
+  return rows;
+}
+
+function csvToObjects(csvText) {
+  const rows = parseCSV(csvText);
+
+  if (rows.length < 2) {
+    return [];
+  }
+
+  const headers = rows[0].map((header) =>
+    header.trim().toLowerCase()
+  );
+
+  return rows.slice(1).map((row) => {
+    const item = {};
+
+    headers.forEach((header, index) => {
+      item[header] = row[index]?.trim() ?? "";
+    });
+
+    return item;
+  });
+}
+
+function escapeHTML(value = "") {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function getAgendaType(typeValue = "") {
+  const normalizedType = typeValue
+    .trim()
+    .toLowerCase();
+
+  return (
+    agendaTypes[normalizedType] || {
+      emoji: "✨",
+      label: "Actividad",
+      className: "agenda-general"
+    }
+  );
+}
+
+function renderAgenda(items) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcomingItems = items
+    .filter((item) => {
+      return item.visible.trim().toUpperCase() !== "NO";
+    })
+    .map((item) => ({
+      ...item,
+      parsedDate: new Date(`${item.fecha}T00:00:00`)
+    }))
+    .filter((item) => {
+      return (
+        !Number.isNaN(item.parsedDate.getTime()) &&
+        item.parsedDate >= today
+      );
+    })
+    .sort((a, b) => a.parsedDate - b.parsedDate)
+    .slice(0, 4);
+
+  if (upcomingItems.length === 0) {
+    agendaGrid.innerHTML = `
+      <article class="agenda-empty">
+        <div class="agenda-empty-icon">✨</div>
+
+        <div>
+          <span class="agenda-empty-kicker">
+            Muy pronto
+          </span>
+
+          <h3>
+            Estamos preparando nuevas actividades
+          </h3>
+
+          <p>
+            Síguenos en nuestras redes sociales para conocer
+            nuestras próximas presentaciones, talleres y novedades.
+          </p>
+
+          <a
+            href="#redes"
+            class="agenda-empty-link"
+          >
+            Ir a nuestras redes →
+          </a>
+        </div>
+      </article>
+    `;
+
+    return;
+  }
+
+  agendaGrid.innerHTML = upcomingItems
+    .map((item, index) => {
+      const type = getAgendaType(item.tipo);
+
+      const day = item.parsedDate
+        .toLocaleDateString("es-PE", {
+          day: "2-digit"
+        });
+
+      const month = item.parsedDate
+        .toLocaleDateString("es-PE", {
+          month: "short"
+        })
+        .replace(".", "")
+        .toUpperCase();
+
+      const year = item.parsedDate.getFullYear();
+
+      const place = item.lugar
+        ? `
+          <p class="agenda-place">
+            <i class="fa-solid fa-location-dot"></i>
+            ${escapeHTML(item.lugar)}
+          </p>
+        `
+        : "";
+
+      const link = item.enlace
+        ? `
+          <a
+            href="${escapeHTML(item.enlace)}"
+            class="agenda-link"
+            ${
+              item.enlace.startsWith("http")
+                ? 'target="_blank" rel="noopener noreferrer"'
+                : ""
+            }
+          >
+            Más información →
+          </a>
+        `
+        : "";
+
+      return `
+        <article
+          class="agenda-card ${type.className}
+          ${index === 0 ? "agenda-card-featured" : ""}"
+        >
+          <div class="agenda-card-top">
+            <div class="agenda-emoji">
+              ${type.emoji}
+            </div>
+
+            <span class="agenda-badge">
+              ${type.label}
+            </span>
+          </div>
+
+          <div class="agenda-card-body">
+            <div class="agenda-date">
+              <strong>${day}</strong>
+
+              <div>
+                <span>${month}</span>
+                <small>${year}</small>
+              </div>
+            </div>
+
+            <h3>${escapeHTML(item.titulo)}</h3>
+
+            <p class="agenda-description">
+              ${escapeHTML(item.descripcion)}
+            </p>
+
+            ${place}
+            ${link}
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+async function loadAgenda() {
+  if (!agendaGrid) {
+    return;
+  }
+
+  try {
+    const response = await fetch(agendaSheetUrl, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `No se pudo cargar la agenda: ${response.status}`
+      );
+    }
+
+    const csvText = await response.text();
+    const items = csvToObjects(csvText);
+
+    renderAgenda(items);
+  } catch (error) {
+    console.error(error);
+
+    agendaGrid.innerHTML = `
+      <article class="agenda-empty">
+        <div class="agenda-empty-icon">📅</div>
+
+        <div>
+          <span class="agenda-empty-kicker">
+            Agenda PySC
+          </span>
+
+          <h3>
+            No pudimos cargar la agenda en este momento
+          </h3>
+
+          <p>
+            Puedes conocer nuestras novedades a través
+            de nuestras redes sociales.
+          </p>
+        </div>
+      </article>
+    `;
+  }
+}
+
+loadAgenda();
+
+/* =========================
+   CUMPLEAÑOS
+========================= */
+
+const birthdaysSheetUrl =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vT5frIUl9HsRVOBcBTw6EXj7bKtzhDUgieCfHXh7A7Bn1w7OE83Ld84_M7__7hlNSg6GvtjSrS6G61L/pub?gid=1460740281&single=true&output=csv";
+
+const birthdaySection =
+  document.getElementById("birthdaySection");
+
+const birthdayPhoto =
+  document.getElementById("birthdayPhoto");
+
+const birthdayTitle =
+  document.getElementById("birthdayTitle");
+
+const birthdayMessage =
+  document.getElementById("birthdayMessage");
+
+const birthdayShare =
+  document.getElementById("birthdayShare");
+
+const birthdayShareStatus =
+  document.getElementById("birthdayShareStatus");
+
+let currentBirthdayShareData = null;
+
+function normalizeVisibleValue(value = "") {
+  return value.trim().toUpperCase();
+}
+
+function getTodaysBirthdays(items) {
+  const today = new Date();
+
+  const currentDay = today.getDate();
+  const currentMonth = today.getMonth() + 1;
+
+  return items.filter((item) => {
+    const isVisible =
+      normalizeVisibleValue(item.visible) !== "NO";
+
+    const birthdayDay = Number(item.dia);
+    const birthdayMonth = Number(item.mes);
+
+    return (
+      isVisible &&
+      birthdayDay === currentDay &&
+      birthdayMonth === currentMonth
+    );
+  });
+}
+
+function renderSingleBirthday(person) {
+  const name = person.nombre || "Integrante de PySC";
+
+  birthdayTitle.textContent =
+    `¡Feliz cumpleaños, ${name}!`;
+
+  birthdayMessage.textContent =
+    person.mensaje ||
+    "Deseamos que este nuevo año esté lleno de alegría, salud y muchos momentos especiales.";
+
+  if (person.foto) {
+    birthdayPhoto.src = person.foto;
+    birthdayPhoto.alt =
+      `Felicitación de cumpleaños para ${name}`;
+
+    birthdayPhoto.parentElement.hidden = false;
+  } else {
+    birthdayPhoto.removeAttribute("src");
+    birthdayPhoto.alt = "";
+    birthdayPhoto.parentElement.hidden = true;
+  }
+
+  currentBirthdayShareData = {
+    title: `¡Feliz cumpleaños, ${name}!`,
+    text:
+      `🎂 ¡Feliz cumpleaños, ${name}! ` +
+      `${birthdayMessage.textContent} ` +
+      `Con cariño, Pasión y Sentimiento Cultural.`,
+    url: window.location.href
+  };
+
+  const birthdayStoryTitle =
+    document.getElementById("birthdayStoryTitle");
+
+  const birthdayStoryPhoto =
+    document.getElementById("birthdayStoryPhoto");
+
+  const birthdayStoryMessage =
+    document.getElementById("birthdayStoryMessage");
+
+  birthdayStoryTitle.textContent =
+    `¡Feliz cumpleaños, ${name}!`;
+
+  birthdayStoryMessage.textContent =
+    birthdayMessage.textContent;
+
+  if (person.foto) {
+    birthdayStoryPhoto.src = person.foto;
+    birthdayStoryPhoto.alt =
+      `Felicitación para ${name}`;
+  }
+}
+
+function renderMultipleBirthdays(people) {
+  const names = people
+    .map((person) => person.nombre)
+    .filter(Boolean);
+
+  birthdayTitle.textContent =
+    "¡Hoy celebramos varios cumpleaños!";
+
+  birthdayMessage.textContent =
+    `Enviamos un saludo muy especial a ${names.join(", ")}. ` +
+    "Deseamos que tengan un día lleno de alegría y momentos inolvidables.";
+
+  const firstPhoto = people.find(
+    (person) => person.foto
+  );
+
+  if (firstPhoto) {
+    birthdayPhoto.src = firstPhoto.foto;
+    birthdayPhoto.alt =
+      "Felicitación de cumpleaños de integrantes de PySC";
+
+    birthdayPhoto.parentElement.hidden = false;
+  } else {
+    birthdayPhoto.removeAttribute("src");
+    birthdayPhoto.alt = "";
+    birthdayPhoto.parentElement.hidden = true;
+  }
+
+  currentBirthdayShareData = {
+    title: "¡Hoy estamos de fiesta!",
+    text:
+      `🎉 Hoy celebramos los cumpleaños de ${names.join(", ")}. ` +
+      "¡Muchas felicidades de parte de Pasión y Sentimiento Cultural!",
+    url: window.location.href
+  };
+}
+
+function renderTodaysBirthdays(people) {
+  if (!birthdaySection || people.length === 0) {
+    return;
+  }
+
+  if (people.length === 1) {
+    renderSingleBirthday(people[0]);
+  } else {
+    renderMultipleBirthdays(people);
+  }
+
+  birthdaySection.hidden = false;
+
+  setTimeout(() => {
+    launchBirthdayConfetti();
+  }, 500);
+}
+
+async function loadBirthdays() {
+  if (!birthdaySection) {
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      birthdaysSheetUrl,
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `No se pudieron cargar los cumpleaños: ${response.status}`
+      );
+    }
+
+    const csvText = await response.text();
+    const birthdays = csvToObjects(csvText);
+
+    const todaysBirthdays =
+      getTodaysBirthdays(birthdays);
+
+    renderTodaysBirthdays(todaysBirthdays);
+  } catch (error) {
+    console.error(error);
+
+    /*
+      No mostramos un error visual porque esta sección
+      es opcional. Si falla, simplemente permanece oculta.
+    */
+    birthdaySection.hidden = true;
+  }
+}
+
+async function shareBirthday() {
+  if (!currentBirthdayShareData) {
+    return;
+  }
+
+  birthdayShareStatus.textContent = "";
+
+  try {
+    if (navigator.share) {
+      await navigator.share(
+        currentBirthdayShareData
+      );
+
+      birthdayShareStatus.textContent =
+        "Felicitación compartida.";
+    } else {
+      const shareText =
+        `${currentBirthdayShareData.text}\n` +
+        `${currentBirthdayShareData.url}`;
+
+      await navigator.clipboard.writeText(
+        shareText
+      );
+
+      birthdayShareStatus.textContent =
+        "Felicitación copiada. Ya puedes compartirla.";
+    }
+  } catch (error) {
+    /*
+      AbortError ocurre cuando el usuario cierra
+      voluntariamente el menú de compartir.
+    */
+    if (error.name !== "AbortError") {
+      console.error(error);
+
+      birthdayShareStatus.textContent =
+        "No se pudo compartir la felicitación.";
+    }
+  }
+}
+
+if (birthdayShare) {
+  birthdayShare.addEventListener(
+    "click",
+    shareBirthday
+  );
+}
+
+loadBirthdays();
+
+let birthdayConfettiHasRun = false;
+
+function launchBirthdayConfetti() {
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (reduceMotion) {
+    return;
+  }
+
+  if (
+    birthdayConfettiHasRun ||
+    typeof confetti !== "function"
+  ) {
+    return;
+  }
+
+  birthdayConfettiHasRun = true;
+
+  const duration = 2800;
+  const animationEnd = Date.now() + duration;
+
+  const pyscColors = [
+    "#8c1832",
+    "#132f5d",
+    "#e2aa16",
+    "#ef75bb",
+    "#ffffff"
+  ];
+
+  const interval = setInterval(() => {
+    const timeLeft =
+      animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      clearInterval(interval);
+      return;
+    }
+
+    confetti({
+      particleCount: 3,
+      angle: 60,
+      spread: 58,
+      origin: {
+        x: 0,
+        y: 0.55
+      },
+      colors: pyscColors,
+      gravity: 0.85,
+      scalar: 0.9
+    });
+
+    confetti({
+      particleCount: 3,
+      angle: 120,
+      spread: 58,
+      origin: {
+        x: 1,
+        y: 0.55
+      },
+      colors: pyscColors,
+      gravity: 0.85,
+      scalar: 0.9
+    });
+  }, 150);
+}
+
+const birthdayDownload =
+  document.getElementById("birthdayDownload");
+
+const birthdayStory =
+  document.getElementById("birthdayStory");
+
+function sanitizeFileName(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+async function createBirthdayStoryImage() {
+  if (
+    !birthdayStory ||
+    typeof html2canvas !== "function"
+  ) {
+    return;
+  }
+
+  birthdayDownload.disabled = true;
+  birthdayDownload.innerHTML = `
+    <i class="fa-solid fa-circle-notch fa-spin"></i>
+    Creando imagen...
+  `;
+
+  try {
+    const storyPhoto =
+      document.getElementById("birthdayStoryPhoto");
+
+    if (storyPhoto && !storyPhoto.complete) {
+      await new Promise((resolve, reject) => {
+        storyPhoto.onload = resolve;
+        storyPhoto.onerror = reject;
+      });
+    }
+
+    const canvas = await html2canvas(
+      birthdayStory,
+      {
+        scale: 1,
+        useCORS: true,
+        backgroundColor: null,
+        logging: false
+      }
+    );
+
+    const imageBlob = await new Promise((resolve) => {
+      canvas.toBlob(resolve, "image/png", 1);
+    });
+
+    if (!imageBlob) {
+      throw new Error("No se pudo crear la imagen.");
+    }
+
+    const title =
+      document.getElementById("birthdayTitle")
+        ?.textContent || "feliz-cumpleanos";
+
+    const fileName =
+      `${sanitizeFileName(title)}-pysc.png`;
+
+    const file = new File(
+      [imageBlob],
+      fileName,
+      {
+        type: "image/png"
+      }
+    );
+
+    if (
+      navigator.canShare &&
+      navigator.canShare({
+        files: [file]
+      })
+    ) {
+      await navigator.share({
+        title: title,
+        text:
+          "Felicitación de Pasión y Sentimiento Cultural",
+        files: [file]
+      });
+    } else {
+      const imageUrl =
+        URL.createObjectURL(imageBlob);
+
+      const downloadLink =
+        document.createElement("a");
+
+      downloadLink.href = imageUrl;
+      downloadLink.download = fileName;
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      downloadLink.remove();
+
+      URL.revokeObjectURL(imageUrl);
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      console.error(error);
+
+      birthdayShareStatus.textContent =
+        "No se pudo crear la imagen.";
+    }
+  } finally {
+    birthdayDownload.disabled = false;
+    birthdayDownload.innerHTML = `
+      <i class="fa-solid fa-image"></i>
+      Crear imagen para historias
+    `;
+  }
+}
+
+if (birthdayDownload) {
+  birthdayDownload.addEventListener(
+    "click",
+    createBirthdayStoryImage
+  );
+}

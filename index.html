@@ -102,7 +102,7 @@
             <i class="fa-solid fa-award stat-icon"></i>
           </div>
           <div class="stat-content">
-            <strong>17+</strong>
+            <strong id="yearsActive">17+</strong>
             <span>Años de trayectoria</span>
           </div>
         </article>
@@ -127,6 +127,149 @@
           </div>
         </article>
 
+      </div>
+    </div>
+  </section>
+
+  <section class="birthday-section" id="birthdaySection" hidden>
+    <div class="container">
+      <article class="birthday-card">
+        <div class="birthday-balloons" aria-hidden="true">
+          <span class="birthday-balloon balloon-wine"></span>
+          <span class="birthday-balloon balloon-gold"></span>
+          <span class="birthday-balloon balloon-blue"></span>
+          <span class="birthday-balloon balloon-pink"></span>
+        </div>
+
+        <div class="birthday-decoration birthday-decoration-right">
+          🎉
+        </div>
+
+        <div class="birthday-photo-wrapper">
+          <img
+            src=""
+            alt=""
+            class="birthday-photo"
+            id="birthdayPhoto"
+          >
+        </div>
+
+        <div class="birthday-content">
+          <span class="birthday-kicker">
+            🎂 Hoy estamos de fiesta
+          </span>
+
+          <h2 id="birthdayTitle">
+            ¡Feliz cumpleaños!
+          </h2>
+
+          <p
+            class="birthday-message"
+            id="birthdayMessage"
+          ></p>
+
+          <p class="birthday-signature">
+            Con cariño, tu familia de
+            <strong>Pasión y Sentimiento Cultural</strong>.
+          </p>
+
+          <button type="button" class="birthday-share" id="birthdayShare">
+            <i class="fa-solid fa-share-nodes"></i>
+            Compartir felicitación
+          </button>
+          <button type="button" class="birthday-download" id="birthdayDownload">
+            <i class="fa-solid fa-image"></i>
+            Crear imagen para historias
+          </button>
+
+          <span
+            class="birthday-share-status"
+            id="birthdayShareStatus"
+            aria-live="polite"
+          ></span>
+        </div>
+
+      </article>
+    </div>
+  </section>
+
+  <div
+    class="birthday-story"
+    id="birthdayStory"
+    aria-hidden="true"
+  >
+    <div class="birthday-story-brand">
+      <img
+        src="img/logo-pasion-sentimiento.png"
+        alt=""
+      >
+
+      <div>
+        <strong>Pasión y Sentimiento Cultural</strong>
+        <span>Grupo Folklórico</span>
+      </div>
+    </div>
+
+    <div class="birthday-story-icon">🎂</div>
+
+    <span class="birthday-story-kicker">
+      Nuestra familia está de fiesta
+    </span>
+
+    <h2 id="birthdayStoryTitle">
+      ¡Feliz cumpleaños!
+    </h2>
+
+    <div class="birthday-story-photo-frame">
+      <img
+        src=""
+        alt=""
+        id="birthdayStoryPhoto"
+      >
+    </div>
+
+    <p id="birthdayStoryMessage"></p>
+
+    <div class="birthday-story-signature">
+      Con cariño, tu familia PySC
+    </div>
+
+    <div class="birthday-story-footer">
+      Catacaos · Piura · Perú
+    </div>
+  </div>
+
+  <section class="agenda-section section" id="agenda">
+    <div class="agenda-decoration agenda-decoration-one"></div>
+    <div class="agenda-decoration agenda-decoration-two"></div>
+
+    <div class="container">
+      <div class="agenda-heading">
+        <div>
+          <span class="agenda-kicker">
+            <i class="fa-regular fa-calendar"></i>
+            Agenda PySC
+          </span>
+
+          <h2>Lo próximo en nuestra familia cultural</h2>
+
+          <p>
+            Presentaciones, convocatorias, avisos y momentos especiales
+            de Pasión y Sentimiento Cultural.
+          </p>
+        </div>
+
+        <div class="agenda-live">
+          <span></span>
+          Actualizado desde nuestra agenda
+        </div>
+      </div>
+
+      <div class="agenda-grid" id="agendaGrid">
+        <div class="agenda-loading">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          Cargando agenda...
+        </div>
       </div>
     </div>
   </section>
@@ -323,22 +466,22 @@
 
         <div class="social-grid">
 
-            <a href="#" class="social-card">
+            <a href="https://www.facebook.com/profile.php?id=100063490963350" class="social-card" target="_blank">
                 <i class="fa-brands fa-facebook-f"></i>
                 <span>Facebook</span>
             </a>
 
-            <a href="#" class="social-card">
+            <a href="https://www.instagram.com/pasionysentimientocultural/" class="social-card" target="_blank">
                 <i class="fa-brands fa-instagram"></i>
                 <span>Instagram</span>
             </a>
 
-            <a href="#" class="social-card">
+            <a href="https://www.tiktok.com/@pysc_17" class="social-card" target="_blank">
                 <i class="fa-brands fa-tiktok"></i>
                 <span>TikTok</span>
             </a>
 
-            <a href="#" class="social-card">
+            <a href="https://www.youtube.com/@grupofolkloricopasionysent6944/videos" class="social-card" target="_blank">
                 <i class="fa-brands fa-youtube"></i>
                 <span>YouTube</span>
             </a>
@@ -382,10 +525,15 @@
       <strong>Grupo Folklórico Pasión y Sentimiento Cultural</strong>
       <p>Catacaos, Piura · Perú</p>
     </div>
-    <p>© 2026 Pasión y Sentimiento Cultural</p>
+    <p>
+      © <span id="currentYear"></span>
+      Pasión y Sentimiento Cultural
+    </p>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
