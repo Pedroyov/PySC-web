@@ -705,3 +705,361 @@ function launchBirthdayConfetti() {
     });
   }, 150);
 }
+
+/* =========================
+   ANIMACIÓN NUESTRA ESENCIA
+========================= */
+
+const essenceRevealElements =
+  document.querySelectorAll(
+    ".reveal-left, .reveal-right"
+  );
+
+if (essenceRevealElements.length > 0) {
+  const essenceObserver =
+    new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add(
+            "reveal-visible"
+          );
+
+          observer.unobserve(
+            entry.target
+          );
+        });
+      },
+      {
+        threshold: 0.2
+      }
+    );
+
+  essenceRevealElements.forEach(
+    (element) => {
+      essenceObserver.observe(element);
+    }
+  );
+}
+
+/* =========================
+   CONTADOR DE HISTORIA
+========================= */
+
+function updateHistoryCounter() {
+  const yearsElement =
+    document.getElementById("historyYears");
+
+  const monthsElement =
+    document.getElementById("historyMonths");
+
+  const daysElement =
+    document.getElementById("historyDays");
+
+  if (
+    !yearsElement ||
+    !monthsElement ||
+    !daysElement
+  ) {
+    return;
+  }
+
+  const foundationDate =
+    new Date(2009, 9, 17);
+
+  const today = new Date();
+
+  const start =
+    new Date(
+      foundationDate.getFullYear(),
+      foundationDate.getMonth(),
+      foundationDate.getDate()
+    );
+
+  const current =
+    new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+
+  let years =
+    current.getFullYear() -
+    start.getFullYear();
+
+  let months =
+    current.getMonth() -
+    start.getMonth();
+
+  let days =
+    current.getDate() -
+    start.getDate();
+
+  if (days < 0) {
+    const previousMonthLastDay =
+      new Date(
+        current.getFullYear(),
+        current.getMonth(),
+        0
+      ).getDate();
+
+    days += previousMonthLastDay;
+    months--;
+  }
+
+  if (months < 0) {
+    months += 12;
+    years--;
+  }
+
+  yearsElement.textContent =
+    String(years);
+
+  monthsElement.textContent =
+    String(months);
+
+  daysElement.textContent =
+    String(days);
+}
+
+updateHistoryCounter();
+
+/* =========================
+   MAPA CULTURAL INTERACTIVO
+========================= */
+
+const cultureCountries = {
+  PE: {
+    flagImage: "img/peru.png",
+    name: "Perú",
+    type: "Trayectoria nacional",
+    years: "Desde 2009",
+    description:
+      "Hemos participado en actividades, concursos, festivales y presentaciones culturales en diferentes escenarios del país.",
+    highlight:
+      "Nuestra historia comienza en Catacaos, Piura.",
+    color: "#8c1832"
+  },
+
+  EC: {
+    flagImage: "img/ecuador.svg",
+    name: "Ecuador",
+    type: "Representación internacional",
+    years: "2016 · 2017 · 2018",
+    description:
+      "Representamos nuestra cultura durante tres años, fortaleciendo el intercambio artístico y los vínculos entre agrupaciones latinoamericanas.",
+    highlight:
+      "Tres experiencias internacionales compartiendo el folklore peruano.",
+    color: "#e2aa16"
+  },
+
+  BO: {
+    flagImage: "img/bolivia.svg",
+    name: "Bolivia",
+    type: "Encuentro internacional",
+    years: "2025",
+    description:
+      "Compartimos nuestras danzas y tradiciones en una nueva experiencia de representación cultural fuera del Perú.",
+    highlight:
+      "Una experiencia que amplió nuestra trayectoria internacional.",
+    color: "#315b9b"
+  }
+};
+
+const southAmericaMap =
+  document.getElementById("southAmericaMap");
+
+const cultureCountryDetail =
+  document.getElementById("cultureCountryDetail");
+
+function updateCultureCountry(countryId) {
+  const country = cultureCountries[countryId];
+
+  if (!country) {
+    return;
+  }
+
+  const flagElement =
+    document.getElementById("cultureCountryFlag");
+
+  flagElement.src = country.flagImage;
+  flagElement.alt = country.flagAlt;
+
+  document.getElementById(
+    "cultureCountryType"
+  ).textContent = country.type;
+
+  document.getElementById(
+    "cultureCountryName"
+  ).textContent = country.name;
+
+  document.getElementById(
+    "cultureCountryYears"
+  ).textContent = country.years;
+
+  document.getElementById(
+    "cultureCountryDescription"
+  ).textContent = country.description;
+
+  document.getElementById(
+    "cultureCountryHighlight"
+  ).textContent = country.highlight;
+
+  document
+    .querySelectorAll(".culture-country-button")
+    .forEach((button) => {
+      button.classList.toggle(
+        "active",
+        button.dataset.country === countryId
+      );
+    });
+
+  document
+    .querySelectorAll(
+      "#southAmericaMap .map-country"
+    )
+    .forEach((element) => {
+      element.classList.toggle(
+        "map-country-active",
+        element.id === countryId
+      );
+    });
+
+  cultureCountryDetail.classList.remove(
+    "country-changing"
+  );
+
+  void cultureCountryDetail.offsetWidth;
+
+  cultureCountryDetail.classList.add(
+    "country-changing"
+  );
+}
+
+async function loadSouthAmericaMap() {
+  if (!southAmericaMap) {
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "img/sudamerica-pysc-interactivo.svg"
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `No se pudo cargar el mapa: ${response.status}`
+      );
+    }
+
+    const svgContent = await response.text();
+
+    southAmericaMap.innerHTML = svgContent;
+
+    const svg =
+      southAmericaMap.querySelector("svg");
+
+    if (!svg) {
+      throw new Error(
+        "El archivo cargado no contiene un SVG válido."
+      );
+    }
+
+    svg.setAttribute(
+      "role",
+      "img"
+    );
+
+    svg.setAttribute(
+      "aria-label",
+      "Mapa de Sudamérica con los países visitados por PySC"
+    );
+
+    Object.entries(cultureCountries).forEach(
+      ([countryId, country]) => {
+        const element =
+          svg.querySelector(`#${countryId}`);
+
+        if (!element) {
+          console.warn(
+            `No se encontró el país ${countryId} en el SVG.`
+          );
+
+          return;
+        }
+
+        element.classList.add(
+          "map-country"
+        );
+
+        element.style.fill =
+          country.color;
+
+        element.setAttribute(
+          "tabindex",
+          "0"
+        );
+
+        element.setAttribute(
+          "role",
+          "button"
+        );
+
+        element.setAttribute(
+          "aria-label",
+          `Ver trayectoria en ${country.name}`
+        );
+
+        element.addEventListener(
+          "click",
+          () => {
+            updateCultureCountry(countryId);
+          }
+        );
+
+        element.addEventListener(
+          "keydown",
+          (event) => {
+            if (
+              event.key === "Enter" ||
+              event.key === " "
+            ) {
+              event.preventDefault();
+              updateCultureCountry(countryId);
+            }
+          }
+        );
+      }
+    );
+
+    updateCultureCountry("PE");
+  } catch (error) {
+    console.error(error);
+
+    southAmericaMap.innerHTML = `
+      <div class="map-loading">
+        <i class="fa-solid fa-map"></i>
+        No se pudo cargar el mapa.
+      </div>
+    `;
+  }
+}
+
+document
+  .querySelectorAll(".culture-country-button")
+  .forEach((button) => {
+    button.addEventListener(
+      "click",
+      () => {
+        updateCultureCountry(
+          button.dataset.country
+        );
+      }
+    );
+  });
+
+loadSouthAmericaMap();
+
