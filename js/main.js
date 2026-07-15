@@ -419,6 +419,7 @@ const birthdayShareStatus =
   document.getElementById("birthdayShareStatus");
 
 let currentBirthdayShareData = null;
+let currentBirthdayImageData = null;
 
 function normalizeVisibleValue(value = "") {
   return value.trim().toUpperCase();
@@ -446,14 +447,18 @@ function getTodaysBirthdays(items) {
 }
 
 function renderSingleBirthday(person) {
-  const name = person.nombre || "Integrante de PySC";
+  const name =
+    person.nombre || "Integrante de PySC";
+
+  const message =
+    person.mensaje ||
+    "Deseamos que este nuevo año esté lleno de alegría, salud y muchos momentos especiales.";
 
   birthdayTitle.textContent =
     `¡Feliz cumpleaños, ${name}!`;
 
   birthdayMessage.textContent =
-    person.mensaje ||
-    "Deseamos que este nuevo año esté lleno de alegría, salud y muchos momentos especiales.";
+    message;
 
   if (person.foto) {
     birthdayPhoto.src = person.foto;
@@ -471,32 +476,25 @@ function renderSingleBirthday(person) {
     title: `¡Feliz cumpleaños, ${name}!`,
     text:
       `🎂 ¡Feliz cumpleaños, ${name}! ` +
-      `${birthdayMessage.textContent} ` +
-      `Con cariño, Pasión y Sentimiento Cultural.`,
+      `${message} ` +
+      "Con cariño, Pasión y Sentimiento Cultural.",
     url: window.location.href
   };
 
-  const birthdayStoryTitle =
-    document.getElementById("birthdayStoryTitle");
-
-  const birthdayStoryPhoto =
-    document.getElementById("birthdayStoryPhoto");
-
-  const birthdayStoryMessage =
-    document.getElementById("birthdayStoryMessage");
-
-  birthdayStoryTitle.textContent =
-    `¡Feliz cumpleaños, ${name}!`;
-
-  birthdayStoryMessage.textContent =
-    birthdayMessage.textContent;
-
-  if (person.foto) {
-    birthdayStoryPhoto.src = person.foto;
-    birthdayStoryPhoto.alt =
-      `Felicitación para ${name}`;
-  }
+  /*
+    Estos datos se usarán después para generar
+    la imagen mediante Canvas.
+  */
+  currentBirthdayImageData = {
+    name: name,
+    message: message,
+    photo: person.foto || ""
+  };
 }
+
+window.getCurrentBirthdayImageData = function(){
+  return currentBirthdayImageData;
+};
 
 function renderMultipleBirthdays(people) {
   const names = people
@@ -706,128 +704,4 @@ function launchBirthdayConfetti() {
       scalar: 0.9
     });
   }, 150);
-}
-
-const birthdayDownload =
-  document.getElementById("birthdayDownload");
-
-const birthdayStory =
-  document.getElementById("birthdayStory");
-
-function sanitizeFileName(value) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase();
-}
-
-async function createBirthdayStoryImage() {
-  if (
-    !birthdayStory ||
-    typeof html2canvas !== "function"
-  ) {
-    return;
-  }
-
-  birthdayDownload.disabled = true;
-  birthdayDownload.innerHTML = `
-    <i class="fa-solid fa-circle-notch fa-spin"></i>
-    Creando imagen...
-  `;
-
-  try {
-    const storyPhoto =
-      document.getElementById("birthdayStoryPhoto");
-
-    if (storyPhoto && !storyPhoto.complete) {
-      await new Promise((resolve, reject) => {
-        storyPhoto.onload = resolve;
-        storyPhoto.onerror = reject;
-      });
-    }
-
-    const canvas = await html2canvas(
-      birthdayStory,
-      {
-        scale: 1,
-        useCORS: true,
-        backgroundColor: null,
-        logging: false
-      }
-    );
-
-    const imageBlob = await new Promise((resolve) => {
-      canvas.toBlob(resolve, "image/png", 1);
-    });
-
-    if (!imageBlob) {
-      throw new Error("No se pudo crear la imagen.");
-    }
-
-    const title =
-      document.getElementById("birthdayTitle")
-        ?.textContent || "feliz-cumpleanos";
-
-    const fileName =
-      `${sanitizeFileName(title)}-pysc.png`;
-
-    const file = new File(
-      [imageBlob],
-      fileName,
-      {
-        type: "image/png"
-      }
-    );
-
-    if (
-      navigator.canShare &&
-      navigator.canShare({
-        files: [file]
-      })
-    ) {
-      await navigator.share({
-        title: title,
-        text:
-          "Felicitación de Pasión y Sentimiento Cultural",
-        files: [file]
-      });
-    } else {
-      const imageUrl =
-        URL.createObjectURL(imageBlob);
-
-      const downloadLink =
-        document.createElement("a");
-
-      downloadLink.href = imageUrl;
-      downloadLink.download = fileName;
-
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      downloadLink.remove();
-
-      URL.revokeObjectURL(imageUrl);
-    }
-  } catch (error) {
-    if (error.name !== "AbortError") {
-      console.error(error);
-
-      birthdayShareStatus.textContent =
-        "No se pudo crear la imagen.";
-    }
-  } finally {
-    birthdayDownload.disabled = false;
-    birthdayDownload.innerHTML = `
-      <i class="fa-solid fa-image"></i>
-      Crear imagen para historias
-    `;
-  }
-}
-
-if (birthdayDownload) {
-  birthdayDownload.addEventListener(
-    "click",
-    createBirthdayStoryImage
-  );
 }
