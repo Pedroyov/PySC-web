@@ -193,68 +193,155 @@ img {
 
 .hero {
   position: relative;
-  min-height: 600px;
+  min-height: 650px;
 
   display: flex;
   align-items: center;
 
   overflow: hidden;
-  color: #ffffff;
+  isolation: isolate;
 
-  background:
-    linear-gradient(
-      90deg,
-      rgba(10, 8, 18, 0.92) 0%,
-      rgba(45, 8, 18, 0.75) 48%,
-      rgba(140, 24, 50, 0.45) 100%
-    ),
-    url("../img/hero-pysc.jpg") center / cover no-repeat;
+  background: var(--navy-dark);
+  color: #ffffff;
 }
 
 /*
 Mientras todavía no tengas la imagen hero-pysc.jpg,
 el fondo seguirá viéndose azul gracias al color inferior.
 */
-
-.hero::before {
-  content: "";
+.hero-background {
   position: absolute;
-  width: 520px;
-  height: 520px;
-  top: -170px;
-  right: -130px;
+  inset: -45px;
+  z-index: -5;
 
-  border-radius: 50%;
-  background: rgba(214, 164, 55, 0.13);
-  filter: blur(4px);
-}
+  background:
+    url("../img/hero-pysc.jpg")
+    center center / cover no-repeat;
 
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  left: -130px;
-  bottom: -130px;
+  transform:
+    translate3d(
+      0,
+      var(--hero-parallax, 0px),
+      0
+    )
+    scale(1.06);
 
-  border-radius: 50%;
-  background: rgba(43, 102, 177, 0.2);
+  will-change: transform;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(5, 18, 35, 0.12),
-    rgba(5, 18, 35, 0.42)
-  );
+  z-index: -2;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 15, 31, 0.94) 0%,
+      rgba(12, 34, 66, 0.85) 37%,
+      rgba(79, 15, 33, 0.68) 70%,
+      rgba(140, 24, 50, 0.46) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3, 10, 22, 0.18),
+      rgba(3, 10, 22, 0.58)
+    );
+}
+
+/* Patrón inspirado en tejidos */
+
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  opacity: 0.19;
+
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 46%,
+      rgba(255, 255, 255, 0.09) 47%,
+      rgba(255, 255, 255, 0.09) 49%,
+      transparent 50%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 46%,
+      rgba(226, 170, 22, 0.09) 47%,
+      rgba(226, 170, 22, 0.09) 49%,
+      transparent 50%
+    );
+
+  background-size: 54px 54px;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.35),
+      transparent 72%
+    );
+
+  pointer-events: none;
+}
+
+/* Brillo dorado que atraviesa lentamente */
+
+.hero-glow {
+  position: absolute;
+  top: -35%;
+  left: -30%;
+  z-index: -1;
+
+  width: 42%;
+  height: 170%;
+
+  background:
+    linear-gradient(
+      100deg,
+      transparent 10%,
+      rgba(226, 170, 22, 0.03) 32%,
+      rgba(255, 220, 125, 0.17) 49%,
+      rgba(226, 170, 22, 0.05) 64%,
+      transparent 85%
+    );
+
+  filter: blur(14px);
+  transform: skewX(-14deg);
+
+  animation:
+    heroGoldenGlow 15s ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+@keyframes heroGoldenGlow {
+  0%,
+  12% {
+    left: -45%;
+    opacity: 0;
+  }
+
+  28% {
+    opacity: 0.65;
+  }
+
+  65% {
+    opacity: 0.35;
+  }
+
+  82%,
+  100% {
+    left: 115%;
+    opacity: 0;
+  }
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  width: 85%;
+  width: 100%;
   max-width: 1180px;
   padding-top: 12rem;
   padding-bottom: 12rem;
@@ -280,9 +367,13 @@ el fondo seguirá viéndose azul gracias al color inferior.
 
 .hero h1 {
   max-width: 820px;
+
+  font-family: "Montserrat", sans-serif;
   font-size: clamp(2.9rem, 5vw, 4.8rem);
   line-height: 1.03;
-  text-shadow: 0 10px 35px rgba(0, 0, 0, 0.24);
+
+  text-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.28);
 }
 
 .hero p {
@@ -299,6 +390,177 @@ el fondo seguirá viéndose azul gracias al color inferior.
   gap: 12px;
   margin-top: 28px;
 }
+
+/* Entrada escalonada */
+
+.hero-reveal {
+  opacity: 0;
+
+  transform:
+    translateY(26px);
+
+  animation:
+    heroContentAppear
+    0.85s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.hero-reveal-1 {
+  animation-delay: 0.12s;
+}
+
+.hero-reveal-2 {
+  animation-delay: 0.25s;
+}
+
+.hero-reveal-3 {
+  animation-delay: 0.38s;
+}
+
+.hero-reveal-4 {
+  animation-delay: 0.51s;
+}
+
+.hero-reveal-5 {
+  animation-delay: 0.64s;
+}
+
+@keyframes heroContentAppear {
+  from {
+    opacity: 0;
+    transform:
+      translateY(26px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+/* Cinta institucional */
+
+.hero-ribbon {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 12px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 14px rgba(12, 34, 66, 0.14);
+}
+
+.hero-ribbon span {
+  display: block;
+  width: 100%;
+  flex: 1;
+}
+
+.hero-ribbon-wine {
+  background:
+    linear-gradient(
+      90deg,
+      #6d0018,
+      #a30d2d,
+      #d6284a
+    );
+}
+
+.hero-ribbon-gold {
+  background:
+    linear-gradient(
+      90deg,
+      #f2f2f2,
+      #ffffff,
+      #ececec
+    );
+}
+
+.hero-ribbon-navy {
+  background:
+    linear-gradient(
+      90deg,
+      #d6284a,
+      #a30d2d,
+      #6d0018
+    );
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-background {
+    inset: 0;
+    transform: scale(1.02);
+  }
+
+  .hero-content {
+    padding-top: 135px;
+    padding-bottom: 105px;
+  }
+
+  .hero-pattern {
+    opacity: 0.13;
+    background-size: 44px 44px;
+  }
+
+  .hero-glow {
+    animation-duration: 18s;
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-content {
+    padding-top: 120px;
+    padding-bottom: 82px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 13vw, 4rem);
+  }
+
+  .hero-title-main {
+    font-size: inherit;
+  }
+
+  .hero-pattern {
+    opacity: 0.1;
+  }
+
+  .hero-ribbon {
+    height: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background {
+    transform: scale(1.03);
+  }
+
+  .hero-glow {
+    animation: none;
+    opacity: 0.18;
+    left: 28%;
+  }
+
+  .hero-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
 
 /* =========================
    BOTONES
@@ -363,22 +625,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
   color: var(--navy);
   font-size: clamp(1.85rem, 3vw, 2.65rem);
   line-height: 1.15;
-}
-
-.intro {
-  background: #ffffff;
-}
-
-.intro-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 48px;
-  align-items: start;
-}
-
-.intro-grid p {
-  color: var(--muted);
-  font-size: 1.1rem;
 }
 
 .text-link {
@@ -1152,17 +1398,24 @@ el fondo seguirá viéndose azul gracias al color inferior.
     font-size: 1.1rem;
   }
 
-  .intro-grid,
+  @media (max-width: 900px) {
+  .nav-links {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .nav-links.open {
+    right: 0;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
   .cards-grid {
     grid-template-columns: 1fr;
   }
 
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .cta-box,
-  .footer-content {
+  .cta-box {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -1206,11 +1459,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
     min-height: 72px;
   }
 
-  .brand-mark {
-    width: 44px;
-    height: 44px;
-  }
-
   .brand-text strong {
     font-size: 0.82rem;
   }
@@ -1230,10 +1478,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
 
   .section {
     padding: 76px 0;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr;
   }
 
   .stat-card {
@@ -1318,6 +1562,7 @@ el fondo seguirá viéndose azul gracias al color inferior.
 }
 
 .hero-title-highlight {
+  margin-top: 5px;
   color: var(--gold);
 }
 
@@ -2593,13 +2838,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
   }
 }
 
-.birthday-photo-wrapper {
-  animation:
-    birthdayPhotoAppear 0.75s 0.2s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    both;
-}
-
 .birthday-content {
   animation:
     birthdayContentAppear 0.75s 0.32s
@@ -3117,31 +3355,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
 .pillar-navy .pillar-icon {
   background: rgba(19, 47, 93, 0.1);
   color: var(--navy);
-}
-
-/* Animación inicial */
-
-.reveal-left,
-.reveal-right {
-  opacity: 0;
-
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s
-      cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.reveal-left {
-  transform: translateX(-45px);
-}
-
-.reveal-right {
-  transform: translateX(45px);
-}
-
-.reveal-visible {
-  opacity: 1;
-  transform: translateX(0);
 }
 
 /* Responsive */
@@ -3708,68 +3921,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
 
 /* Mapa visual */
 
-.culture-map-visual {
-  position: relative;
-  overflow: hidden;
-
-  min-height: 540px;
-
-  background:
-    radial-gradient(
-      circle at 32% 30%,
-      rgba(255, 255, 255, 0.16),
-      transparent 28%
-    ),
-    linear-gradient(
-      145deg,
-      var(--navy-dark),
-      var(--navy) 62%,
-      var(--wine-dark)
-    );
-
-  border: 1px solid rgba(226, 170, 22, 0.35);
-  border-radius: 28px;
-
-  box-shadow:
-    0 24px 55px rgba(12, 34, 66, 0.2);
-}
-
-.culture-map-visual::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      rgba(255, 255, 255, 0.025) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.025) 1px,
-      transparent 1px
-    );
-
-  background-size: 34px 34px;
-}
-
-.culture-map-watermark {
-  position: absolute;
-  right: -35px;
-  bottom: -42px;
-
-  color: rgba(255, 255, 255, 0.045);
-  font-size: 19rem;
-  line-height: 1;
-}
-
-.culture-map-origin {
-  position: absolute;
-  left: 16%;
-  top: 44%;
-  z-index: 4;
-}
-
 .culture-map-pulse {
   position: absolute;
   left: 16px;
@@ -3790,169 +3941,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
     culturePulse 2.4s ease-out infinite;
 }
 
-.culture-map-origin-label {
-  margin-left: 52px;
-  padding: 12px 16px;
-
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 14px;
-
-  backdrop-filter: blur(8px);
-}
-
-.culture-map-origin-label strong {
-  display: block;
-
-  color: #ffffff;
-  font-family: "Montserrat", sans-serif;
-  font-size: 1rem;
-}
-
-.culture-map-origin-label span {
-  display: block;
-  margin-top: 2px;
-
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.76rem;
-}
-
-.culture-country-point {
-  position: absolute;
-  z-index: 4;
-
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 11px 14px;
-
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 14px;
-
-  box-shadow:
-    0 12px 26px rgba(0, 0, 0, 0.18);
-}
-
-.culture-country-point strong {
-  display: block;
-
-  color: var(--navy);
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.9rem;
-}
-
-.culture-country-point small {
-  display: block;
-  margin-top: 1px;
-
-  color: var(--muted);
-  font-size: 0.7rem;
-}
-
-.country-flag {
-  font-size: 1.65rem;
-}
-
-
-/* Líneas */
-
-
-/* Tarjetas */
-
-.culture-countries {
-  display: grid;
-  gap: 18px;
-}
-
-.culture-country-card {
-  position: relative;
-  overflow: hidden;
-
-  display: grid;
-  grid-template-columns: 72px 1fr;
-  align-items: center;
-  gap: 18px;
-
-  padding: 24px;
-
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-
-  box-shadow:
-    0 16px 38px rgba(19, 47, 93, 0.08);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.culture-country-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 5px;
-  height: 100%;
-}
-
-.country-card-peru::before {
-  background: var(--wine);
-}
-
-.country-card-ecuador::before {
-  background: var(--gold);
-}
-
-.country-card-bolivia::before {
-  background: var(--navy);
-}
-
-.culture-country-card:hover {
-  transform: translateX(7px);
-
-  box-shadow:
-    0 22px 48px rgba(19, 47, 93, 0.13);
-}
-
-.culture-country-icon {
-  width: 66px;
-  height: 66px;
-
-  display: grid;
-  place-items: center;
-
-  background: #f8f6f1;
-  border-radius: 18px;
-
-  font-size: 2.15rem;
-}
-
-.culture-country-type {
-  color: var(--gold);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.culture-country-card h3 {
-  margin-top: 3px;
-
-  color: var(--navy);
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.22rem;
-}
-
-.culture-country-card p {
-  margin-top: 8px;
-
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.55;
-}
 
 /* Frase */
 
@@ -3997,52 +3985,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
 
   .culture-map-visual {
     min-height: 500px;
-  }
-}
-
-@media (max-width: 620px) {
-  .culture-map-visual {
-    min-height: 560px;
-  }
-
-  .culture-map-origin {
-    left: 8%;
-    top: 43%;
-  }
-
-  .culture-route-peru {
-    width: 190px;
-    left: 19%;
-    top: 47%;
-    transform: rotate(-38deg);
-  }
-
-  .culture-route-ecuador {
-    width: 260px;
-    left: 18%;
-    top: 48%;
-  }
-
-  .culture-route-bolivia {
-    width: 230px;
-    left: 18%;
-    top: 49%;
-    transform: rotate(42deg);
-  }
-
-  .culture-country-card {
-    grid-template-columns: 58px 1fr;
-    padding: 20px;
-  }
-
-  .culture-country-icon {
-    width: 54px;
-    height: 54px;
-    font-size: 1.8rem;
-  }
-
-  .culture-map-quote {
-    align-items: flex-start;
   }
 }
 
@@ -4339,19 +4281,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
   gap: 17px;
 }
 
-.culture-country-detail-flag {
-  width: 72px;
-  height: 72px;
-
-  display: grid;
-  place-items: center;
-
-  background: #f7f4ed;
-  border-radius: 19px;
-
-  font-size: 2.5rem;
-}
-
 .culture-country-detail-type {
   color: var(--gold);
   font-size: 0.68rem;
@@ -4601,7 +4530,6 @@ el fondo seguirá viéndose azul gracias al color inferior.
 }
 
 @media(max-width:900px){
-
   .location-grid{
     grid-template-columns:1fr;
   }
@@ -4609,5 +4537,365 @@ el fondo seguirá viéndose azul gracias al color inferior.
   .location-image img{
     height:380px;
   }
+}
 
+.location .btn-outline {
+  color: var(--navy);
+  border-color: var(--navy);
+  background: transparent;
+}
+
+.location .btn-outline:hover {
+  color: #ffffff;
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   ANIMACIONES AL HACER SCROLL
+========================= */
+
+[data-reveal] {
+  opacity: 0;
+
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s
+      cubic-bezier(0.22, 1, 0.36, 1);
+
+  will-change:
+    opacity,
+    transform;
+}
+
+[data-reveal="up"] {
+  transform: translateY(38px);
+}
+
+[data-reveal="left"] {
+  transform: translateX(-42px);
+}
+
+[data-reveal="right"] {
+  transform: translateX(42px);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.92);
+}
+
+[data-reveal].reveal-active {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+  Cuando JavaScript todavía no ha cargado,
+  evitamos mantener oculto el contenido indefinidamente.
+*/
+.no-js [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 620px) {
+  [data-reveal="left"],
+  [data-reveal="right"] {
+    transform: translateY(30px);
+  }
+
+  [data-reveal="scale"] {
+    transform:
+      translateY(22px)
+      scale(0.97);
+  }
+
+  [data-reveal].reveal-active {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================
+   NAVEGACIÓN INTELIGENTE
+========================= */
+
+/* Barra de progreso */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+
+  width: 0;
+  height: 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--wine),
+      var(--gold),
+      var(--navy)
+    );
+
+  box-shadow:
+    0 0 12px rgba(226, 170, 22, 0.45);
+
+  pointer-events: none;
+
+  transition: width 0.08s linear;
+}
+
+/* Evita que el header tape secciones enlazadas */
+
+section[id] {
+  scroll-margin-top: 95px;
+}
+
+/* Header compacto */
+
+.site-header .navbar,
+.site-header .brand-logo,
+.site-header .brand-text strong,
+.site-header .brand-text span {
+  transition:
+    height 0.3s ease,
+    width 0.3s ease,
+    font-size 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.site-header.scrolled .navbar {
+  height: 66px;
+}
+
+.site-header.scrolled .brand-logo {
+  width: 52px;
+  height: 52px;
+}
+
+.site-header.scrolled .brand-text strong {
+  font-size: 0.9rem;
+}
+
+.site-header.scrolled .brand-text span {
+  font-size: 0.65rem;
+}
+
+/* Fondo oscuro del menú móvil */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 990;
+
+  background: rgba(3, 12, 25, 0.66);
+  backdrop-filter: blur(3px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.menu-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Bloqueo del fondo cuando el menú está abierto */
+
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Animación del botón hamburguesa */
+
+.menu-toggle {
+  position: relative;
+  width: 35px;
+  height: 35px;
+}
+
+.menu-toggle span {
+  position: absolute;
+  left: 4px;
+
+  width: 27px;
+
+  transition:
+    top 0.25s ease,
+    transform 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.menu-toggle span:nth-child(1) {
+  top: 8px;
+}
+
+.menu-toggle span:nth-child(2) {
+  top: 16px;
+}
+
+.menu-toggle span:nth-child(3) {
+  top: 24px;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  top: 16px;
+  transform: rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  top: 16px;
+  transform: rotate(-45deg);
+}
+
+/* Botón volver arriba */
+
+.back-to-top {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  z-index: 900;
+
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--wine),
+      var(--wine-dark)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+
+  color: #ffffff;
+  font-size: 1rem;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 13px 30px rgba(12, 34, 66, 0.28);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform:
+    translateY(18px)
+    scale(0.88);
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease,
+    background 0.25s ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.back-to-top:hover {
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      #c78c00
+    );
+
+  color: #111111;
+
+  transform:
+    translateY(-4px)
+    scale(1.03);
+}
+
+.back-to-top:focus-visible,
+.menu-toggle:focus-visible,
+.nav-links a:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .nav-links {
+    z-index: 1000;
+  }
+
+  .menu-toggle {
+    z-index: 1010;
+  }
+
+  .site-header.scrolled .navbar {
+    height: 68px;
+  }
+}
+
+@media (max-width: 560px) {
+  section[id] {
+    scroll-margin-top: 82px;
+  }
+
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+
+    width: 44px;
+    height: 44px;
+  }
+
+  .site-header.scrolled .brand-logo {
+    width: 46px;
+    height: 46px;
+  }
+
+  .site-header.scrolled .brand-text strong {
+    font-size: 0.76rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress,
+  .back-to-top,
+  .menu-toggle span,
+  .site-header .navbar,
+  .site-header .brand-logo {
+    transition: none !important;
+  }
 }

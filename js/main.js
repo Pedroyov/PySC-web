@@ -1,30 +1,240 @@
-const header = document.getElementById("header");
-const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
+/* =========================
+   NAVEGACIÓN PRINCIPAL
+========================= */
+
+const header =
+  document.getElementById("header");
+
+const menuToggle =
+  document.getElementById("menuToggle");
+
+const navLinks =
+  document.getElementById("navLinks");
+
+const menuOverlay =
+  document.getElementById("menuOverlay");
+
+const scrollProgress =
+  document.getElementById("scrollProgress");
+
+const backToTop =
+  document.getElementById("backToTop");
 
 function updateHeader() {
-  if (window.scrollY > 30) {
+  if (!header) {
+    return;
+  }
+
+  const shouldBeScrolled =
+    window.scrollY > 30;
+
+  if (shouldBeScrolled) {
     header.classList.add("scrolled");
-  } else if (!document.body.classList.contains("placeholder-page")) {
+  } else if (
+    !document.body.classList.contains(
+      "placeholder-page"
+    )
+  ) {
     header.classList.remove("scrolled");
   }
 }
 
-window.addEventListener("scroll", updateHeader);
-updateHeader();
+function updateScrollProgress() {
+  if (!scrollProgress) {
+    return;
+  }
+
+  const scrollableHeight =
+    document.documentElement.scrollHeight -
+    window.innerHeight;
+
+  const progress =
+    scrollableHeight > 0
+      ? (window.scrollY / scrollableHeight) * 100
+      : 0;
+
+  scrollProgress.style.width =
+    `${Math.min(100, Math.max(0, progress))}%`;
+}
+
+function updateBackToTop() {
+  if (!backToTop) {
+    return;
+  }
+
+  backToTop.classList.toggle(
+    "visible",
+    window.scrollY > 550
+  );
+}
+
+function updateNavigationOnScroll() {
+  updateHeader();
+  updateScrollProgress();
+  updateBackToTop();
+}
+
+window.addEventListener(
+  "scroll",
+  updateNavigationOnScroll,
+  {
+    passive: true
+  }
+);
+
+window.addEventListener(
+  "resize",
+  updateScrollProgress
+);
+
+updateNavigationOnScroll();
+
+/* =========================
+   MENÚ MÓVIL
+========================= */
+
+function openMobileMenu() {
+  if (!menuToggle || !navLinks) {
+    return;
+  }
+
+  navLinks.classList.add("open");
+  menuToggle.classList.add("active");
+
+  menuToggle.setAttribute(
+    "aria-expanded",
+    "true"
+  );
+
+  menuToggle.setAttribute(
+    "aria-label",
+    "Cerrar menú"
+  );
+
+  document.body.classList.add(
+    "menu-open"
+  );
+
+  if (menuOverlay) {
+    menuOverlay.classList.add(
+      "visible"
+    );
+
+    menuOverlay.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+  }
+}
+
+function closeMobileMenu() {
+  if (!menuToggle || !navLinks) {
+    return;
+  }
+
+  navLinks.classList.remove("open");
+  menuToggle.classList.remove("active");
+
+  menuToggle.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+  menuToggle.setAttribute(
+    "aria-label",
+    "Abrir menú"
+  );
+
+  document.body.classList.remove(
+    "menu-open"
+  );
+
+  if (menuOverlay) {
+    menuOverlay.classList.remove(
+      "visible"
+    );
+
+    menuOverlay.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+  }
+}
+
+function toggleMobileMenu() {
+  if (!navLinks) {
+    return;
+  }
+
+  if (navLinks.classList.contains("open")) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+}
 
 if (menuToggle && navLinks) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = navLinks.classList.toggle("open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-  });
+  menuToggle.addEventListener(
+    "click",
+    toggleMobileMenu
+  );
 
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("open");
-      menuToggle.setAttribute("aria-expanded", "false");
+  navLinks
+    .querySelectorAll("a")
+    .forEach((link) => {
+      link.addEventListener(
+        "click",
+        closeMobileMenu
+      );
     });
-  });
+}
+
+if (menuOverlay) {
+  menuOverlay.addEventListener(
+    "click",
+    closeMobileMenu
+  );
+}
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+    if (event.key === "Escape") {
+      closeMobileMenu();
+    }
+  }
+);
+
+window.addEventListener(
+  "resize",
+  () => {
+    if (window.innerWidth > 900) {
+      closeMobileMenu();
+    }
+  }
+);
+
+/* =========================
+   VOLVER ARRIBA
+========================= */
+
+if (backToTop) {
+  backToTop.addEventListener(
+    "click",
+    () => {
+      const reduceMotion =
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+      window.scrollTo({
+        top: 0,
+        behavior: reduceMotion
+          ? "auto"
+          : "smooth"
+      });
+    }
+  );
 }
 
 const yearsActive = document.getElementById("yearsActive");
@@ -706,44 +916,6 @@ function launchBirthdayConfetti() {
   }, 150);
 }
 
-/* =========================
-   ANIMACIÓN NUESTRA ESENCIA
-========================= */
-
-const essenceRevealElements =
-  document.querySelectorAll(
-    ".reveal-left, .reveal-right"
-  );
-
-if (essenceRevealElements.length > 0) {
-  const essenceObserver =
-    new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          entry.target.classList.add(
-            "reveal-visible"
-          );
-
-          observer.unobserve(
-            entry.target
-          );
-        });
-      },
-      {
-        threshold: 0.2
-      }
-    );
-
-  essenceRevealElements.forEach(
-    (element) => {
-      essenceObserver.observe(element);
-    }
-  );
-}
 
 /* =========================
    CONTADOR DE HISTORIA
@@ -834,6 +1006,7 @@ updateHistoryCounter();
 const cultureCountries = {
   PE: {
     flagImage: "img/peru.png",
+    flagAlt: "Bandera de Perú",
     name: "Perú",
     type: "Trayectoria nacional",
     years: "Desde 2009",
@@ -846,6 +1019,7 @@ const cultureCountries = {
 
   EC: {
     flagImage: "img/ecuador.svg",
+    flagAlt: "Bandera de Ecuador",
     name: "Ecuador",
     type: "Representación internacional",
     years: "2016 · 2017 · 2018",
@@ -858,6 +1032,7 @@ const cultureCountries = {
 
   BO: {
     flagImage: "img/bolivia.svg",
+    flagAlt: "Bandera de Bolivia",
     name: "Bolivia",
     type: "Encuentro internacional",
     years: "2025",
@@ -1063,3 +1238,165 @@ document
 
 loadSouthAmericaMap();
 
+
+
+
+
+
+
+
+/* =========================
+   ANIMACIONES GENERALES
+========================= */
+
+function initializeScrollReveal() {
+  const revealElements =
+    document.querySelectorAll(
+      "[data-reveal]"
+    );
+
+  if (revealElements.length === 0) {
+    return;
+  }
+
+  const reduceMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+  if (
+    reduceMotion ||
+    !("IntersectionObserver" in window)
+  ) {
+    revealElements.forEach(
+      (element) => {
+        element.classList.add(
+          "reveal-active"
+        );
+      }
+    );
+
+    return;
+  }
+
+  const observer =
+    new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          const element = entry.target;
+
+          const delay = Number(
+            element.dataset.revealDelay || 0
+          );
+
+          element.style.transitionDelay =
+            `${Math.max(0, delay)}ms`;
+
+          element.classList.add(
+            "reveal-active"
+          );
+
+          currentObserver.unobserve(
+            element
+          );
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin:
+          "0px 0px -45px 0px"
+      }
+    );
+
+  revealElements.forEach(
+    (element) => {
+      observer.observe(element);
+    }
+  );
+}
+
+initializeScrollReveal();
+
+
+/* =========================
+   PARALLAX DEL HERO
+========================= */
+
+function initializeHeroParallax() {
+  const hero =
+    document.querySelector(".hero");
+
+  if (!hero) {
+    return;
+  }
+
+  const reduceMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+  const isMobile =
+    window.matchMedia(
+      "(max-width: 900px)"
+    ).matches;
+
+  if (reduceMotion || isMobile) {
+    hero.style.setProperty(
+      "--hero-parallax",
+      "0px"
+    );
+
+    return;
+  }
+
+  let ticking = false;
+
+  function updateHeroParallax() {
+    const heroHeight =
+      hero.offsetHeight;
+
+    const scrollPosition =
+      Math.min(
+        window.scrollY,
+        heroHeight
+      );
+
+    const movement =
+      scrollPosition * 0.16;
+
+    hero.style.setProperty(
+      "--hero-parallax",
+      `${movement}px`
+    );
+
+    ticking = false;
+  }
+
+  function requestHeroParallax() {
+    if (ticking) {
+      return;
+    }
+
+    window.requestAnimationFrame(
+      updateHeroParallax
+    );
+
+    ticking = true;
+  }
+
+  window.addEventListener(
+    "scroll",
+    requestHeroParallax,
+    {
+      passive: true
+    }
+  );
+
+  updateHeroParallax();
+}
+
+initializeHeroParallax();

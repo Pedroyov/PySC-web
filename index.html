@@ -5,15 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Grupo Folklórico Pasión y Sentimiento Cultural de Catacaos, Piura. Desde 2009 difundiendo y preservando el folklore peruano.">
   <title>Grupo Folklórico Pasión y Sentimiento Cultural | Catacaos</title>
-  <link rel="icon" type="image/png" href="img/logo-pasion-sentimiento.png">
+  <meta name="keywords" content="folklore peruano, danzas peruanas, Catacaos, Piura, Grupo Folklórico, Pasión y Sentimiento Cultural, cultura peruana, marinera, tondero, talleres culturales">
+  <meta name="author" content="Grupo Folklórico Pasión y Sentimiento Cultural">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#8c1832">
+  <link rel="canonical" href="https://pedroyov.github.io/PySC-web/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pasión y Sentimiento Cultural">
+  <meta property="og:description" content="Preservamos, difundimos y vivimos el folklore peruano desde Catacaos, Piura.">
+  <meta property="og:url" content="https://pedroyov.github.io/PySC-web/">
+  <meta property="og:site_name" content="Pasión y Sentimiento Cultural">
+  <meta property="og:locale" content="es_PE">
+  <meta property="og:image" content="https://pedroyov.github.io/PySC-web/img/social-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <link rel="icon" href="img/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Rouge+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"PerformingGroup",
+    "name":"Grupo Folklórico Pasión y Sentimiento Cultural",
+    "alternateName":"Pasión y Sentimiento Cultural",
+    "description":"Agrupación cultural dedicada a la preservación y difusión del folklore peruano.",
+    "foundingDate":"2009",
+    "address":{
+      "@type":"PostalAddress",
+      "addressLocality":"Catacaos",
+      "addressRegion":"Piura",
+      "addressCountry":"PE"
+    },
+    "url":"https://pedroyov.github.io/PySC-web/",
+    "logo":"https://pedroyov.github.io/PySC-web/img/logo-pasion-sentimiento.png",
+    "sameAs":[
+      "https://www.facebook.com/profile.php?id=100063490963350",
+      "https://www.instagram.com/pasionysentimientocultural/",
+      "https://www.tiktok.com/@pysc_17",
+      "https://www.youtube.com/@grupofolkloricopasionysent6944/videos"
+    ]
+  }
+  </script>
 </head>
-<body>
+<body id="top">
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <header class="site-header" id="header">
   <nav class="navbar container">
@@ -30,7 +74,7 @@
       </div>
     </a>
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+    <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
       <span></span>
       <span></span>
       <span></span>
@@ -46,32 +90,38 @@
     </div>
   </nav>
 </header>
+<div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
 
 <main>
-  <section class="hero">
-    <div class="hero-overlay"></div>
+  <section class="hero" id="inicio">
+    <div class="hero-background" aria-hidden="true"></div>
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-content container">
-      <span class="eyebrow">Desde 2009</span>
+      <span class="eyebrow hero-reveal hero-reveal-1">
+        Desde 2009
+      </span>
 
       <h1>
-        <span class="hero-title-main">
+        <span class="hero-title-main hero-reveal hero-reveal-2">
           Preservamos,<br>
           difundimos y vivimos
         </span>
 
-        <span class="hero-title-highlight">
+        <span class="hero-title-highlight hero-reveal hero-reveal-3">
           el folklore peruano
         </span>
       </h1>
 
-      <p>
+      <p class="hero-reveal hero-reveal-4">
         Somos una agrupación cultural de Catacaos que promueve
         nuestras tradiciones a través de la danza, la formación
         y el amor por nuestra identidad.
       </p>
 
-      <div class="hero-actions">
+      <div class="hero-actions hero-reveal hero-reveal-5">
         <a href="nosotros.html" class="btn btn-primary">
           Conócenos →
         </a>
@@ -82,6 +132,12 @@
       </div>
     </div>
   </section>
+
+  <div class="hero-ribbon" aria-hidden="true">
+    <span class="hero-ribbon-wine"></span>
+    <span class="hero-ribbon-gold"></span>
+    <span class="hero-ribbon-navy"></span>
+  </div>
 
   
   <section class="stats">
@@ -152,6 +208,7 @@
             alt=""
             class="birthday-photo"
             id="birthdayPhoto"
+            decoding="async"
           >
         </div>
 
@@ -200,7 +257,7 @@
     <div class="agenda-decoration agenda-decoration-two"></div>
     
     <div class="container">
-      <div class="agenda-heading">
+      <div class="agenda-heading" data-reveal="up">
         <div>
           <span class="agenda-kicker">
             <i class="fa-regular fa-calendar"></i>
@@ -221,7 +278,7 @@
         </div>
       </div>
 
-      <div class="agenda-grid" id="agendaGrid">
+      <div class="agenda-grid" id="agendaGrid" data-reveal="up" data-reveal-delay="120">
         <div class="agenda-loading">
           <i class="fa-solid fa-circle-notch fa-spin"></i>
           Cargando agenda...
@@ -238,6 +295,8 @@
           <img
             src="img/esencia-pysc.jpg"
             alt="Integrantes de Pasión y Sentimiento Cultural compartiendo una presentación folclórica"
+            loading="lazy"
+            decoding="async"
           >
         </div>
 
@@ -247,7 +306,7 @@
         </div>
       </div>
 
-      <div class="essence-content reveal-right">
+      <div class="essence-content" data-reveal="right"  data-reveal-delay="100">
         <span class="section-kicker">
           Nuestra esencia
         </span>
@@ -368,7 +427,7 @@
   <section class="featured section">
     <div class="container featured-layout">
       
-      <div class="featured-intro">
+      <div class="featured-intro" data-reveal="left">
         <span class="section-kicker">Lo que hacemos</span>
         
         <h2>
@@ -387,7 +446,7 @@
         </a>
       </div>
       
-      <div class="cards-grid">
+      <div class="cards-grid" data-reveal="right" data-reveal-delay="120">
 
         <article class="feature-card feature-card-wine">
           <div class="card-number">01</div>
@@ -423,14 +482,16 @@
   <section class="about-preview section">
     <div class="container about-preview-grid">
 
-      <div class="about-preview-image">
+      <div class="about-preview-image" data-reveal="left">
         <img
           src="img/grupo-pysc.jpg"
           alt="Integrantes del Grupo Folklórico Pasión y Sentimiento Cultural"
+          loading="lazy"
+          decoding="async"
         >
       </div>
 
-      <div class="about-preview-content">
+      <div class="about-preview-content" data-reveal="right" data-reveal-delay="100">
         <span class="section-kicker">Quiénes somos</span>
 
         <h2>
@@ -461,7 +522,7 @@
   <section class="recognitions section" id="reconocimientos">
     <div class="container">
 
-      <div class="recognitions-heading">
+      <div class="recognitions-heading" data-reveal="up">
         <span class="section-kicker">
           Reconocimientos
         </span>
@@ -480,11 +541,13 @@
 
       <div class="recognitions-grid">
 
-        <article class="recognition-card">
+        <article class="recognition-card" data-reveal="up">
           <div class="recognition-logo">
             <img
               src="img/reconocimientos/punto-cultura.jpg"
               alt="Punto de Cultura"
+              loading="lazy"
+              decoding="async"
             >
           </div>
 
@@ -504,11 +567,13 @@
           </div>
         </article>
 
-        <article class="recognition-card">
+        <article class="recognition-card" data-reveal="up">
           <div class="recognition-logo">
             <img
               src="img/reconocimientos/afla.jpg"
               alt="AFLA"
+              loading="lazy"
+              decoding="async"
             >
           </div>
 
@@ -539,7 +604,7 @@
   <section class="projects-preview section">
     <div class="container">
 
-      <div class="section-heading">
+      <div class="section-heading" data-reveal="up">
         <div>
           <span class="section-kicker">Nuestros proyectos</span>
           <h2>Cultura que transforma y conecta</h2>
@@ -552,10 +617,12 @@
 
       <div class="projects-grid">
 
-        <article class="project-card">
+        <article class="project-card" data-reveal="left">
           <img
             src="img/2024-6.jpg"
             alt="Catacaos, Color y Tradición"
+            loading="lazy"
+            decoding="async"
           >
 
           <div class="project-card-content">
@@ -569,10 +636,12 @@
           </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-reveal="right">
           <img
             src="img/talleres.jpg"
             alt="Talleres de formación artística"
+            loading="lazy"
+            decoding="async"
           >
 
           <div class="project-card-content">
@@ -593,7 +662,7 @@
   <section class="culture-map section" id="trayectoria-internacional">
     <div class="container">
 
-      <div class="culture-map-heading">
+      <div class="culture-map-heading" data-reveal="up">
         <span class="section-kicker">
           Nuestra cultura sin fronteras
         </span>
@@ -612,7 +681,7 @@
 
       <div class="culture-map-layout">
 
-        <div class="culture-map-visual">
+        <div class="culture-map-visual" data-reveal="left">
 
           <div
             class="south-america-map"
@@ -641,7 +710,7 @@
 
         </div>
 
-        <div class="culture-country-panel">
+        <div class="culture-country-panel" data-reveal="right">
 
           <div class="culture-country-buttons">
             <button
@@ -649,7 +718,7 @@
               class="culture-country-button active"
               data-country="PE"
             >
-              <img src="img/peru.png" alt="" class="culture-country-flag">
+              <img src="img/peru.png" alt="" class="culture-country-flag" decoding="async">
               Perú
             </button>
 
@@ -658,7 +727,7 @@
               class="culture-country-button"
               data-country="EC"
             >
-              <img src="img/ecuador.svg" alt="" class="culture-country-flag">
+              <img src="img/ecuador.svg" alt="" class="culture-country-flag" decoding="async">
               Ecuador
             </button>
 
@@ -667,7 +736,7 @@
               class="culture-country-button"
               data-country="BO"
             >
-              <img src="img/bolivia.svg" alt="" class="culture-country-flag">
+              <img src="img/bolivia.svg" alt="" class="culture-country-flag" decoding="async">
               Bolivia
             </button>
           </div>
@@ -727,7 +796,7 @@
 
       </div>
 
-      <div class="culture-map-quote">
+      <div class="culture-map-quote" data-reveal="up" data-reveal-delay="120">
         <i class="fa-solid fa-quote-left"></i>
 
         <p>
@@ -743,7 +812,7 @@
   <section class="gallery-preview section">
     <div class="container">
 
-      <div class="section-heading">
+      <div class="section-heading" data-reveal="up">
         <div>
           <span class="section-kicker">Nuestra galería</span>
           <h2>Momentos que cuentan nuestra historia</h2>
@@ -755,12 +824,12 @@
       </div>
 
       <div class="gallery-preview-grid">
-        <img src="img/galeria/1.jpg" alt="Presentación de PySC">
-        <img src="img/galeria/3.jpg" alt="Integrantes de PySC">
-        <img src="img/galeria/2.jpg" alt="Danza folclórica">
-        <img src="img/galeria/4.jpg" alt="Actividad cultural">
-        <img src="img/galeria/5.jpg" alt="Viaje cultural">
-        <img src="img/galeria/6.jpg" alt="Presentación artística">
+        <img src="img/galeria/1.jpg" alt="Presentación de PySC" loading="lazy" decoding="async" data-reveal="scale">
+        <img src="img/galeria/3.jpg" alt="Integrantes de PySC" loading="lazy" decoding="async" data-reveal="scale">
+        <img src="img/galeria/2.jpg" alt="Danza folclórica" loading="lazy" decoding="async" data-reveal="scale">
+        <img src="img/galeria/4.jpg" alt="Actividad cultural" loading="lazy" decoding="async" data-reveal="scale">
+        <img src="img/galeria/5.jpg" alt="Viaje cultural" loading="lazy" decoding="async" data-reveal="scale">
+        <img src="img/galeria/6.jpg" alt="Presentación artística" loading="lazy" decoding="async" data-reveal="scale">
       </div>
 
     </div>
@@ -769,11 +838,11 @@
   <section class="location section" id="ubicacion">
     <div class="container">
       <div class="location-grid">
-        <div class="location-image">
-          <img src="img/catacaos.jpg" alt="Plaza de Armas de Catacaos">
+        <div class="location-image" data-reveal="left">
+          <img src="img/catacaos.jpg" alt="Plaza de Armas de Catacaos" loading="lazy" decoding="async">
         </div>
 
-        <div class="location-content">
+        <div class="location-content" data-reveal="right" data-reveal-delay="100">
           <span class="section-kicker">
             Nuestra casa
           </span>
@@ -837,41 +906,41 @@
     </div>
   </section>
 
-  <section class="social section">
+  <section class="social section" id="redes">
 
     <div class="container">
 
-        <span class="section-kicker">
+        <span class="section-kicker" data-reveal="up">
             Síguenos
         </span>
 
-        <h2>
+        <h2 data-reveal="up" data-reveal-delay="70">
             Vive el folklore con nosotros
         </h2>
 
-        <p>
+        <p data-reveal="up" data-reveal-delay="120">
             Mantente al día con nuestras presentaciones,
             proyectos y actividades culturales.
         </p>
 
         <div class="social-grid">
 
-            <a href="https://www.facebook.com/profile.php?id=100063490963350" class="social-card" target="_blank">
+            <a href="https://www.facebook.com/profile.php?id=100063490963350" class="social-card" target="_blank" data-reveal="scale">
                 <i class="fa-brands fa-facebook-f"></i>
                 <span>Facebook</span>
             </a>
 
-            <a href="https://www.instagram.com/pasionysentimientocultural/" class="social-card" target="_blank">
+            <a href="https://www.instagram.com/pasionysentimientocultural/" class="social-card" target="_blank" data-reveal="scale">
                 <i class="fa-brands fa-instagram"></i>
                 <span>Instagram</span>
             </a>
 
-            <a href="https://www.tiktok.com/@pysc_17" class="social-card" target="_blank">
+            <a href="https://www.tiktok.com/@pysc_17" class="social-card" target="_blank" data-reveal="scale">
                 <i class="fa-brands fa-tiktok"></i>
                 <span>TikTok</span>
             </a>
 
-            <a href="https://www.youtube.com/@grupofolkloricopasionysent6944/videos" class="social-card" target="_blank">
+            <a href="https://www.youtube.com/@grupofolkloricopasionysent6944/videos" class="social-card" target="_blank" data-reveal="scale">
                 <i class="fa-brands fa-youtube"></i>
                 <span>YouTube</span>
             </a>
@@ -883,7 +952,7 @@
   </section>
 
   <section class="cta section">
-    <div class="container cta-box">
+    <div class="container cta-box" data-reveal="up">
 
       <div>
         <span class="section-kicker">
@@ -924,6 +993,7 @@
           <img
             src="img/logo-pasion-sentimiento.png"
             alt="Logo de Pasión y Sentimiento Cultural"
+            loading="lazy" decoding="async"
           >
 
           <div>
@@ -1033,7 +1103,7 @@
           <li>
             <i class="fa-solid fa-envelope"></i>
 
-            <a href="mailto:TU_CORREO@gmail.com">
+            <a href="mailto:omarpisc@gmail.com">
               omarpisc@gmail.com
             </a>
           </li>
@@ -1042,7 +1112,7 @@
             <i class="fa-brands fa-whatsapp"></i>
 
             <a
-              href="https://wa.me/51TU_NUMERO"
+              href="https://wa.me/51983627392"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -1074,7 +1144,7 @@
         Todos los derechos reservados.
       </p>
 
-      <a href="index.html" class="footer-back-top">
+      <a href="#top" class="footer-back-top">
         Volver al inicio
         <i class="fa-solid fa-arrow-up"></i>
       </a>
@@ -1083,6 +1153,8 @@
   </div>
 
 </footer>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="Volver al inicio de la página" title="Volver arriba"> <i class="fa-solid fa-arrow-up"></i></button>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="js/main.js"></script>
