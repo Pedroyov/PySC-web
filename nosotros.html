@@ -2,232 +2,698 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosotros | Pasión y Sentimiento Cultural</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="img/logo-pasion-sentimiento.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Rouge+Script&display=swap" rel="stylesheet">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Nuestra esencia | Pasión y Sentimiento Cultural
+  </title>
+
+  <meta
+    name="description"
+    content="Conoce la esencia, misión, visión y valores del Grupo Folklórico Pasión y Sentimiento Cultural de Catacaos, Piura."
+  >
+
+  <link rel="icon" href="img/favicon.ico" sizes="any">
+
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="img/icon-192.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="img/apple-touch-icon.png"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="placeholder-page">
 
-<header class="site-header scrolled" id="header">
-  <nav class="navbar container">
-    <a href="index.html" class="brand" aria-label="Ir al inicio">
-      <div class="brand-mark">PySC</div>
-      <div class="brand-text">
-        <strong>Pasión y Sentimiento</strong>
-        <span>Cultural</span>
-      </div>
-    </a>
+<body id="top">
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+  <div
+    class="scroll-progress"
+    id="scrollProgress"
+    aria-hidden="true"
+  ></div>
 
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Inicio</a>
-      <a href="nosotros.html" class="active">Nosotros</a>
-      <a href="historia.html" class="">Historia</a>
-      <a href="proyectos.html" class="">Proyectos</a>
-      <a href="galeria.html" class="">Galería</a>
-      <a href="contacto.html" class="">Contacto</a>
-    </div>
-  </nav>
-</header>
+  <header class="site-header scrolled" id="header">
+    <nav class="navbar container">
 
-<main class="under-construction">
-  <div class="under-construction-card">
-    <span class="construction-tag">Próximamente</span>
-    <h1>Nosotros</h1>
-    <p>Estamos trabajando en esta sección para compartirte muy pronto toda la información.</p>
-    <a href="index.html" class="btn btn-primary">Volver al inicio</a>
-  </div>
-</main>
-
-<footer class="site-footer">
-
-  <div class="footer-main">
-    <div class="container footer-grid">
-
-      <div class="footer-brand">
-
-        <a
-          href="index.html"
-          class="footer-logo"
-          aria-label="Ir al inicio"
+      <a href="index.html" class="brand">
+        <img
+          src="img/logo-pasion-sentimiento.png"
+          alt="Pasión y Sentimiento Cultural"
+          class="brand-logo"
         >
-          <img
-            src="img/logo-pasion-sentimiento.png"
-            alt="Logo de Pasión y Sentimiento Cultural"
-          >
 
-          <div>
-            <strong>
-              Pasión y Sentimiento Cultural
-            </strong>
+        <div class="brand-text">
+          <strong>Pasión y Sentimiento Cultural</strong>
+          <span>Grupo Folklórico</span>
+        </div>
+      </a>
 
-            <span>
-              Grupo Folklórico
-            </span>
-          </div>
-        </a>
+      <button
+        type="button"
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="navLinks"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html" class="active">Nosotros</a>
+        <a href="historia.html">Historia</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="galeria.html">Galería</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <div
+    class="menu-overlay"
+    id="menuOverlay"
+    aria-hidden="true"
+  ></div>
+
+  <main>
+
+    <section class="inner-hero inner-hero-about">
+
+      <div
+        class="inner-hero-background"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="inner-hero-overlay"
+        aria-hidden="true"
+      ></div>
+
+      <div class="container inner-hero-content">
+
+        <span class="inner-hero-kicker">
+          Conoce quiénes somos
+        </span>
+
+        <h1>Nuestra esencia</h1>
 
         <p>
-          Desde 2009 preservamos, difundimos y vivimos
-          el folklore peruano desde Catacaos, Piura.
+          Vivimos nuestras tradiciones.
+          Inspiramos nuevas generaciones.
         </p>
 
-        <div class="footer-social">
+        <nav
+          class="inner-hero-breadcrumb"
+          aria-label="Ruta de navegación"
+        >
+          <a href="index.html">Inicio</a>
+          <i class="fa-solid fa-chevron-right"></i>
+          <span>Nosotros</span>
+        </nav>
+
+      </div>
+
+    </section>
+
+    <div class="hero-ribbon" aria-hidden="true">
+      <span class="hero-ribbon-wine"></span>
+      <span class="hero-ribbon-gold"></span>
+      <span class="hero-ribbon-navy"></span>
+    </div>
+
+    <section class="about-introduction section">
+      <div class="container about-introduction-grid">
+
+        <div
+          class="about-introduction-image"
+          data-reveal="left"
+        >
+          <img
+            src="img/grupo-pysc.jpg"
+            alt="Integrantes de Pasión y Sentimiento Cultural"
+            loading="lazy"
+            decoding="async"
+          >
+
+          <div class="about-introduction-badge">
+            <strong>Desde 2009</strong>
+            <span>Catacaos · Piura</span>
+          </div>
+        </div>
+
+        <div
+          class="about-introduction-content"
+          data-reveal="right"
+          data-reveal-delay="100"
+        >
+          <span class="section-kicker">
+            Quiénes somos
+          </span>
+
+          <h2>
+            Una familia unida por
+            <span>la danza y la cultura</span>
+          </h2>
+
+          <p class="about-introduction-lead">
+            Somos una agrupación cultural nacida en Catacaos,
+            comprometida con preservar, enseñar y compartir
+            las expresiones tradicionales del Perú.
+          </p>
+
+          <p>
+            A través de la formación artística, las presentaciones,
+            los proyectos comunitarios y el trabajo colectivo,
+            fortalecemos nuestra identidad y creamos espacios
+            donde niños, jóvenes y adultos pueden encontrarse
+            con sus raíces.
+          </p>
+
+          <p>
+            Más que un grupo de danza, somos una familia cultural
+            que cree en el folklore como una herramienta de unión,
+            aprendizaje y transformación social.
+          </p>
+
+          <div class="about-introduction-quote">
+            <i class="fa-solid fa-quote-left"></i>
+
+            <p>
+              Cada paso que damos lleva consigo la memoria,
+              la identidad y el orgullo de nuestras tradiciones.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="purpose section">
+      <div class="container">
+
+        <div class="section-heading center">
+
+          <span class="section-kicker">
+            Nuestra razón de ser
+          </span>
+
+          <h2>
+            Lo que nos mueve
+          </h2>
+
+          <p>
+            Cada ensayo, cada presentación y cada proyecto nacen del compromiso
+            de mantener vivas nuestras tradiciones y compartirlas con las futuras generaciones.
+          </p>
+
+        </div>
+
+        <div class="purpose-grid">
+
+          <article class="purpose-card" data-reveal>
+
+            <div class="purpose-icon">
+              <i class="fa-solid fa-masks-theater"></i>
+            </div>
+
+            <h3>Nuestra misión</h3>
+
+            <p>
+              Promover, preservar y difundir el folklore peruano mediante la
+              formación artística, proyectos culturales y la puesta en escena de
+              nuestras expresiones culturales, fortaleciendo la identidad y el
+              orgullo por nuestras tradiciones.
+            </p>
+
+          </article>
+
+          <article
+            class="purpose-card"
+            data-reveal
+            data-reveal-delay="120"
+          >
+
+            <div class="purpose-icon">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+
+            <h3>Nuestra visión</h3>
+
+            <p>
+              Ser una agrupación cultural referente a nivel regional y nacional,
+              reconocida por su excelencia artística, compromiso social y la
+              formación de nuevas generaciones que amen y valoren el patrimonio
+              cultural del Perú.
+            </p>
+
+          </article>
+
+          <article
+            class="purpose-card"
+            data-reveal
+            data-reveal-delay="240"
+          >
+
+            <div class="purpose-icon">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <h3>Nuestro compromiso</h3>
+
+            <p>
+              Trabajar con pasión, disciplina y respeto para que cada actividad,
+              proyecto y presentación contribuya a fortalecer nuestra comunidad y
+              mantener vivas nuestras raíces culturales.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="values section" id="valores">
+      <div class="container">
+
+        <div class="values-heading" data-reveal="up">
+          <span class="section-kicker">
+            Lo que guía nuestro camino
+          </span>
+
+          <h2>
+            Nuestros valores
+          </h2>
+
+          <p>
+            Son los principios que orientan cada ensayo, presentación,
+            proyecto y experiencia compartida dentro de nuestra familia cultural.
+          </p>
+        </div>
+
+        <div class="values-grid">
+
+          <article
+            class="value-card value-card-featured"
+            data-reveal="scale"
+          >
+            <div class="value-icon">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <span class="value-number">01</span>
+
+            <h3>Pasión</h3>
+
+            <p>
+              Vivimos la danza con entrega, entusiasmo y amor por nuestras
+              tradiciones, dando lo mejor de nosotros en cada presentación.
+            </p>
+          </article>
+
+          <article
+            class="value-card"
+            data-reveal="up"
+            data-reveal-delay="70"
+          >
+            <div class="value-icon">
+              <i class="fa-solid fa-people-group"></i>
+            </div>
+
+            <span class="value-number">02</span>
+
+            <h3>Comunidad</h3>
+
+            <p>
+              Crecemos como una familia, fortaleciendo la unión, el compañerismo
+              y el respeto entre integrantes, familias y comunidad.
+            </p>
+          </article>
+
+          <article
+            class="value-card"
+            data-reveal="up"
+            data-reveal-delay="140"
+          >
+            <div class="value-icon">
+              <i class="fa-solid fa-landmark"></i>
+            </div>
+
+            <span class="value-number">03</span>
+
+            <h3>Identidad</h3>
+
+            <p>
+              Valoramos nuestras raíces y representamos con orgullo la diversidad
+              cultural del Perú y el nombre de Catacaos.
+            </p>
+          </article>
+
+          <article
+            class="value-card"
+            data-reveal="up"
+            data-reveal-delay="210"
+          >
+            <div class="value-icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <span class="value-number">04</span>
+
+            <h3>Formación</h3>
+
+            <p>
+              Compartimos conocimientos y experiencias para que nuevas
+              generaciones conozcan, valoren y continúen nuestras tradiciones.
+            </p>
+          </article>
+
+          <article
+            class="value-card"
+            data-reveal="up"
+            data-reveal-delay="280"
+          >
+            <div class="value-icon">
+              <i class="fa-solid fa-star"></i>
+            </div>
+
+            <span class="value-number">05</span>
+
+            <h3>Excelencia</h3>
+
+            <p>
+              Trabajamos con disciplina y responsabilidad para mejorar
+              constantemente dentro y fuera del escenario.
+            </p>
+          </article>
+
+        </div>
+
+        <div
+          class="values-message"
+          data-reveal="up"
+          data-reveal-delay="120"
+        >
+          <i class="fa-solid fa-hands-holding-circle"></i>
+
+          <p>
+            Nuestros valores no solo se expresan en el escenario:
+            se viven en cada ensayo, viaje, proyecto y momento compartido.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="cultural-work section" id="labor-cultural">
+      <div class="container cultural-work-grid">
+
+        <div
+          class="cultural-work-image"
+          data-reveal="left"
+        >
+          <img
+            src="img/labor-cultural.jpg"
+            alt="Integrantes de Pasión y Sentimiento Cultural durante una actividad artística"
+            loading="lazy"
+            decoding="async"
+          >
+
+          <div class="cultural-work-badge">
+            <i class="fa-solid fa-heart"></i>
+
+            <div>
+              <strong>Cultura en acción</strong>
+              <span>Arte, formación y comunidad</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="cultural-work-content"
+          data-reveal="right"
+          data-reveal-delay="100"
+        >
+          <span class="section-kicker">
+            Lo que hacemos
+          </span>
+
+          <h2>
+            Nuestra labor
+            <span>cultural</span>
+          </h2>
+
+          <p class="cultural-work-lead">
+            Trabajamos desde la danza, la formación y la gestión cultural
+            para mantener vivas nuestras tradiciones y compartirlas con
+            nuevas generaciones.
+          </p>
+
+          <div class="cultural-work-list">
+
+            <article class="cultural-work-item">
+              <div class="cultural-work-icon">
+                <i class="fa-solid fa-person-chalkboard"></i>
+              </div>
+
+              <div>
+                <h3>Formación y ensayos</h3>
+
+                <p>
+                  Desarrollamos ensayos y procesos de formación artística
+                  con niños, jóvenes y adultos, fortaleciendo la disciplina,
+                  la expresión corporal y el conocimiento de nuestras danzas.
+                </p>
+              </div>
+            </article>
+
+            <article class="cultural-work-item">
+              <div class="cultural-work-icon">
+                <i class="fa-solid fa-masks-theater"></i>
+              </div>
+
+              <div>
+                <h3>Presentaciones culturales</h3>
+
+                <p>
+                  Participamos en celebraciones, actividades institucionales,
+                  encuentros artísticos y eventos donde compartimos la riqueza
+                  del folklore peruano.
+                </p>
+              </div>
+            </article>
+
+            <article class="cultural-work-item">
+              <div class="cultural-work-icon">
+                <i class="fa-solid fa-trophy"></i>
+              </div>
+
+              <div>
+                <h3>Festivales y concursos</h3>
+
+                <p>
+                  Representamos a Catacaos en festivales y concursos dentro
+                  y fuera del país, y también organizamos espacios propios
+                  para promover el intercambio y la valoración cultural.
+                </p>
+              </div>
+            </article>
+
+            <article class="cultural-work-item">
+              <div class="cultural-work-icon">
+                <i class="fa-solid fa-gift"></i>
+              </div>
+
+              <div>
+                <h3>Acciones comunitarias</h3>
+
+                <p>
+                  Realizamos actividades solidarias como nuestras tradicionales
+                  chocolatadas navideñas, creando momentos de encuentro,
+                  alegría y cercanía con la comunidad.
+                </p>
+              </div>
+            </article>
+
+          </div>
 
           <a
-            href="https://www.facebook.com/profile.php?id=100063490963350"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook"
+            href="proyectos.html"
+            class="text-link cultural-work-link"
           >
-            <i class="fa-brands fa-facebook-f"></i>
+            Conoce nuestros proyectos →
           </a>
+        </div>
 
-          <a
-            href="https://www.instagram.com/pasionysentimientocultural/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <i class="fa-brands fa-instagram"></i>
-          </a>
+      </div>
+    </section>
 
-          <a
-            href="https://www.tiktok.com/@pysc_17"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="TikTok"
-          >
-            <i class="fa-brands fa-tiktok"></i>
-          </a>
+    <section class="team section" id="equipo">
 
-          <a
-            href="https://www.youtube.com/@grupofolkloricopasionysent6944/videos"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="YouTube"
+      <div class="container">
+
+        <div class="section-heading center">
+
+          <span class="section-kicker">
+            Nuestro equipo
+          </span>
+
+          <h2>
+            Personas que hacen posible
+            nuestra labor cultural
+          </h2>
+
+          <p>
+            Cada actividad, presentación y proyecto es posible gracias al
+            compromiso de un equipo que trabaja con dedicación para mantener
+            vivas nuestras tradiciones.
+          </p>
+
+        </div>
+
+        <div class="team-director">
+
+          <img
+            src="img/director.jpg"
+            alt="Edwin Omar Yovera"
           >
-            <i class="fa-brands fa-youtube"></i>
-          </a>
+
+          <h3>
+            Edwin Omar Yovera
+          </h3>
+
+          <span>
+            Director General y Profesor Principal
+          </span>
+
+          <p>
+            Fundador de Pasión y Sentimiento Cultural y responsable de la
+            dirección artística, la formación de los integrantes y el
+            desarrollo de los principales proyectos culturales de la institución.
+          </p>
+
+        </div>
+
+        <div class="team-areas">
+
+          <article class="team-area">
+
+            <i class="fa-solid fa-compass"></i>
+
+            <h4>
+              Dirección
+            </h4>
+
+            <p>
+              Planificación institucional,
+              coordinación general y representación
+              cultural.
+            </p>
+
+          </article>
+
+          <article class="team-area">
+
+            <i class="fa-solid fa-coins"></i>
+
+            <h4>
+              Finanzas
+            </h4>
+
+            <p>
+              Administración de recursos,
+              presupuestos y organización económica.
+            </p>
+
+          </article>
+
+          <article class="team-area">
+
+            <i class="fa-solid fa-music"></i>
+
+            <h4>
+              Escenario
+            </h4>
+
+            <p>
+              Producción, vestuario,
+              utilería, sonido y logística
+              durante cada presentación.
+            </p>
+
+          </article>
+
+          <article class="team-area">
+
+            <i class="fa-solid fa-camera-retro"></i>
+
+            <h4>
+              Difusión
+            </h4>
+
+            <p>
+              Comunicación, fotografía,
+              video, redes sociales y
+              promoción institucional.
+            </p>
+
+          </article>
 
         </div>
 
       </div>
 
-      <div class="footer-column">
+    </section>
 
-        <h3>Enlaces</h3>
+  </main>
 
-        <nav class="footer-links">
-          <a href="index.html">Inicio</a>
-          <a href="nosotros.html">Nosotros</a>
-          <a href="historia.html">Historia</a>
-          <a href="proyectos.html">Proyectos</a>
-          <a href="galeria.html">Galería</a>
-          <a href="contacto.html">Contacto</a>
-        </nav>
+  <!-- Copia aquí el mismo footer del index -->
 
-      </div>
+  <button
+    type="button"
+    class="back-to-top"
+    id="backToTop"
+    aria-label="Volver al inicio de la página"
+  >
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
-      <div class="footer-column">
-
-        <h3>Explora</h3>
-
-        <nav class="footer-links">
-          <a href="index.html#agenda">Agenda PySC</a>
-          <a href="index.html#esencia">Nuestra esencia</a>
-          <a href="index.html#reconocimientos">Reconocimientos</a>
-          <a href="index.html#trayectoria-internacional">
-            Trayectoria internacional
-          </a>
-          <a href="index.html#ubicacion">Nuestra ubicación</a>
-        </nav>
-
-      </div>
-
-      <div class="footer-column footer-contact">
-
-        <h3>Contacto</h3>
-
-        <ul>
-
-          <li>
-            <i class="fa-solid fa-location-dot"></i>
-
-            <span>
-              Catacaos, Piura<br>
-              Perú
-            </span>
-          </li>
-
-          <li>
-            <i class="fa-solid fa-envelope"></i>
-
-            <a href="mailto:TU_CORREO@gmail.com">
-              omarpisc@gmail.com
-            </a>
-          </li>
-
-          <li>
-            <i class="fa-brands fa-whatsapp"></i>
-
-            <a
-              href="https://wa.me/51TU_NUMERO"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              +51 983 627 392
-            </a>
-          </li>
-
-        </ul>
-
-        <a
-          href="contacto.html"
-          class="footer-contact-button"
-        >
-          Escríbenos
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-
-      </div>
-
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <div class="container footer-bottom-content">
-
-      <p>
-        © <span id="currentYear"></span>
-        Grupo Folklórico Pasión y Sentimiento Cultural.
-        Todos los derechos reservados.
-      </p>
-
-      <a href="index.html" class="footer-back-top">
-        Volver al inicio
-        <i class="fa-solid fa-arrow-up"></i>
-      </a>
-
-    </div>
-  </div>
-
-</footer>
-
-<script src="js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
