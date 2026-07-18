@@ -3,60 +3,1345 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Historia | Pasión y Sentimiento Cultural</title>
+
+  <title>Nuestra historia | Pasión y Sentimiento Cultural</title>
+
+  <meta
+    name="description"
+    content="Conoce la historia de Pasión y Sentimiento Cultural, agrupación folklórica nacida en Catacaos en 2009."
+  >
+
+  <link rel="icon" href="img/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="placeholder-page">
 
-<header class="site-header scrolled" id="header">
-  <nav class="navbar container">
-    <a href="index.html" class="brand" aria-label="Ir al inicio">
-      <div class="brand-mark">PySC</div>
-      <div class="brand-text">
-        <strong>Pasión y Sentimiento</strong>
-        <span>Cultural</span>
+<body id="top">
+
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="site-header scrolled" id="header">
+    <nav class="navbar container">
+
+      <a href="index.html" class="brand">
+        <img
+          src="img/logo-pasion-sentimiento.png"
+          alt="Pasión y Sentimiento Cultural"
+          class="brand-logo"
+        >
+
+        <div class="brand-text">
+          <strong>Pasión y Sentimiento Cultural</strong>
+          <span>Grupo Folklórico</span>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="navLinks"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="historia.html" class="active">Historia</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="galeria.html">Galería</a>
+        <a href="contacto.html">Contacto</a>
       </div>
-    </a>
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    </nav>
+  </header>
 
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Inicio</a>
-      <a href="nosotros.html" class="">Nosotros</a>
-      <a href="historia.html" class="active">Historia</a>
-      <a href="proyectos.html" class="">Proyectos</a>
-      <a href="galeria.html" class="">Galería</a>
-      <a href="contacto.html" class="">Contacto</a>
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+
+  <main>
+
+    <section class="history-hero">
+      <div class="history-hero-background" aria-hidden="true"></div>
+      <div class="history-hero-overlay" aria-hidden="true"></div>
+      <div class="history-hero-pattern" aria-hidden="true"></div>
+
+      <div class="container history-hero-content">
+        <span class="history-hero-kicker hero-reveal hero-reveal-1">
+          Más de quince años de historia
+        </span>
+
+        <h1 class="hero-reveal hero-reveal-2">
+          Nuestra historia
+        </h1>
+
+        <p class="hero-reveal hero-reveal-3">
+          Una historia escrita con pasión, amistad y folklore desde 2009.
+        </p>
+
+        <nav
+          class="inner-hero-breadcrumb hero-reveal hero-reveal-4"
+          aria-label="Ruta de navegación"
+        >
+          <a href="index.html">Inicio</a>
+          <i class="fa-solid fa-chevron-right"></i>
+          <span>Historia</span>
+        </nav>
+
+        <a
+          href="#inicio-historia"
+          class="history-hero-scroll hero-reveal hero-reveal-5"
+          aria-label="Descubrir nuestra historia"
+        >
+          <span>Descubre nuestra historia</span>
+          <i class="fa-solid fa-arrow-down"></i>
+        </a>
+      </div>
+    </section>
+
+    <div class="hero-ribbon" aria-hidden="true">
+      <span class="hero-ribbon-wine"></span>
+      <span class="hero-ribbon-gold"></span>
+      <span class="hero-ribbon-navy"></span>
     </div>
-  </nav>
-</header>
 
-<main class="under-construction">
-  <div class="under-construction-card">
-    <span class="construction-tag">Próximamente</span>
-    <h1>Historia</h1>
-    <p>Estamos trabajando en esta sección para compartirte muy pronto toda la información.</p>
-    <a href="index.html" class="btn btn-primary">Volver al inicio</a>
-  </div>
-</main>
+    <section class="history-opening section" id="inicio-historia">
+      <div class="history-opening-year" aria-hidden="true">2009</div>
 
-<footer class="site-footer">
-  <div class="container footer-content">
-    <div>
-      <strong>Grupo Folklórico Pasión y Sentimiento Cultural</strong>
-      <p>Catacaos, Piura · Perú</p>
+      <div class="container history-opening-content" data-reveal="up">
+        <span class="section-kicker">Nuestra historia</span>
+
+        <h2>
+          Todo comenzó con un grupo de jóvenes que solo quería
+          <span>bailar y compartir su amor por el folklore.</span>
+        </h2>
+
+        <p>
+          Antes de los viajes, los concursos y los grandes escenarios, existió
+          una conversación sencilla, una pregunta y el deseo de construir algo
+          diferente. Así comenzó una historia que, con el paso de los años,
+          se convertiría en una familia cultural.
+        </p>
+
+        <div class="history-opening-date">
+          <div>
+            <strong>17</strong>
+            <span>Octubre</span>
+          </div>
+
+          <span class="history-opening-separator"></span>
+
+          <div>
+            <strong>2009</strong>
+            <span>Catacaos · Piura</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-chapter-guide" aria-label="Capítulos de nuestra historia">
+      <div class="container">
+        <div class="history-chapter-guide-track">
+          <a href="#origen">
+            <span>01</span>
+            <strong>El origen</strong>
+          </a>
+
+          <a href="#primeros-pasos">
+            <span>02</span>
+            <strong>Primeros pasos</strong>
+          </a>
+
+          <a href="#nuevos-horizontes">
+            <span>03</span>
+            <strong>Nuevos horizontes</strong>
+          </a>
+
+          <a href="#los-frutos">
+            <span>04</span>
+            <strong>Los frutos</strong>
+          </a>
+
+          <a href="#sin-fronteras">
+            <span>05</span>
+            <strong>Sin fronteras</strong>
+          </a>
+
+          <a href="#comunidad">
+            <span>06</span>
+            <strong>Comunidad</strong>
+          </a>
+
+          <a href="#legado">
+            <span>07</span>
+            <strong>El legado continúa</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-chapter history-chapter-one section" id="origen">
+      <div class="container history-chapter-grid">
+
+        <div class="history-chapter-content" data-reveal="left">
+          <span class="history-chapter-number">
+            Primera etapa · 2009
+          </span>
+
+          <h2>Un sueño que comenzó con 17 años</h2>
+
+          <p class="history-chapter-phrase">
+            “Hay historias que nacen de grandes planes. La nuestra comenzó con una pregunta.”
+          </p>
+
+          <p>
+            Desde muy joven, <strong>Edwin Omar Yovera Ruiz</strong> encontró en la
+            danza una forma de expresar el amor por su cultura. Después de varios
+            años como bailarín, comenzó a imaginar una agrupación propia: un espacio
+            donde el folklore, la amistad y la formación de los jóvenes caminaran juntos.
+          </p>
+
+          <p>
+            La idea fue compartida con Edison Yarleque y con otros jóvenes cercanos
+            a la parroquia de Catacaos. Poco a poco, una conversación entre amigos
+            empezó a convertirse en un proyecto colectivo.
+          </p>
+
+          <p>
+            El 17 de octubre de 2009, cerca de quince jóvenes se reunieron para
+            darle forma a aquel sueño. Todavía no tenían vestuarios, local ni
+            recursos, pero ya compartían algo esencial: las ganas de comenzar.
+          </p>
+        </div>
+
+        <aside class="history-memory-card" data-reveal="right" data-reveal-delay="120">
+          <span class="history-memory-label">El primer encuentro</span>
+
+          <div class="history-memory-date">
+            <strong>17</strong>
+            <div>
+              <span>Octubre</span>
+              <b>2009</b>
+            </div>
+          </div>
+
+          <div class="history-memory-line"></div>
+
+          <ul>
+            <li>
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Catacaos</span>
+            </li>
+
+            <li>
+              <i class="fa-solid fa-people-group"></i>
+              <span>Cerca de 15 jóvenes</span>
+            </li>
+
+            <li>
+              <i class="fa-solid fa-seedling"></i>
+              <span>El nacimiento de una nueva familia cultural</span>
+            </li>
+          </ul>
+        </aside>
+
+      </div>
+
+      <div class="container history-origin-question" data-reveal="up">
+        <i class="fa-solid fa-quote-left"></i>
+
+        <p>¿Qué significa la danza para ustedes?</p>
+
+        <span>
+          De aquella pregunta nacieron tres palabras que terminarían
+          convirtiéndose en el nombre de una familia.
+        </span>
+
+        <div class="history-origin-words">
+          <strong>Pasión</strong>
+          <strong>Sentimiento</strong>
+          <strong>Cultura</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-early-years section" id="primeros-pasos">
+      <div class="container">
+
+        <div class="history-early-years-header" data-reveal="up">
+          <span class="history-chapter-number">
+            Segunda etapa · 2009 - 2014
+          </span>
+
+          <h2>Cuando solo teníamos ganas de bailar</h2>
+
+          <p class="history-chapter-phrase">
+            “No teníamos un gran escenario. Nuestro escenario era cualquier lugar
+            donde pudiéramos ensayar.”
+          </p>
+
+          <p>
+            Los primeros años estuvieron marcados por el entusiasmo. Los ensayos
+            se realizaban en los exteriores de la Comunidad Campesina San Juan
+            Bautista, donde el polvo, las noches y las ganas de aprender fueron
+            los primeros compañeros de la agrupación.
+          </p>
+
+          <p>
+            Mientras unos aprendían sus primeros pasos, otros comenzaban a enseñar.
+            Poco a poco se fue formando una familia donde cada integrante encontraba
+            un espacio para crecer, compartir y disfrutar del folklore.
+          </p>
+        </div>
+
+        <div class="history-early-cards">
+
+          <article
+            class="history-early-card"
+            data-reveal="up"
+            data-reveal-delay="0"
+          >
+            <div class="history-early-card-icon">
+              <i class="fa-solid fa-person-running"></i>
+            </div>
+
+            <span>01</span>
+
+            <h3>Los primeros ensayos</h3>
+
+            <p>
+              Cada ensayo comenzaba con calentamiento y estiramientos. Después
+              venía la enseñanza de los pasos, mientras los integrantes con más
+              experiencia ayudaban a quienes recién llegaban.
+            </p>
+          </article>
+
+          <article
+            class="history-early-card"
+            data-reveal="up"
+            data-reveal-delay="100"
+          >
+            <div class="history-early-card-icon">
+              <i class="fa-solid fa-shirt"></i>
+            </div>
+
+            <span>02</span>
+
+            <h3>Los primeros vestuarios</h3>
+
+            <p>
+              Al principio solo algunas prendas eran propias y el resto debía
+              alquilarse. Cada nuevo vestuario fue posible gracias a rifas,
+              polladas, bingos y al esfuerzo de integrantes y familiares.
+            </p>
+          </article>
+
+          <article
+            class="history-early-card"
+            data-reveal="up"
+            data-reveal-delay="200"
+          >
+            <div class="history-early-card-icon">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span>03</span>
+
+            <h3>Los primeros escenarios</h3>
+
+            <p>
+              Las presentaciones y los concursos locales permitieron ganar
+              experiencia, enfrentar los primeros nervios y demostrar que aquel
+              pequeño grupo comenzaba a encontrar su propio camino.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="history-memories" data-reveal="up">
+
+          <div class="history-memories-heading">
+            <span class="section-kicker">Entre ensayos y presentaciones</span>
+            <h3>Historias que todavía nos hacen sonreír</h3>
+          </div>
+
+          <div class="history-memories-grid">
+
+            <article class="history-memory-story">
+              <div class="history-memory-story-icon">
+                <i class="fa-solid fa-face-laugh-beam"></i>
+              </div>
+
+              <div>
+                <span>El más divertido</span>
+                <h4>Kelvin y las risas del ensayo</h4>
+
+                <p>
+                  Bastaban unos minutos de descanso para que Kelvin encontrara la
+                  manera de hacer reír a todos. Sus ocurrencias ayudaban a aliviar
+                  el cansancio antes de volver a repetir los pasos.
+                </p>
+
+                <blockquote>
+                  —¡Ya pues, Kelvin! Concéntrate.
+                </blockquote>
+              </div>
+            </article>
+
+            <article class="history-memory-story">
+              <div class="history-memory-story-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+
+              <div>
+                <span>Antes de cada presentación</span>
+                <h4>¿Qué olvidó Manuel esta vez?</h4>
+
+                <p>
+                  Manuel podía repasar una coreografía muchas veces, pero antes
+                  de salir al escenario casi siempre faltaba alguna prenda o
+                  accesorio. Entonces comenzaba una búsqueda entre mochilas,
+                  vestuarios y risas.
+                </p>
+
+                <blockquote>
+                  —Manuel, ¿ahora qué te falta?
+                </blockquote>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <div class="history-early-closing" data-reveal="up">
+          <i class="fa-solid fa-quote-left"></i>
+
+          <p>
+            Los sueños no se construyen solamente sobre un escenario.
+            Se construyen ensayo tras ensayo.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="history-growth section" id="nuevos-horizontes">
+      <div class="container history-growth-grid">
+
+        <div class="history-growth-image" data-reveal="left">
+          <img
+            src="img/historia-mama-gusti-2015.jpg"
+            alt="Pasión y Sentimiento Cultural durante su participación en Mamá Gusti 2015"
+            loading="lazy"
+            decoding="async"
+          >
+
+          <div class="history-growth-year">
+            <strong>2015</strong>
+            <span>El año que cambió nuestra manera de bailar</span>
+          </div>
+        </div>
+
+        <div class="history-growth-content" data-reveal="right">
+          <span class="history-chapter-number">
+            Tercera etapa · 2015
+          </span>
+
+          <h2>Cuando entendimos que podíamos llegar más lejos</h2>
+
+          <p class="history-chapter-phrase">
+            “A veces no se necesita ganar para descubrir que algo está a punto de cambiar.”
+          </p>
+
+          <p>
+            En 2015, Pasión y Sentimiento Cultural participó en el concurso
+            Mamá Gusti con la danza Kajchas de Caracara. La preparación exigió
+            más dedicación, investigación y cuidado en cada detalle.
+          </p>
+
+          <p>
+            Muchos de los accesorios fueron elaborados por los propios integrantes.
+            Cada elemento del vestuario y cada movimiento comenzaron a entenderse
+            como parte de una propuesta artística completa.
+          </p>
+
+          <p>
+            La agrupación obtuvo el séptimo lugar. Sin embargo, aquel resultado
+            no fue visto como una derrota. Fue el momento en que comprendieron
+            que podían crecer, mejorar y competir a un nivel mucho más alto.
+          </p>
+
+          <div class="history-growth-highlight">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+
+            <p>
+              Aquel séptimo lugar no cerró una etapa.
+              <strong>Abrió una nueva forma de mirar el futuro.</strong>
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="container history-growth-lessons" data-reveal="up">
+
+        <article>
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <h3>Investigar</h3>
+          <p>
+            Conocer mejor el origen, el significado y la identidad de cada danza.
+          </p>
+        </article>
+
+        <article>
+          <i class="fa-solid fa-hammer"></i>
+          <h3>Crear</h3>
+          <p>
+            Elaborar accesorios y cuidar cada detalle de la propuesta escénica.
+          </p>
+        </article>
+
+        <article>
+          <i class="fa-solid fa-people-group"></i>
+          <h3>Trabajar juntos</h3>
+          <p>
+            Comprender que cada logro dependía del compromiso de todo el grupo.
+          </p>
+        </article>
+
+        <article>
+          <i class="fa-solid fa-medal"></i>
+          <h3>Superarse</h3>
+          <p>
+            Convertir un resultado inesperado en motivación para seguir creciendo.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="history-achievements section" id="los-frutos">
+      <div class="container">
+
+        <div class="history-achievements-header" data-reveal="up">
+          <span class="history-chapter-number">
+            Cuarta etapa · 2016 - 2017
+          </span>
+
+          <h2>Cuando el esfuerzo comenzó a dar frutos</h2>
+
+          <p class="history-chapter-phrase">
+            “Después de tantos ensayos, viajes y sacrificios, comenzaron a llegar
+            los resultados que alguna vez parecieron lejanos.”
+          </p>
+
+          <p>
+            La experiencia adquirida durante los primeros años empezó a reflejarse
+            sobre el escenario. Pasión y Sentimiento Cultural ya no era solamente
+            una agrupación joven con ganas de bailar: se había convertido en un
+            equipo más preparado, disciplinado y consciente de sus capacidades.
+          </p>
+        </div>
+
+        <div class="history-achievements-timeline">
+
+          <article
+            class="history-achievement-item"
+            data-reveal="left"
+          >
+            <div class="history-achievement-year">
+              <strong>2016</strong>
+              <span>Los primeros podios</span>
+            </div>
+
+            <div class="history-achievement-content">
+              <div class="history-achievement-icon">
+                <i class="fa-solid fa-medal"></i>
+              </div>
+
+              <div>
+                <h3>La recompensa al trabajo constante</h3>
+
+                <p>
+                  Durante 2016, la agrupación comenzó a ocupar los primeros lugares
+                  en diferentes competencias. Cada reconocimiento confirmó que el
+                  esfuerzo realizado durante años estaba comenzando a dar frutos.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="history-achievement-item history-achievement-item-reverse"
+            data-reveal="right"
+          >
+            <div class="history-achievement-year">
+              <strong>2017</strong>
+              <span>El año de los campeonatos</span>
+            </div>
+
+            <div class="history-achievement-content">
+              <div class="history-achievement-icon">
+                <i class="fa-solid fa-trophy"></i>
+              </div>
+
+              <div>
+                <h3>El sueño de ser campeones</h3>
+
+                <p>
+                  En 2017 llegaron algunos de los triunfos más importantes de
+                  aquellos primeros años. Los campeonatos representaron mucho más
+                  que un trofeo: fueron la confirmación de que la agrupación podía
+                  competir y destacar entre grandes elencos.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="history-achievement-item"
+            data-reveal="left"
+          >
+            <div class="history-achievement-year">
+              <strong>2017</strong>
+              <span>Una etapa cumplida</span>
+            </div>
+
+            <div class="history-achievement-content">
+              <div class="history-achievement-icon">
+                <i class="fa-solid fa-person-walking-arrow-right"></i>
+              </div>
+
+              <div>
+                <h3>La despedida de uno de los primeros soñadores</h3>
+
+                <p>
+                  Edison Yarleque, una de las primeras personas que creyó en el
+                  proyecto, decidió retirarse después de ver a Pasión y Sentimiento
+                  Cultural convertirse en una agrupación campeona.
+                </p>
+
+                <blockquote>
+                  Había acompañado el nacimiento del sueño y también pudo verlo
+                  alcanzar uno de sus primeros grandes objetivos.
+                </blockquote>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="history-achievement-item history-achievement-item-reverse"
+            data-reveal="right"
+          >
+            <div class="history-achievement-year">
+              <strong>2017</strong>
+              <span>Después de las lluvias</span>
+            </div>
+
+            <div class="history-achievement-content">
+              <div class="history-achievement-icon">
+                <i class="fa-solid fa-hands-holding-circle"></i>
+              </div>
+
+              <div>
+                <h3>Una iniciativa para volver a encontrarnos</h3>
+
+                <p>
+                  Tras las lluvias y las inundaciones que afectaron a Catacaos,
+                  surgió una actividad cultural pensada para reunir nuevamente a
+                  la comunidad a través de la danza.
+                </p>
+
+                <p>
+                  Aquella iniciativa se convirtió en el inicio de
+                  <strong>Catacaos, Color y Tradición</strong>, un proyecto que
+                  después crecería hasta transformarse en uno de los concursos
+                  más representativos organizados por la agrupación.
+                </p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="history-achievements-summary" data-reveal="up">
+          <div class="history-achievements-summary-icon">
+            <i class="fa-solid fa-star"></i>
+          </div>
+
+          <div>
+            <span>Un momento decisivo</span>
+
+            <p>
+              Aquellos años demostraron que los logros más importantes no nacen
+              únicamente de una victoria, sino de la capacidad de convertir cada
+              experiencia en una oportunidad para crecer.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="history-international section" id="sin-fronteras">
+      <div class="history-international-background" aria-hidden="true"></div>
+      <div class="history-international-overlay" aria-hidden="true"></div>
+
+      <div class="container history-international-content">
+
+        <div class="history-international-header" data-reveal="up">
+          <span class="history-chapter-number">
+            Quinta etapa · 2017 - 2025
+          </span>
+
+          <h2>Cuando nuestro folklore cruzó fronteras</h2>
+
+          <p class="history-chapter-phrase">
+            “Cada viaje llevó nuestras danzas más lejos, pero también nos enseñó
+            a valorar todavía más el lugar del que veníamos.”
+          </p>
+
+          <p>
+            Con el paso de los años, Pasión y Sentimiento Cultural comenzó a
+            representar a Catacaos y al Perú fuera del país. Los viajes
+            internacionales fueron una oportunidad para compartir nuestras
+            tradiciones, conocer otras culturas y fortalecer los lazos entre
+            los integrantes.
+          </p>
+        </div>
+
+        <div class="history-international-route" data-reveal="up">
+          <div class="history-route-point history-route-point-peru">
+            <span class="history-route-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </span>
+
+            <div>
+              <strong>Catacaos</strong>
+              <span>El punto de partida</span>
+            </div>
+          </div>
+
+          <div class="history-route-line">
+            <span></span>
+            <i class="fa-solid fa-plane"></i>
+            <span></span>
+          </div>
+
+          <div class="history-route-point">
+            <span class="history-route-icon">
+              <i class="fa-solid fa-earth-americas"></i>
+            </span>
+
+            <div>
+              <strong>Más allá de nuestras fronteras</strong>
+              <span>Ecuador y Bolivia</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="history-international-cards">
+
+          <article
+            class="history-international-card"
+            data-reveal="up"
+            data-reveal-delay="0"
+          >
+            <div class="history-international-card-year">2017</div>
+
+            <div class="history-international-card-icon">
+              <i class="fa-solid fa-flag"></i>
+            </div>
+
+            <span class="history-international-country">Ecuador</span>
+
+            <h3>La primera experiencia internacional</h3>
+
+            <p>
+              La agrupación cruzó por primera vez las fronteras del Perú para
+              participar en un encuentro cultural en Ecuador. Para muchos
+              integrantes fue también su primer viaje fuera del país.
+            </p>
+          </article>
+
+          <article
+            class="history-international-card"
+            data-reveal="up"
+            data-reveal-delay="100"
+          >
+            <div class="history-international-card-year">2018</div>
+
+            <div class="history-international-card-icon">
+              <i class="fa-solid fa-people-arrows-left-right"></i>
+            </div>
+
+            <span class="history-international-country">Ecuador</span>
+
+            <h3>Volver para seguir compartiendo</h3>
+
+            <p>
+              Un año después, Pasión y Sentimiento Cultural regresó a Ecuador.
+              La nueva experiencia permitió reencontrarse con agrupaciones amigas
+              y seguir difundiendo las danzas y costumbres del Perú.
+            </p>
+          </article>
+
+          <article
+            class="history-international-card"
+            data-reveal="up"
+            data-reveal-delay="200"
+          >
+            <div class="history-international-card-year">2019</div>
+
+            <div class="history-international-card-icon">
+              <i class="fa-solid fa-music"></i>
+            </div>
+
+            <span class="history-international-country">Ecuador</span>
+
+            <h3>Una tradición que seguía creciendo</h3>
+
+            <p>
+              La tercera participación internacional confirmó que aquellos viajes
+              ya formaban parte del crecimiento artístico y humano de la
+              agrupación.
+            </p>
+          </article>
+
+          <article
+            class="history-international-card history-international-card-featured"
+            data-reveal="up"
+            data-reveal-delay="300"
+          >
+            <div class="history-international-card-year">2025</div>
+
+            <div class="history-international-card-icon">
+              <i class="fa-solid fa-mountain-sun"></i>
+            </div>
+
+            <span class="history-international-country">Bolivia</span>
+
+            <h3>Un nuevo destino y una gran experiencia</h3>
+
+            <p>
+              En 2025, la agrupación llegó hasta Bolivia para representar
+              nuevamente a Catacaos y al Perú. El viaje estuvo lleno de
+              aprendizajes, encuentros y una historia ocurrida durante el regreso
+              que todavía se recuerda con cierta preocupación... y muchas risas.
+            </p>
+
+            <button
+              type="button"
+              class="history-international-secret"
+              aria-label="Mostrar una pequeña pista de la anécdota de Bolivia"
+            >
+              <i class="fa-solid fa-lock"></i>
+              <span>Hay detalles que todavía es mejor no contar</span>
+            </button>
+          </article>
+
+        </div>
+
+        <div class="history-international-quote" data-reveal="up">
+          <i class="fa-solid fa-quote-left"></i>
+
+          <p>
+            Viajamos para compartir nuestras danzas, pero en cada regreso
+            comprendimos que también llevábamos con nosotros el nombre,
+            la memoria y la identidad de Catacaos.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="history-community section" id="comunidad">
+      <div class="container">
+
+        <div class="history-community-header" data-reveal="up">
+          <span class="history-chapter-number">
+            Sexta etapa · 2010 - actualidad
+          </span>
+
+          <h2>Más que una agrupación</h2>
+
+          <p class="history-chapter-phrase">
+            “Con el tiempo entendimos que enseñar una danza también podía
+            significar acompañar, formar y abrir nuevas oportunidades.”
+          </p>
+
+          <p>
+            Pasión y Sentimiento Cultural no creció únicamente sobre los escenarios.
+            También lo hizo en los talleres, en el trabajo comunitario y en cada
+            espacio donde un niño, un joven o una familia encontró una manera de
+            acercarse a la cultura.
+          </p>
+        </div>
+
+        <div class="history-community-showcase">
+
+          <article
+            class="history-community-card history-community-card-left"
+            data-reveal="left"
+          >
+            <div class="history-community-icon">
+              <i class="fa-solid fa-children"></i>
+            </div>
+
+            <span>Formación cultural</span>
+            <h3>Talleres en Simbilá</h3>
+
+            <p>
+              Entre 2010 y 2013, la agrupación desarrolló actividades formativas
+              en Simbilá, acercando la danza y el folklore a nuevos niños y jóvenes.
+            </p>
+          </article>
+
+          <div class="history-community-image" data-reveal="up">
+            <img
+              src="img/historia-comunidad.jpg"
+              alt="Niños y jóvenes participando en las actividades de Pasión y Sentimiento Cultural"
+              loading="lazy"
+              decoding="async"
+            >
+
+            <div class="history-community-image-content">
+              <span>La cultura se comparte</span>
+
+              <strong>
+                Cada nuevo integrante representó una nueva oportunidad para que
+                nuestras tradiciones continuaran vivas.
+              </strong>
+            </div>
+          </div>
+
+          <article
+            class="history-community-card history-community-card-right"
+            data-reveal="right"
+          >
+            <div class="history-community-icon">
+              <i class="fa-solid fa-house-user"></i>
+            </div>
+
+            <span>Nuevos espacios</span>
+            <h3>Pedregal Grande</h3>
+
+            <p>
+              Años después, el trabajo continuó en Pedregal Grande, donde nuevas
+              generaciones comenzaron a descubrir la danza como una forma de
+              expresión, identidad y encuentro.
+            </p>
+          </article>
+
+          <article
+            class="history-community-card history-community-card-bottom-left"
+            data-reveal="left"
+          >
+            <div class="history-community-icon">
+              <i class="fa-solid fa-hands-holding-child"></i>
+            </div>
+
+            <span>Una red de apoyo</span>
+            <h3>Familias y voluntarios</h3>
+
+            <p>
+              Padres, madres, amigos y colaboradores acompañaron ensayos,
+              actividades, viajes y presentaciones. Muchos logros también llevan
+              el esfuerzo de quienes estuvieron detrás del escenario.
+            </p>
+          </article>
+
+          <article
+            class="history-community-card history-community-card-bottom-right"
+            data-reveal="right"
+          >
+            <div class="history-community-icon">
+              <i class="fa-solid fa-landmark"></i>
+            </div>
+
+            <span>Reconocimiento</span>
+            <h3>Punto de Cultura</h3>
+
+            <p>
+              En 2021, Pasión y Sentimiento Cultural fue reconocida como Punto de
+              Cultura por el Ministerio de Cultura, fortaleciendo su compromiso
+              con la comunidad y la preservación del patrimonio cultural.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="history-community-recognition" data-reveal="up">
+          <div class="history-community-recognition-icon">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+
+          <div>
+            <span>2025 · Un nuevo paso institucional</span>
+
+            <h3>Integración a AFLA</h3>
+
+            <p>
+              La incorporación a la Asociación de Folkloristas Latinoamericanos
+              representó una nueva oportunidad para fortalecer vínculos,
+              intercambiar experiencias y continuar difundiendo el folklore
+              peruano dentro y fuera del país.
+            </p>
+          </div>
+        </div>
+
+        <div class="history-community-values" data-reveal="up">
+
+          <article>
+            <strong>Formar</strong>
+            <p>
+              Acompañar el crecimiento artístico y humano de niños y jóvenes.
+            </p>
+          </article>
+
+          <article>
+            <strong>Compartir</strong>
+            <p>
+              Llevar la danza y el folklore a diferentes comunidades.
+            </p>
+          </article>
+
+          <article>
+            <strong>Preservar</strong>
+            <p>
+              Mantener vivas las tradiciones y transmitirlas a nuevas generaciones.
+            </p>
+          </article>
+
+          <article>
+            <strong>Unir</strong>
+            <p>
+              Crear vínculos entre integrantes, familias y comunidades.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="history-community-closing" data-reveal="up">
+          <i class="fa-solid fa-quote-left"></i>
+
+          <p>
+            La danza fue el punto de encuentro. La comunidad terminó
+            convirtiéndose en nuestra verdadera obra.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="history-legacy section" id="legado">
+      <div class="container">
+
+        <div class="history-legacy-header" data-reveal="up">
+          <span class="history-chapter-number">
+            Séptima etapa · 2014 - actualidad
+          </span>
+
+          <h2>El legado continúa</h2>
+
+          <p class="history-chapter-phrase">
+            “Algunos iniciaron el camino. Otros llegaron después para mantenerlo vivo.”
+          </p>
+
+          <p>
+            Con el paso de los años, muchos de los integrantes fundadores comenzaron
+            a tomar otros caminos. Entre 2014 y 2015, una nueva generación asumió
+            el reto de continuar la historia, aprender lo construido y aportar
+            nuevas ideas a la agrupación.
+          </p>
+        </div>
+
+        <div class="history-legacy-photo" data-reveal="up">
+          <img
+            src="img/historia-generaciones.jpg"
+            alt="Integrantes de diferentes generaciones de Pasión y Sentimiento Cultural"
+            loading="lazy"
+            decoding="async"
+          >
+
+          <div class="history-legacy-photo-overlay"></div>
+
+          <div class="history-legacy-photo-content">
+            <span>Una historia compartida</span>
+
+            <h3>
+              Cada generación recibió un sueño que ya estaba en marcha.
+            </h3>
+
+            <p>
+              La responsabilidad no era repetir el pasado, sino proteger su esencia
+              y encontrar nuevas maneras de seguir avanzando.
+            </p>
+          </div>
+        </div>
+
+        <div class="history-legacy-generations">
+
+          <article
+            class="history-legacy-generation"
+            data-reveal="left"
+          >
+            <div class="history-legacy-generation-number">
+              01
+            </div>
+
+            <div class="history-legacy-generation-icon">
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+
+            <span>Quienes comenzaron</span>
+
+            <h3>La primera generación</h3>
+
+            <p>
+              Fueron quienes ensayaron cuando todavía no existían grandes
+              escenarios, vestuarios completos ni certezas sobre el futuro.
+              Su principal aporte fue creer que el sueño podía convertirse
+              en una realidad.
+            </p>
+          </article>
+
+          <div class="history-legacy-connector" aria-hidden="true">
+            <span></span>
+            <i class="fa-solid fa-arrow-right-long"></i>
+            <span></span>
+          </div>
+
+          <article
+            class="history-legacy-generation"
+            data-reveal="right"
+          >
+            <div class="history-legacy-generation-number">
+              02
+            </div>
+
+            <div class="history-legacy-generation-icon">
+              <i class="fa-solid fa-people-group"></i>
+            </div>
+
+            <span>Quienes continuaron</span>
+
+            <h3>Las nuevas generaciones</h3>
+
+            <p>
+              Nuevos niños y jóvenes llegaron para aprender, competir, enseñar
+              y asumir responsabilidades. Cada uno encontró una agrupación
+              construida por otros, pero también un espacio donde podía dejar
+              su propia huella.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="history-legacy-message" data-reveal="up">
+
+          <div class="history-legacy-message-icon">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+          </div>
+
+          <div>
+            <span>El verdadero legado</span>
+
+            <h3>No se trata solamente de recordar</h3>
+
+            <p>
+              El legado de Pasión y Sentimiento Cultural vive en cada integrante
+              que enseña un paso, ayuda a preparar un vestuario, acompaña a un
+              niño en su primera presentación o vuelve a colocarse el traje para
+              representar a Catacaos.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="history-legacy-values" data-reveal="up">
+
+          <article>
+            <i class="fa-solid fa-heart"></i>
+            <strong>Pasión</strong>
+            <p>
+              Bailar con el mismo entusiasmo que dio origen a la agrupación.
+            </p>
+          </article>
+
+          <article>
+            <i class="fa-solid fa-handshake-angle"></i>
+            <strong>Compromiso</strong>
+            <p>
+              Comprender que cada presentación comienza mucho antes del escenario.
+            </p>
+          </article>
+
+          <article>
+            <i class="fa-solid fa-person-chalkboard"></i>
+            <strong>Enseñanza</strong>
+            <p>
+              Compartir lo aprendido para que otros puedan continuar el camino.
+            </p>
+          </article>
+
+          <article>
+            <i class="fa-solid fa-landmark-flag"></i>
+            <strong>Identidad</strong>
+            <p>
+              Representar con orgullo la cultura, las tradiciones y el nombre de Catacaos.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="history-legacy-final" data-reveal="up">
+
+          <span class="history-legacy-final-kicker">
+            Desde 2009
+          </span>
+
+          <h2>La historia continúa</h2>
+
+          <p>
+            Pasión y Sentimiento Cultural sigue creciendo con cada ensayo,
+            cada viaje, cada presentación y cada nueva persona que decide
+            formar parte de este sueño.
+          </p>
+
+          <blockquote>
+            Mientras existan personas dispuestas a enseñar, aprender y defender
+            sus tradiciones, esta historia nunca tendrá un punto final.
+          </blockquote>
+
+          <div class="history-legacy-signature">
+            <span>Pasión y Sentimiento Cultural</span>
+            <small>Catacaos, Piura</small>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+
+    <div class="footer-main">
+      <div class="container footer-grid">
+
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="Ir al inicio">
+            <img
+              src="img/logo-pasion-sentimiento.png"
+              alt="Logo de Pasión y Sentimiento Cultural"
+              loading="lazy"
+              decoding="async"
+            >
+
+            <div>
+              <strong>Pasión y Sentimiento Cultural</strong>
+              <span>Grupo Folklórico</span>
+            </div>
+          </a>
+
+          <p>
+            Desde 2009 preservamos, difundimos y vivimos
+            el folklore peruano desde Catacaos, Piura.
+          </p>
+
+          <div class="footer-social">
+            <a href="https://www.facebook.com/profile.php?id=100063490963350" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/pasionysentimientocultural/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@pysc_17" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@grupofolkloricopasionysent6944/videos" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Enlaces</h3>
+          <nav class="footer-links">
+            <a href="index.html">Inicio</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="historia.html">Historia</a>
+            <a href="proyectos.html">Proyectos</a>
+            <a href="galeria.html">Galería</a>
+            <a href="contacto.html">Contacto</a>
+          </nav>
+        </div>
+
+        <div class="footer-column">
+          <h3>Explora</h3>
+          <nav class="footer-links">
+            <a href="index.html#agenda">Agenda PySC</a>
+            <a href="index.html#esencia">Nuestra esencia</a>
+            <a href="index.html#reconocimientos">Reconocimientos</a>
+            <a href="index.html#trayectoria-internacional">Trayectoria internacional</a>
+            <a href="index.html#ubicacion">Nuestra ubicación</a>
+          </nav>
+        </div>
+
+        <div class="footer-column footer-contact">
+          <h3>Contacto</h3>
+          <ul>
+            <li><i class="fa-solid fa-location-dot"></i><span>Catacaos, Piura<br>Perú</span></li>
+            <li><i class="fa-solid fa-envelope"></i><a href="mailto:omarpisc@gmail.com">omarpisc@gmail.com</a></li>
+            <li><i class="fa-brands fa-whatsapp"></i><a href="https://wa.me/51983627392" target="_blank" rel="noopener noreferrer">+51 983 627 392</a></li>
+          </ul>
+
+          <a href="contacto.html" class="footer-contact-button">
+            Escríbenos
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
     </div>
-    <p>© 2026 Pasión y Sentimiento Cultural</p>
-  </div>
-</footer>
 
-<script src="js/main.js"></script>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-content">
+        <p>
+          © <span id="currentYear"></span>
+          Grupo Folklórico Pasión y Sentimiento Cultural.
+          Todos los derechos reservados.
+        </p>
+
+        <a href="#top" class="footer-back-top">
+          Volver al inicio
+          <i class="fa-solid fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+
+  </footer>
+
+  <button
+    type="button"
+    class="back-to-top"
+    id="backToTop"
+    aria-label="Volver al inicio de la página"
+  >
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

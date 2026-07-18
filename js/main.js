@@ -1022,7 +1022,7 @@ const cultureCountries = {
     flagAlt: "Bandera de Ecuador",
     name: "Ecuador",
     type: "Representación internacional",
-    years: "2016 · 2017 · 2018",
+    years: "2017 · 2018 · 2019",
     description:
       "Representamos nuestra cultura durante tres años, fortaleciendo el intercambio artístico y los vínculos entre agrupaciones latinoamericanas.",
     highlight:

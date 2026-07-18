@@ -6571,3 +6571,2786 @@ FOTOGRAFÍA PANORÁMICA
   }
 
 }
+
+/* =========================
+   PÁGINA HISTORIA
+========================= */
+
+.history-hero {
+  position: relative;
+  min-height: 720px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--navy-dark);
+  color: #ffffff;
+}
+
+.history-hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  background:
+    url("../img/historia-hero.jpg")
+    center center / cover no-repeat;
+  transform: scale(1.04);
+}
+
+.history-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4, 14, 30, 0.95) 0%,
+      rgba(12, 34, 66, 0.84) 43%,
+      rgba(104, 17, 37, 0.62) 76%,
+      rgba(140, 24, 50, 0.36) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3, 10, 22, 0.08),
+      rgba(3, 10, 22, 0.72)
+    );
+}
+
+.history-hero-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.13;
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 46%,
+      rgba(255, 255, 255, 0.09) 47%,
+      rgba(255, 255, 255, 0.09) 49%,
+      transparent 50%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 46%,
+      rgba(226, 170, 22, 0.09) 47%,
+      rgba(226, 170, 22, 0.09) 49%,
+      transparent 50%
+    );
+  background-size: 56px 56px;
+}
+
+.history-hero-content {
+  position: relative;
+  z-index: 2;
+  padding-top: 180px;
+  padding-bottom: 120px;
+}
+
+.history-hero-kicker {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--gold);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.history-hero h1 {
+  max-width: 840px;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  line-height: 0.98;
+  text-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+}
+
+.history-hero-content > p {
+  max-width: 650px;
+  margin-top: 22px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 700;
+}
+
+.history-hero-scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 46px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.history-hero-scroll i {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  color: var(--gold);
+  animation: historyScrollHint 1.8s ease-in-out infinite;
+}
+
+@keyframes historyScrollHint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.history-opening {
+  position: relative;
+  overflow: hidden;
+  padding-top: 115px;
+  padding-bottom: 115px;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(226, 170, 22, 0.1), transparent 30%),
+    #ffffff;
+}
+
+.history-opening-year {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -52%);
+  color: rgba(19, 47, 93, 0.045);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(10rem, 24vw, 20rem);
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.history-opening-content {
+  position: relative;
+  z-index: 2;
+  max-width: 850px;
+  text-align: center;
+}
+
+.history-opening-content h2 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: 1.16;
+}
+
+.history-opening-content h2 span {
+  color: var(--wine);
+}
+
+.history-opening-content > p {
+  max-width: 740px;
+  margin: 24px auto 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.history-opening-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+  padding: 18px 24px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(19, 47, 93, 0.09);
+}
+
+.history-opening-date > div {
+  text-align: left;
+}
+
+.history-opening-date strong {
+  display: block;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.history-opening-date span {
+  display: block;
+  margin-top: 5px;
+  color: var(--wine);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.history-opening-separator {
+  width: 1px;
+  height: 46px;
+  margin: 0 !important;
+  background: rgba(19, 47, 93, 0.18);
+}
+
+.history-chapter-guide {
+  position: relative;
+  z-index: 10;
+  padding: 23px 0;
+  background: var(--navy-dark);
+  border-top: 1px solid rgba(226, 170, 22, 0.35);
+  border-bottom: 1px solid rgba(226, 170, 22, 0.35);
+}
+
+.history-chapter-guide-track {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.history-chapter-guide a {
+  min-width: 0;
+  padding: 12px 10px;
+  border-radius: 12px;
+  text-align: center;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.history-chapter-guide a:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.history-chapter-guide span {
+  display: block;
+  color: var(--gold);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.history-chapter-guide strong {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+.history-chapter {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 92% 16%, rgba(226, 170, 22, 0.09), transparent 27%),
+    linear-gradient(180deg, #ffffff, #faf8f4);
+}
+
+.history-chapter-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  align-items: center;
+  gap: 72px;
+}
+
+.history-chapter-number {
+  display: inline-block;
+  margin-bottom: 13px;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.history-chapter-content h2,
+.history-next-placeholder h2 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  line-height: 1.1;
+}
+
+.history-chapter-phrase {
+  margin: 24px 0 22px !important;
+  padding-left: 20px;
+  border-left: 4px solid var(--gold);
+  color: var(--wine) !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.08rem !important;
+  font-weight: 700;
+  line-height: 1.65 !important;
+}
+
+.history-chapter-content > p {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.history-memory-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 510px;
+  padding: 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top right, rgba(226, 170, 22, 0.16), transparent 34%),
+    linear-gradient(145deg, var(--navy-dark), var(--navy) 64%, var(--wine-dark));
+  border: 1px solid rgba(226, 170, 22, 0.42);
+  border-radius: 28px;
+  box-shadow: 0 28px 65px rgba(12, 34, 66, 0.24);
+  color: #ffffff;
+}
+
+.history-memory-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(45deg, transparent 46%, rgba(255, 255, 255, 0.08) 47%, rgba(255, 255, 255, 0.08) 49%, transparent 50%),
+    linear-gradient(-45deg, transparent 46%, rgba(226, 170, 22, 0.08) 47%, rgba(226, 170, 22, 0.08) 49%, transparent 50%);
+  background-size: 48px 48px;
+}
+
+.history-memory-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.history-memory-label {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.history-memory-date {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.history-memory-date > strong {
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 5.8rem;
+  line-height: 0.82;
+}
+
+.history-memory-date div span,
+.history-memory-date div b {
+  display: block;
+}
+
+.history-memory-date div span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.history-memory-date div b {
+  margin-top: 3px;
+  color: var(--gold);
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.1rem;
+}
+
+.history-memory-line {
+  width: 100%;
+  height: 1px;
+  margin: 32px 0 25px;
+  background: linear-gradient(90deg, var(--gold), rgba(255, 255, 255, 0.08));
+}
+
+.history-memory-card ul {
+  display: grid;
+  gap: 18px;
+  list-style: none;
+}
+
+.history-memory-card li {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.93rem;
+}
+
+.history-memory-card li i {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 11px;
+  color: var(--gold);
+}
+
+.history-origin-question {
+  max-width: 900px;
+  margin-top: 85px;
+  padding: 50px 45px;
+  text-align: center;
+  background:
+    radial-gradient(circle at top right, rgba(226, 170, 22, 0.13), transparent 32%),
+    #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  box-shadow: 0 24px 55px rgba(19, 47, 93, 0.11);
+}
+
+.history-origin-question > i {
+  color: var(--wine);
+  font-size: 2rem;
+}
+
+.history-origin-question > p {
+  margin-top: 15px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.history-origin-question > span {
+  display: block;
+  max-width: 680px;
+  margin: 16px auto 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.history-origin-words {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 32px;
+}
+
+.history-origin-words strong {
+  padding: 16px 14px;
+  border-radius: 14px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.history-origin-words strong:nth-child(1) { background: var(--wine); }
+.history-origin-words strong:nth-child(2) { background: var(--navy); }
+.history-origin-words strong:nth-child(3) { background: #b37b00; }
+
+.history-next-placeholder {
+  background: var(--navy-dark);
+  color: #ffffff;
+  text-align: center;
+}
+
+.history-next-placeholder .container {
+  max-width: 780px;
+}
+
+.history-next-placeholder h2 {
+  color: #ffffff;
+}
+
+.history-next-placeholder p {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.75;
+}
+
+@media (max-width: 960px) {
+  .history-chapter-guide-track {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .history-chapter-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .history-memory-card {
+    min-height: 430px;
+  }
+}
+
+@media (max-width: 620px) {
+  .history-hero {
+    min-height: 620px;
+  }
+
+  .history-hero-content {
+    padding-top: 150px;
+    padding-bottom: 95px;
+  }
+
+  .history-hero-scroll span {
+    display: none;
+  }
+
+  .history-opening {
+    padding-top: 85px;
+    padding-bottom: 85px;
+  }
+
+  .history-opening-date {
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .history-chapter-guide {
+    overflow-x: auto;
+  }
+
+  .history-chapter-guide-track {
+    width: 760px;
+    grid-template-columns: repeat(7, 100px);
+  }
+
+  .history-memory-card {
+    min-height: auto;
+    padding: 32px 24px;
+    border-radius: 22px;
+  }
+
+  .history-memory-date > strong {
+    font-size: 4.6rem;
+  }
+
+  .history-origin-question {
+    margin-top: 58px;
+    padding: 38px 22px;
+  }
+
+  .history-origin-words {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .history-hero-scroll i {
+    animation: none;
+  }
+}
+
+/* =========================
+   HISTORIA · PRIMEROS AÑOS
+========================= */
+
+.history-early-years {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 8% 15%,
+      rgba(133, 24, 47, 0.08),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 92% 75%,
+      rgba(226, 170, 22, 0.1),
+      transparent 28%
+    ),
+    #ffffff;
+}
+
+.history-early-years::before {
+  content: "2009";
+  position: absolute;
+  top: 70px;
+  right: -30px;
+  color: rgba(19, 47, 93, 0.035);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(9rem, 19vw, 16rem);
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.history-early-years-header {
+  position: relative;
+  z-index: 2;
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.history-early-years-header h2 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.3rem);
+  line-height: 1.12;
+}
+
+.history-early-years-header .history-chapter-phrase {
+  max-width: 720px;
+  margin: 24px auto 26px !important;
+  padding-left: 0;
+  border-left: 0;
+  color: var(--wine) !important;
+}
+
+.history-early-years-header > p:not(.history-chapter-phrase) {
+  max-width: 760px;
+  margin: 16px auto 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Tarjetas */
+
+.history-early-cards {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 65px;
+}
+
+.history-early-card {
+  position: relative;
+  min-height: 350px;
+  padding: 34px 30px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 20px 48px rgba(19, 47, 93, 0.09);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.history-early-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(226, 170, 22, 0.65);
+  box-shadow: 0 28px 58px rgba(19, 47, 93, 0.15);
+}
+
+.history-early-card::after {
+  content: "";
+  position: absolute;
+  right: -45px;
+  bottom: -45px;
+  width: 135px;
+  height: 135px;
+  background: rgba(226, 170, 22, 0.08);
+  border-radius: 50%;
+}
+
+.history-early-card-icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy)
+    );
+  border-radius: 18px;
+  color: var(--gold);
+  font-size: 1.4rem;
+  box-shadow: 0 13px 26px rgba(19, 47, 93, 0.2);
+}
+
+.history-early-card > span {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  color: rgba(19, 47, 93, 0.11);
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.history-early-card h3 {
+  position: relative;
+  z-index: 2;
+  margin-top: 26px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.history-early-card p {
+  position: relative;
+  z-index: 2;
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+/* Anécdotas */
+
+.history-memories {
+  position: relative;
+  z-index: 2;
+  margin-top: 95px;
+  padding: 55px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(226, 170, 22, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy) 66%,
+      var(--wine-dark)
+    );
+  border: 1px solid rgba(226, 170, 22, 0.35);
+  border-radius: 30px;
+  box-shadow: 0 30px 70px rgba(12, 34, 66, 0.23);
+}
+
+.history-memories::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.11;
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 46%,
+      rgba(255, 255, 255, 0.08) 47%,
+      rgba(255, 255, 255, 0.08) 49%,
+      transparent 50%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 46%,
+      rgba(226, 170, 22, 0.08) 47%,
+      rgba(226, 170, 22, 0.08) 49%,
+      transparent 50%
+    );
+  background-size: 52px 52px;
+}
+
+.history-memories > * {
+  position: relative;
+  z-index: 2;
+}
+
+.history-memories-heading {
+  max-width: 680px;
+}
+
+.history-memories-heading h3 {
+  margin-top: 10px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.2;
+}
+
+.history-memories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 38px;
+}
+
+.history-memory-story {
+  display: grid;
+  grid-template-columns: 55px 1fr;
+  gap: 20px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.history-memory-story-icon {
+  width: 55px;
+  height: 55px;
+  display: grid;
+  place-items: center;
+  background: rgba(226, 170, 22, 0.14);
+  border: 1px solid rgba(226, 170, 22, 0.32);
+  border-radius: 16px;
+  color: var(--gold);
+  font-size: 1.25rem;
+}
+
+.history-memory-story span {
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.history-memory-story h4 {
+  margin-top: 7px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.history-memory-story p {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.91rem;
+  line-height: 1.7;
+}
+
+.history-memory-story blockquote {
+  margin-top: 16px;
+  padding-left: 14px;
+  border-left: 3px solid var(--gold);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Frase final */
+
+.history-early-closing {
+  max-width: 850px;
+  margin: 75px auto 0;
+  padding: 38px 45px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(19, 47, 93, 0.1);
+}
+
+.history-early-closing i {
+  color: var(--gold);
+  font-size: 1.7rem;
+}
+
+.history-early-closing p {
+  margin-top: 14px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+/* Responsive */
+
+@media (max-width: 960px) {
+  .history-early-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .history-early-card {
+    min-height: auto;
+  }
+
+  .history-memories {
+    padding: 45px 35px;
+  }
+
+  .history-memories-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .history-early-cards {
+    margin-top: 45px;
+    gap: 18px;
+  }
+
+  .history-early-card {
+    padding: 28px 24px;
+    border-radius: 20px;
+  }
+
+  .history-early-card > span {
+    top: 26px;
+    right: 24px;
+  }
+
+  .history-memories {
+    margin-top: 65px;
+    padding: 35px 22px;
+    border-radius: 23px;
+  }
+
+  .history-memory-story {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+  }
+
+  .history-early-closing {
+    margin-top: 55px;
+    padding: 32px 22px;
+  }
+}
+
+/* =========================
+   HISTORIA · NUEVOS HORIZONTES
+========================= */
+
+.history-growth {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(133, 24, 47, 0.08),
+      transparent 28%
+    ),
+    linear-gradient(180deg, #faf8f4, #ffffff);
+}
+
+.history-growth-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  align-items: center;
+  gap: 75px;
+}
+
+.history-growth-image {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  border-radius: 30px;
+  box-shadow: 0 30px 70px rgba(12, 34, 66, 0.2);
+}
+
+.history-growth-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.history-growth-image:hover img {
+  transform: scale(1.04);
+}
+
+.history-growth-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 45%,
+      rgba(4, 14, 30, 0.88) 100%
+    );
+}
+
+.history-growth-year {
+  position: absolute;
+  z-index: 2;
+  left: 35px;
+  right: 35px;
+  bottom: 34px;
+  color: #ffffff;
+}
+
+.history-growth-year strong {
+  display: block;
+  color: var(--gold);
+  font-family: "Montserrat", sans-serif;
+  font-size: 4.8rem;
+  line-height: 1;
+}
+
+.history-growth-year span {
+  display: block;
+  max-width: 330px;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.history-growth-content h2 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.3rem);
+  line-height: 1.12;
+}
+
+.history-growth-content > p {
+  margin-top: 17px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.history-growth-content .history-chapter-phrase {
+  margin: 24px 0 25px !important;
+}
+
+.history-growth-highlight {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  align-items: center;
+  gap: 18px;
+  margin-top: 32px;
+  padding: 24px;
+  background: rgba(226, 170, 22, 0.1);
+  border: 1px solid rgba(226, 170, 22, 0.38);
+  border-radius: 18px;
+}
+
+.history-growth-highlight i {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  border-radius: 15px;
+  color: var(--gold);
+  font-size: 1.25rem;
+}
+
+.history-growth-highlight p {
+  color: var(--navy);
+  line-height: 1.65;
+}
+
+.history-growth-highlight strong {
+  color: var(--wine);
+}
+
+.history-growth-lessons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 80px;
+}
+
+.history-growth-lessons article {
+  padding: 30px 24px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 18px 42px rgba(19, 47, 93, 0.08);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.history-growth-lessons article:hover {
+  transform: translateY(-7px);
+  border-color: rgba(226, 170, 22, 0.55);
+  box-shadow: 0 25px 50px rgba(19, 47, 93, 0.13);
+}
+
+.history-growth-lessons i {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  background: rgba(19, 47, 93, 0.08);
+  border-radius: 16px;
+  color: var(--wine);
+  font-size: 1.25rem;
+}
+
+.history-growth-lessons h3 {
+  margin-top: 20px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.05rem;
+}
+
+.history-growth-lessons p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 960px) {
+  .history-growth-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .history-growth-image,
+  .history-growth-image img {
+    min-height: 520px;
+  }
+
+  .history-growth-lessons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .history-growth-image,
+  .history-growth-image img {
+    min-height: 430px;
+  }
+
+  .history-growth-image {
+    border-radius: 22px;
+  }
+
+  .history-growth-year {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+
+  .history-growth-year strong {
+    font-size: 3.8rem;
+  }
+
+  .history-growth-highlight {
+    grid-template-columns: 1fr;
+  }
+
+  .history-growth-lessons {
+    grid-template-columns: 1fr;
+    margin-top: 55px;
+  }
+}
+
+/* =========================
+   HISTORIA · LOS FRUTOS
+========================= */
+
+.history-achievements {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 10% 12%,
+      rgba(226, 170, 22, 0.09),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(133, 24, 47, 0.08),
+      transparent 28%
+    ),
+    #ffffff;
+}
+
+.history-achievements::before {
+  content: "2017";
+  position: absolute;
+  top: 110px;
+  left: -45px;
+  color: rgba(19, 47, 93, 0.035);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(9rem, 19vw, 16rem);
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.history-achievements-header {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.history-achievements-header h2 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.3rem);
+  line-height: 1.12;
+}
+
+.history-achievements-header .history-chapter-phrase {
+  max-width: 740px;
+  margin: 24px auto 26px !important;
+  padding-left: 0;
+  border-left: 0;
+}
+
+.history-achievements-header > p:not(.history-chapter-phrase) {
+  max-width: 760px;
+  margin: 16px auto 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Línea de tiempo */
+
+.history-achievements-timeline {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 36px;
+  max-width: 1080px;
+  margin: 80px auto 0;
+}
+
+.history-achievements-timeline::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 165px;
+  width: 2px;
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      var(--gold) 8%,
+      var(--gold) 92%,
+      transparent
+    );
+}
+
+.history-achievement-item {
+  display: grid;
+  grid-template-columns: 165px 1fr;
+  align-items: center;
+  position: relative;
+}
+
+.history-achievement-year {
+  position: relative;
+  z-index: 3;
+  padding-right: 35px;
+  text-align: right;
+}
+
+.history-achievement-year::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -9px;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  background: var(--gold);
+  border: 5px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(226, 170, 22, 0.25);
+}
+
+.history-achievement-year strong {
+  display: block;
+  color: var(--wine);
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.history-achievement-year span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.history-achievement-content {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 22px;
+  margin-left: 40px;
+  padding: 34px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(19, 47, 93, 0.09);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.history-achievement-content:hover {
+  transform: translateY(-6px);
+  border-color: rgba(226, 170, 22, 0.55);
+  box-shadow: 0 28px 58px rgba(19, 47, 93, 0.14);
+}
+
+.history-achievement-icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy)
+    );
+  border-radius: 18px;
+  color: var(--gold);
+  font-size: 1.35rem;
+  box-shadow: 0 14px 28px rgba(19, 47, 93, 0.18);
+}
+
+.history-achievement-content h3 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.22rem;
+  line-height: 1.35;
+}
+
+.history-achievement-content p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.75;
+}
+
+.history-achievement-content strong {
+  color: var(--wine);
+}
+
+.history-achievement-content blockquote {
+  margin-top: 16px;
+  padding-left: 16px;
+  border-left: 3px solid var(--gold);
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.65;
+  font-style: italic;
+}
+
+/* Cierre */
+
+.history-achievements-summary {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 850px;
+  margin: 75px auto 0;
+  padding: 32px 38px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(226, 170, 22, 0.14),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy)
+    );
+  border: 1px solid rgba(226, 170, 22, 0.35);
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(12, 34, 66, 0.2);
+}
+
+.history-achievements-summary-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background: rgba(226, 170, 22, 0.13);
+  border: 1px solid rgba(226, 170, 22, 0.3);
+  border-radius: 18px;
+  color: var(--gold);
+  font-size: 1.4rem;
+}
+
+.history-achievements-summary span {
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.history-achievements-summary p {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+/* Responsive */
+
+@media (max-width: 760px) {
+  .history-achievements-timeline::before {
+    left: 10px;
+  }
+
+  .history-achievement-item {
+    grid-template-columns: 1fr;
+    padding-left: 38px;
+  }
+
+  .history-achievement-year {
+    padding-right: 0;
+    text-align: left;
+  }
+
+  .history-achievement-year::after {
+    top: 8px;
+    right: auto;
+    left: -37px;
+    transform: none;
+  }
+
+  .history-achievement-content {
+    grid-template-columns: 52px 1fr;
+    gap: 18px;
+    margin-top: 18px;
+    margin-left: 0;
+    padding: 28px 24px;
+  }
+
+  .history-achievement-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 520px) {
+  .history-achievement-content {
+    grid-template-columns: 1fr;
+  }
+
+  .history-achievements-summary {
+    grid-template-columns: 1fr;
+    padding: 30px 24px;
+  }
+}
+
+/* =========================
+   HISTORIA · SIN FRONTERAS
+========================= */
+
+.history-international {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--navy-dark);
+  color: #ffffff;
+}
+
+.history-international-background {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  background:
+    url("../img/historia-internacional.jpg")
+    center center / cover no-repeat;
+}
+
+.history-international-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(4, 14, 30, 0.96),
+      rgba(12, 34, 66, 0.91) 55%,
+      rgba(104, 17, 37, 0.84)
+    );
+}
+
+.history-international::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.1;
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 46%,
+      rgba(255, 255, 255, 0.08) 47%,
+      rgba(255, 255, 255, 0.08) 49%,
+      transparent 50%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 46%,
+      rgba(226, 170, 22, 0.08) 47%,
+      rgba(226, 170, 22, 0.08) 49%,
+      transparent 50%
+    );
+  background-size: 58px 58px;
+}
+
+.history-international-content {
+  position: relative;
+  z-index: 2;
+}
+
+.history-international-header {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.history-international-header h2 {
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  line-height: 1.12;
+}
+
+.history-international-header .history-chapter-phrase {
+  max-width: 740px;
+  margin: 24px auto 26px !important;
+  padding-left: 0;
+  border-left: 0;
+  color: var(--gold) !important;
+}
+
+.history-international-header > p:not(.history-chapter-phrase) {
+  max-width: 760px;
+  margin: 16px auto 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Ruta */
+
+.history-international-route {
+  display: grid;
+  grid-template-columns: 1fr 180px 1fr;
+  align-items: center;
+  max-width: 850px;
+  margin: 60px auto 0;
+}
+
+.history-route-point {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.history-route-point:last-child {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.history-route-icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  background: rgba(226, 170, 22, 0.13);
+  border: 1px solid rgba(226, 170, 22, 0.35);
+  border-radius: 17px;
+  color: var(--gold);
+  font-size: 1.3rem;
+}
+
+.history-route-point strong {
+  display: block;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+}
+
+.history-route-point div > span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+}
+
+.history-route-line {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold);
+}
+
+.history-route-line span {
+  height: 1px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(226, 170, 22, 0.15),
+      var(--gold)
+    );
+}
+
+.history-route-line span:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      var(--gold),
+      rgba(226, 170, 22, 0.15)
+    );
+}
+
+/* Tarjetas */
+
+.history-international-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 70px;
+}
+
+.history-international-card {
+  position: relative;
+  min-height: 415px;
+  padding: 34px 27px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.history-international-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.11);
+  border-color: rgba(226, 170, 22, 0.48);
+}
+
+.history-international-card-featured {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(226, 170, 22, 0.17),
+      transparent 36%
+    ),
+    rgba(133, 24, 47, 0.3);
+  border-color: rgba(226, 170, 22, 0.38);
+}
+
+.history-international-card-year {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: rgba(255, 255, 255, 0.09);
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.history-international-card-icon {
+  position: relative;
+  z-index: 2;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  background: rgba(226, 170, 22, 0.13);
+  border: 1px solid rgba(226, 170, 22, 0.3);
+  border-radius: 17px;
+  color: var(--gold);
+  font-size: 1.25rem;
+}
+
+.history-international-country {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-top: 25px;
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.history-international-card h3 {
+  position: relative;
+  z-index: 2;
+  margin-top: 8px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.13rem;
+  line-height: 1.4;
+}
+
+.history-international-card p {
+  position: relative;
+  z-index: 2;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.91rem;
+  line-height: 1.72;
+}
+
+.history-international-secret {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 13px 14px;
+  background: rgba(4, 14, 30, 0.28);
+  border: 1px solid rgba(226, 170, 22, 0.25);
+  border-radius: 13px;
+  color: rgba(255, 255, 255, 0.74);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: left;
+  cursor: default;
+}
+
+.history-international-secret i {
+  color: var(--gold);
+}
+
+/* Frase final */
+
+.history-international-quote {
+  max-width: 880px;
+  margin: 75px auto 0;
+  text-align: center;
+}
+
+.history-international-quote i {
+  color: var(--gold);
+  font-size: 2rem;
+}
+
+.history-international-quote p {
+  margin-top: 16px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+@media (max-width: 1080px) {
+  .history-international-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .history-international-route {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .history-route-point,
+  .history-route-point:last-child {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .history-route-line {
+    width: 150px;
+    transform: rotate(90deg);
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 620px) {
+  .history-international-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .history-international-card {
+    min-height: auto;
+    padding: 30px 24px;
+  }
+
+  .history-international-quote {
+    margin-top: 55px;
+  }
+}
+
+/* =========================
+   HISTORIA · COMUNIDAD
+========================= */
+
+.history-community {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(226, 170, 22, 0.1),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 88% 78%,
+      rgba(133, 24, 47, 0.08),
+      transparent 28%
+    ),
+    linear-gradient(180deg, #ffffff, #faf8f4);
+}
+
+.history-community::before {
+  content: "COMUNIDAD";
+  position: absolute;
+  top: 115px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(19, 47, 93, 0.028);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(5rem, 12vw, 10rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.history-community-header {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.history-community-header h2 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  line-height: 1.12;
+}
+
+.history-community-header .history-chapter-phrase {
+  max-width: 760px;
+  margin: 24px auto 26px !important;
+  padding-left: 0;
+  border-left: 0;
+}
+
+.history-community-header > p:not(.history-chapter-phrase) {
+  max-width: 760px;
+  margin: 16px auto 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Composición principal */
+
+.history-community-showcase {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  grid-template-areas:
+    "left image right"
+    "bottom-left image bottom-right";
+  gap: 24px;
+  align-items: stretch;
+  margin-top: 75px;
+}
+
+.history-community-image {
+  grid-area: image;
+  position: relative;
+  min-height: 690px;
+  overflow: hidden;
+  border-radius: 30px;
+  box-shadow: 0 30px 70px rgba(12, 34, 66, 0.2);
+}
+
+.history-community-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 690px;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.history-community-image:hover img {
+  transform: scale(1.04);
+}
+
+.history-community-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 14, 30, 0.02) 35%,
+      rgba(4, 14, 30, 0.88) 100%
+    );
+}
+
+.history-community-image-content {
+  position: absolute;
+  z-index: 2;
+  left: 32px;
+  right: 32px;
+  bottom: 32px;
+}
+
+.history-community-image-content span {
+  display: block;
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.history-community-image-content strong {
+  display: block;
+  margin-top: 10px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.45;
+}
+
+.history-community-card {
+  position: relative;
+  padding: 30px 26px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: 0 20px 48px rgba(19, 47, 93, 0.09);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.history-community-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(226, 170, 22, 0.55);
+  box-shadow: 0 27px 55px rgba(19, 47, 93, 0.14);
+}
+
+.history-community-card-left {
+  grid-area: left;
+}
+
+.history-community-card-right {
+  grid-area: right;
+}
+
+.history-community-card-bottom-left {
+  grid-area: bottom-left;
+}
+
+.history-community-card-bottom-right {
+  grid-area: bottom-right;
+}
+
+.history-community-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy)
+    );
+  border-radius: 17px;
+  color: var(--gold);
+  font-size: 1.3rem;
+  box-shadow: 0 13px 26px rgba(19, 47, 93, 0.18);
+}
+
+.history-community-card > span {
+  display: block;
+  margin-top: 23px;
+  color: var(--wine);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.history-community-card h3 {
+  margin-top: 7px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.history-community-card p {
+  margin-top: 13px;
+  color: var(--muted);
+  font-size: 0.91rem;
+  line-height: 1.72;
+}
+
+/* AFLA */
+
+.history-community-recognition {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  align-items: center;
+  gap: 26px;
+  max-width: 920px;
+  margin: 75px auto 0;
+  padding: 38px 42px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(226, 170, 22, 0.15),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy) 68%,
+      var(--wine-dark)
+    );
+  border: 1px solid rgba(226, 170, 22, 0.37);
+  border-radius: 26px;
+  box-shadow: 0 26px 65px rgba(12, 34, 66, 0.22);
+}
+
+.history-community-recognition-icon {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  background: rgba(226, 170, 22, 0.13);
+  border: 1px solid rgba(226, 170, 22, 0.3);
+  border-radius: 20px;
+  color: var(--gold);
+  font-size: 1.5rem;
+}
+
+.history-community-recognition span {
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.history-community-recognition h3 {
+  margin-top: 7px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.45rem;
+}
+
+.history-community-recognition p {
+  margin-top: 11px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.94rem;
+  line-height: 1.75;
+}
+
+/* Valores */
+
+.history-community-values {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 70px;
+}
+
+.history-community-values article {
+  padding: 26px 22px;
+  text-align: center;
+  background: rgba(19, 47, 93, 0.045);
+  border: 1px solid rgba(19, 47, 93, 0.1);
+  border-radius: 18px;
+}
+
+.history-community-values strong {
+  color: var(--wine);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.05rem;
+}
+
+.history-community-values p {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 0.87rem;
+  line-height: 1.62;
+}
+
+/* Cierre */
+
+.history-community-closing {
+  max-width: 850px;
+  margin: 70px auto 0;
+  text-align: center;
+}
+
+.history-community-closing i {
+  color: var(--gold);
+  font-size: 2rem;
+}
+
+.history-community-closing p {
+  margin-top: 16px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+/* Responsive */
+
+@media (max-width: 1080px) {
+  .history-community-showcase {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "image image"
+      "left right"
+      "bottom-left bottom-right";
+  }
+
+  .history-community-image,
+  .history-community-image img {
+    min-height: 560px;
+  }
+}
+
+@media (max-width: 760px) {
+  .history-community-showcase {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "image"
+      "left"
+      "right"
+      "bottom-left"
+      "bottom-right";
+  }
+
+  .history-community-image,
+  .history-community-image img {
+    min-height: 480px;
+  }
+
+  .history-community-values {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .history-community-recognition {
+    grid-template-columns: 1fr;
+    padding: 32px 26px;
+  }
+}
+
+@media (max-width: 520px) {
+  .history-community-image,
+  .history-community-image img {
+    min-height: 410px;
+  }
+
+  .history-community-image {
+    border-radius: 22px;
+  }
+
+  .history-community-image-content {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+
+  .history-community-card {
+    padding: 27px 23px;
+  }
+
+  .history-community-values {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   HISTORIA · EL LEGADO
+========================= */
+
+.history-legacy {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      rgba(226, 170, 22, 0.11),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 88% 74%,
+      rgba(133, 24, 47, 0.1),
+      transparent 30%
+    ),
+    #ffffff;
+}
+
+.history-legacy::before {
+  content: "EL LEGADO";
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(19, 47, 93, 0.028);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(5rem, 13vw, 11rem);
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.history-legacy-header {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.history-legacy-header h2 {
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  line-height: 1.12;
+}
+
+.history-legacy-header .history-chapter-phrase {
+  max-width: 740px;
+  margin: 24px auto 26px !important;
+  padding-left: 0;
+  border-left: 0;
+}
+
+.history-legacy-header > p:not(.history-chapter-phrase) {
+  max-width: 760px;
+  margin: 16px auto 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Fotografía principal */
+
+.history-legacy-photo {
+  position: relative;
+  z-index: 2;
+  min-height: 620px;
+  margin-top: 70px;
+  overflow: hidden;
+  border-radius: 32px;
+  box-shadow: 0 35px 80px rgba(12, 34, 66, 0.22);
+}
+
+.history-legacy-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.history-legacy-photo:hover img {
+  transform: scale(1.035);
+}
+
+.history-legacy-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4, 14, 30, 0.91) 0%,
+      rgba(4, 14, 30, 0.65) 43%,
+      rgba(4, 14, 30, 0.15) 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 50%,
+      rgba(4, 14, 30, 0.55) 100%
+    );
+}
+
+.history-legacy-photo-content {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 65px;
+  width: min(520px, calc(100% - 130px));
+  transform: translateY(-50%);
+}
+
+.history-legacy-photo-content span {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.history-legacy-photo-content h3 {
+  margin-top: 12px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.16;
+}
+
+.history-legacy-photo-content p {
+  max-width: 470px;
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Generaciones */
+
+.history-legacy-generations {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 120px 1fr;
+  align-items: center;
+  gap: 24px;
+  margin-top: 75px;
+}
+
+.history-legacy-generation {
+  position: relative;
+  min-height: 360px;
+  padding: 38px 34px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  box-shadow: 0 22px 52px rgba(19, 47, 93, 0.1);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.history-legacy-generation:hover {
+  transform: translateY(-7px);
+  border-color: rgba(226, 170, 22, 0.55);
+  box-shadow: 0 30px 62px rgba(19, 47, 93, 0.15);
+}
+
+.history-legacy-generation::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  bottom: -50px;
+  width: 150px;
+  height: 150px;
+  background: rgba(226, 170, 22, 0.08);
+  border-radius: 50%;
+}
+
+.history-legacy-generation-number {
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  color: rgba(19, 47, 93, 0.09);
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.history-legacy-generation-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy)
+    );
+  border-radius: 18px;
+  color: var(--gold);
+  font-size: 1.4rem;
+  box-shadow: 0 14px 28px rgba(19, 47, 93, 0.2);
+}
+
+.history-legacy-generation > span {
+  display: block;
+  margin-top: 25px;
+  color: var(--wine);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.history-legacy-generation h3 {
+  position: relative;
+  z-index: 2;
+  margin-top: 8px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.35rem;
+}
+
+.history-legacy-generation p {
+  position: relative;
+  z-index: 2;
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.75;
+}
+
+.history-legacy-connector {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold);
+}
+
+.history-legacy-connector span {
+  height: 1px;
+  background: rgba(226, 170, 22, 0.45);
+}
+
+/* Mensaje central */
+
+.history-legacy-message {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  align-items: center;
+  gap: 28px;
+  max-width: 960px;
+  margin: 75px auto 0;
+  padding: 42px 46px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(226, 170, 22, 0.16),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy) 68%,
+      var(--wine-dark)
+    );
+  border: 1px solid rgba(226, 170, 22, 0.36);
+  border-radius: 28px;
+  box-shadow: 0 28px 68px rgba(12, 34, 66, 0.23);
+}
+
+.history-legacy-message-icon {
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  background: rgba(226, 170, 22, 0.13);
+  border: 1px solid rgba(226, 170, 22, 0.32);
+  border-radius: 21px;
+  color: var(--gold);
+  font-size: 1.65rem;
+}
+
+.history-legacy-message span {
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.history-legacy-message h3 {
+  margin-top: 7px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.55rem;
+}
+
+.history-legacy-message p {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.96rem;
+  line-height: 1.76;
+}
+
+/* Valores */
+
+.history-legacy-values {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 70px;
+}
+
+.history-legacy-values article {
+  padding: 30px 23px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 18px 42px rgba(19, 47, 93, 0.08);
+}
+
+.history-legacy-values i {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  background: rgba(19, 47, 93, 0.07);
+  border-radius: 16px;
+  color: var(--wine);
+  font-size: 1.25rem;
+}
+
+.history-legacy-values strong {
+  display: block;
+  margin-top: 18px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.08rem;
+}
+
+.history-legacy-values p {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 0.87rem;
+  line-height: 1.65;
+}
+
+/* Cierre final */
+
+.history-legacy-final {
+  position: relative;
+  z-index: 2;
+  max-width: 980px;
+  margin: 90px auto 0;
+  padding: 70px 60px;
+  overflow: hidden;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(226, 170, 22, 0.2),
+      transparent 34%
+    ),
+    linear-gradient(
+      145deg,
+      var(--navy-dark),
+      var(--navy) 60%,
+      var(--wine-dark)
+    );
+  border: 1px solid rgba(226, 170, 22, 0.4);
+  border-radius: 34px;
+  box-shadow: 0 35px 85px rgba(12, 34, 66, 0.27);
+}
+
+.history-legacy-final::before {
+  content: "2009";
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.035);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(8rem, 18vw, 14rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.history-legacy-final > * {
+  position: relative;
+  z-index: 2;
+}
+
+.history-legacy-final-kicker {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.history-legacy-final h2 {
+  margin-top: 12px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.history-legacy-final > p {
+  max-width: 720px;
+  margin: 22px auto 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.history-legacy-final blockquote {
+  max-width: 760px;
+  margin: 35px auto 0;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.25rem, 2.6vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.history-legacy-signature {
+  margin-top: 38px;
+}
+
+.history-legacy-signature::before {
+  content: "";
+  display: block;
+  width: 65px;
+  height: 2px;
+  margin: 0 auto 20px;
+  background: var(--gold);
+}
+
+.history-legacy-signature span {
+  display: block;
+  color: var(--gold);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.history-legacy-signature small {
+  display: block;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .history-legacy-generations {
+    grid-template-columns: 1fr;
+  }
+
+  .history-legacy-connector {
+    width: 160px;
+    margin: 5px auto;
+    transform: rotate(90deg);
+  }
+
+  .history-legacy-values {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .history-legacy-photo,
+  .history-legacy-photo img {
+    min-height: 520px;
+  }
+
+  .history-legacy-photo-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(4, 14, 30, 0.15),
+        rgba(4, 14, 30, 0.9)
+      );
+  }
+
+  .history-legacy-photo-content {
+    top: auto;
+    right: 28px;
+    bottom: 34px;
+    left: 28px;
+    width: auto;
+    transform: none;
+  }
+
+  .history-legacy-message {
+    grid-template-columns: 1fr;
+    padding: 35px 28px;
+  }
+
+  .history-legacy-final {
+    padding: 55px 30px;
+  }
+}
+
+@media (max-width: 520px) {
+  .history-legacy-photo,
+  .history-legacy-photo img {
+    min-height: 460px;
+  }
+
+  .history-legacy-photo {
+    border-radius: 24px;
+  }
+
+  .history-legacy-generation {
+    min-height: auto;
+    padding: 32px 25px;
+  }
+
+  .history-legacy-values {
+    grid-template-columns: 1fr;
+  }
+
+  .history-legacy-final {
+    margin-top: 65px;
+    border-radius: 26px;
+  }
+}
