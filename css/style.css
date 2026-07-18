@@ -9519,20 +9519,21 @@ FOTOGRAFÍA PANORÁMICA
 /* Capítulo actual */
 
 .history-timeline-item.active .history-timeline-dot {
-  background: var(--wine);
-  border-color: var(--wine);
+  background-color: var(--wine, #861f41) !important;
+  border-color: var(--wine, #861f41) !important;
   transform: scale(1.35);
+
   box-shadow:
     0 0 0 5px rgba(255, 255, 255, 0.9),
-    0 0 0 9px rgba(133, 24, 47, 0.12);
+    0 0 0 9px rgba(134, 31, 65, 0.18);
 }
 
 .history-timeline-item.active .history-timeline-text small {
-  color: var(--wine);
+  color: var(--wine, #861f41) !important;
 }
 
 .history-timeline-item.active .history-timeline-text strong {
-  color: var(--wine);
+  color: var(--wine, #861f41) !important;
   transform: translateX(3px);
 }
 

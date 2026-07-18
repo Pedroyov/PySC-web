@@ -137,96 +137,89 @@
           <span id="historyTimelineProgress"></span>
         </div>
 
-        <a
-          href="#origen"
-          class="history-timeline-item active"
-          data-section="capitulo-1"
-        >
-          <span class="history-timeline-dot"></span>
+          <a
+            href="#origen"
+            class="history-timeline-item"
+          >
+            <span class="history-timeline-dot"></span>
 
-          <span class="history-timeline-text">
-            <small>2009</small>
-            <strong>El origen</strong>
-          </span>
-        </a>
+            <span class="history-timeline-text">
+              <small>2009</small>
+              <strong>El origen</strong>
+            </span>
+          </a>
 
-        <a
-          href="#primeros-pasos"
-          class="history-timeline-item"
-          data-section="capitulo-2"
-        >
-          <span class="history-timeline-dot"></span>
+          <a
+            href="#primeros-pasos"
+            class="history-timeline-item"
+          >
+            <span class="history-timeline-dot"></span>
 
-          <span class="history-timeline-text">
-            <small>2009–2014</small>
-            <strong>Primeros pasos</strong>
-          </span>
-        </a>
+            <span class="history-timeline-text">
+              <small>2009–2014</small>
+              <strong>Primeros pasos</strong>
+            </span>
+          </a>
 
-        <a
-          href="#nuevos-horizontes"
-          class="history-timeline-item"
-          data-section="capitulo-3"
-        >
-          <span class="history-timeline-dot"></span>
+          <a
+            href="#nuevos-horizontes"
+            class="history-timeline-item"
+          >
+            <span class="history-timeline-dot"></span>
 
-          <span class="history-timeline-text">
-            <small>2015</small>
-            <strong>Crecimiento</strong>
-          </span>
-        </a>
+            <span class="history-timeline-text">
+              <small>2015</small>
+              <strong>Crecimiento</strong>
+            </span>
+          </a>
 
-        <a
-          href="#los-frutos"
-          class="history-timeline-item"
-          data-section="capitulo-4"
-        >
-          <span class="history-timeline-dot"></span>
+          <a
+            href="#los-frutos"
+            class="history-timeline-item"
+          >
+            <span class="history-timeline-dot"></span>
 
-          <span class="history-timeline-text">
-            <small>2016–2017</small>
-            <strong>Logros</strong>
-          </span>
-        </a>
+            <span class="history-timeline-text">
+              <small>2016–2017</small>
+              <strong>Logros</strong>
+            </span>
+          </a>
 
-        <a
-          href="#sin-fronteras"
-          class="history-timeline-item"
-          data-section="capitulo-5"
-        >
-          <span class="history-timeline-dot"></span>
+          <a
+            href="#sin-fronteras"
+            class="history-timeline-item"
+          >
+            <span class="history-timeline-dot"></span>
 
-          <span class="history-timeline-text">
-            <small>2017–2025</small>
-            <strong>Sin fronteras</strong>
-          </span>
-        </a>
+            <span class="history-timeline-text">
+              <small>2017–2025</small>
+              <strong>Sin fronteras</strong>
+            </span>
+          </a>
 
-        <a
-          href="#comunidad"
-          class="history-timeline-item"
-          data-section="capitulo-6"
-        >
-          <span class="history-timeline-dot"></span>
+          <a
+            href="#comunidad"
+            class="history-timeline-item"
+          >
+            <span class="history-timeline-dot"></span>
 
-          <span class="history-timeline-text">
-            <small>Comunidad</small>
-            <strong>Más que danza</strong>
-          </span>
-        </a>
+            <span class="history-timeline-text">
+              <small>Comunidad</small>
+              <strong>Más que danza</strong>
+            </span>
+          </a>
 
-        <a
-          href="#legado"
-          class="history-timeline-item"
-          data-section="capitulo-7"
-        >
-          <span class="history-timeline-dot"></span>
+          <a
+            href="#legado"
+            class="history-timeline-item"
+          >
+            <span class="history-timeline-dot"></span>
 
-          <span class="history-timeline-text">
-            <small>Actualidad</small>
-            <strong>El legado</strong>
-          </span>
-        </a>
+            <span class="history-timeline-text">
+              <small>Actualidad</small>
+              <strong>El legado</strong>
+            </span>
+          </a>
 
       </div>
     </nav>
@@ -1457,38 +1450,42 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const timeline = document.getElementById("historyTimeline");
-      const progress = document.getElementById(
-        "historyTimelineProgress"
-      );
 
-      const timelineItems = Array.from(
-        document.querySelectorAll(".history-timeline-item")
-      );
-
-      const sections = timelineItems
-        .map((item) => {
-          const sectionId = item.dataset.section;
-          return document.getElementById(sectionId);
-        })
-        .filter(Boolean);
-
-      if (!timeline || !progress || sections.length === 0) {
+      if (!timeline) {
         return;
       }
 
-      function updateTimeline() {
-        const viewportReference =
-          window.scrollY + window.innerHeight * 0.42;
+      const items = Array.from(
+        timeline.querySelectorAll(".history-timeline-item")
+      );
 
+      const sections = items
+        .map((item) => {
+          const selector = item.getAttribute("href");
+          const section = document.querySelector(selector);
+
+          return section
+            ? {
+                item,
+                section
+              }
+            : null;
+        })
+        .filter(Boolean);
+
+      function updateTimeline() {
+        const referencePoint = window.innerHeight * 0.45;
         let activeIndex = 0;
 
-        sections.forEach((section, index) => {
-          if (section.offsetTop <= viewportReference) {
+        sections.forEach(({ section }, index) => {
+          const position = section.getBoundingClientRect();
+
+          if (position.top <= referencePoint) {
             activeIndex = index;
           }
         });
 
-        timelineItems.forEach((item, index) => {
+        sections.forEach(({ item }, index) => {
           item.classList.remove("active", "done");
 
           if (index < activeIndex) {
@@ -1500,64 +1497,37 @@
           }
         });
 
-        const progressPercentage =
-          timelineItems.length > 1
-            ? (activeIndex / (timelineItems.length - 1)) * 100
-            : 0;
-
-        progress.style.height = `${progressPercentage}%`;
-
-        const firstSection = sections[0];
-        const lastSection = sections[sections.length - 1];
-
-        const timelineShouldBeVisible =
-          window.scrollY + window.innerHeight >
-            firstSection.offsetTop &&
-          window.scrollY <
-            lastSection.offsetTop +
-              lastSection.offsetHeight;
-
-        timeline.classList.toggle(
-          "is-hidden",
-          !timelineShouldBeVisible
+        const progress = document.getElementById(
+          "historyTimelineProgress"
         );
+
+        if (progress && sections.length > 1) {
+          const percentage =
+            (activeIndex / (sections.length - 1)) * 100;
+
+          progress.style.height = `${percentage}%`;
+        }
       }
 
-      timelineItems.forEach((item) => {
+      items.forEach((item) => {
         item.addEventListener("click", (event) => {
           event.preventDefault();
 
-          const section = document.getElementById(
-            item.dataset.section
-          );
+          const selector = item.getAttribute("href");
+          const section = document.querySelector(selector);
 
-          if (!section) {
-            return;
+          if (section) {
+            section.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
           }
-
-          section.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
         });
       });
 
-      let ticking = false;
-
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (!ticking) {
-            window.requestAnimationFrame(() => {
-              updateTimeline();
-              ticking = false;
-            });
-
-            ticking = true;
-          }
-        },
-        { passive: true }
-      );
+      window.addEventListener("scroll", updateTimeline, {
+        passive: true
+      });
 
       window.addEventListener("resize", updateTimeline);
 
