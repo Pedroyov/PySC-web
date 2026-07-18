@@ -122,6 +122,115 @@
       <span class="hero-ribbon-navy"></span>
     </div>
 
+    <nav
+      class="history-floating-timeline"
+      id="historyTimeline"
+      aria-label="Navegación por la historia"
+    >
+      <div class="history-floating-timeline-inner">
+
+        <span class="history-floating-title">
+          Nuestra historia
+        </span>
+
+        <div class="history-floating-progress">
+          <span id="historyTimelineProgress"></span>
+        </div>
+
+        <a
+          href="#origen"
+          class="history-timeline-item active"
+          data-section="capitulo-1"
+        >
+          <span class="history-timeline-dot"></span>
+
+          <span class="history-timeline-text">
+            <small>2009</small>
+            <strong>El origen</strong>
+          </span>
+        </a>
+
+        <a
+          href="#primeros-pasos"
+          class="history-timeline-item"
+          data-section="capitulo-2"
+        >
+          <span class="history-timeline-dot"></span>
+
+          <span class="history-timeline-text">
+            <small>2009–2014</small>
+            <strong>Primeros pasos</strong>
+          </span>
+        </a>
+
+        <a
+          href="#nuevos-horizontes"
+          class="history-timeline-item"
+          data-section="capitulo-3"
+        >
+          <span class="history-timeline-dot"></span>
+
+          <span class="history-timeline-text">
+            <small>2015</small>
+            <strong>Crecimiento</strong>
+          </span>
+        </a>
+
+        <a
+          href="#los-frutos"
+          class="history-timeline-item"
+          data-section="capitulo-4"
+        >
+          <span class="history-timeline-dot"></span>
+
+          <span class="history-timeline-text">
+            <small>2016–2017</small>
+            <strong>Logros</strong>
+          </span>
+        </a>
+
+        <a
+          href="#sin-fronteras"
+          class="history-timeline-item"
+          data-section="capitulo-5"
+        >
+          <span class="history-timeline-dot"></span>
+
+          <span class="history-timeline-text">
+            <small>2017–2025</small>
+            <strong>Sin fronteras</strong>
+          </span>
+        </a>
+
+        <a
+          href="#comunidad"
+          class="history-timeline-item"
+          data-section="capitulo-6"
+        >
+          <span class="history-timeline-dot"></span>
+
+          <span class="history-timeline-text">
+            <small>Comunidad</small>
+            <strong>Más que danza</strong>
+          </span>
+        </a>
+
+        <a
+          href="#legado"
+          class="history-timeline-item"
+          data-section="capitulo-7"
+        >
+          <span class="history-timeline-dot"></span>
+
+          <span class="history-timeline-text">
+            <small>Actualidad</small>
+            <strong>El legado</strong>
+          </span>
+        </a>
+
+      </div>
+    </nav>
+
     <section class="history-opening section" id="inicio-historia">
       <div class="history-opening-year" aria-hidden="true">2009</div>
 
@@ -865,7 +974,7 @@
           <p>
             Viajamos para compartir nuestras danzas, pero en cada regreso
             comprendimos que también llevábamos con nosotros el nombre,
-            la memoria y la identidad de Catacaos.
+            la memoria y la identidad de nuestro Perú.
           </p>
         </div>
 
@@ -889,7 +998,7 @@
 
           <p>
             Pasión y Sentimiento Cultural no creció únicamente sobre los escenarios.
-            También lo hizo en los talleres, en el trabajo comunitario y en cada
+            También lo hizo en la enseñanza, en el trabajo con la comunidad y en cada
             espacio donde un niño, un joven o una familia encontró una manera de
             acercarse a la cultura.
           </p>
@@ -906,7 +1015,7 @@
             </div>
 
             <span>Formación cultural</span>
-            <h3>Talleres en Simbilá</h3>
+            <h3>PySC en Simbilá</h3>
 
             <p>
               Entre 2010 y 2013, la agrupación desarrolló actividades formativas
@@ -1241,6 +1350,8 @@
       </div>
     </section>
 
+
+
   </main>
 
   <footer class="site-footer">
@@ -1343,5 +1454,115 @@
   </button>
 
   <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const timeline = document.getElementById("historyTimeline");
+      const progress = document.getElementById(
+        "historyTimelineProgress"
+      );
+
+      const timelineItems = Array.from(
+        document.querySelectorAll(".history-timeline-item")
+      );
+
+      const sections = timelineItems
+        .map((item) => {
+          const sectionId = item.dataset.section;
+          return document.getElementById(sectionId);
+        })
+        .filter(Boolean);
+
+      if (!timeline || !progress || sections.length === 0) {
+        return;
+      }
+
+      function updateTimeline() {
+        const viewportReference =
+          window.scrollY + window.innerHeight * 0.42;
+
+        let activeIndex = 0;
+
+        sections.forEach((section, index) => {
+          if (section.offsetTop <= viewportReference) {
+            activeIndex = index;
+          }
+        });
+
+        timelineItems.forEach((item, index) => {
+          item.classList.remove("active", "done");
+
+          if (index < activeIndex) {
+            item.classList.add("done");
+          }
+
+          if (index === activeIndex) {
+            item.classList.add("active");
+          }
+        });
+
+        const progressPercentage =
+          timelineItems.length > 1
+            ? (activeIndex / (timelineItems.length - 1)) * 100
+            : 0;
+
+        progress.style.height = `${progressPercentage}%`;
+
+        const firstSection = sections[0];
+        const lastSection = sections[sections.length - 1];
+
+        const timelineShouldBeVisible =
+          window.scrollY + window.innerHeight >
+            firstSection.offsetTop &&
+          window.scrollY <
+            lastSection.offsetTop +
+              lastSection.offsetHeight;
+
+        timeline.classList.toggle(
+          "is-hidden",
+          !timelineShouldBeVisible
+        );
+      }
+
+      timelineItems.forEach((item) => {
+        item.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          const section = document.getElementById(
+            item.dataset.section
+          );
+
+          if (!section) {
+            return;
+          }
+
+          section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        });
+      });
+
+      let ticking = false;
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateTimeline();
+              ticking = false;
+            });
+
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+
+      window.addEventListener("resize", updateTimeline);
+
+      updateTimeline();
+    });
+  </script>
 </body>
 </html>

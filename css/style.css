@@ -9354,3 +9354,275 @@ FOTOGRAFÍA PANORÁMICA
     border-radius: 26px;
   }
 }
+
+/* =========================
+   LÍNEA DE TIEMPO FLOTANTE
+========================= */
+
+.history-floating-timeline {
+  position: fixed;
+  z-index: 900;
+  top: 50%;
+  left: 18px;
+  width: 210px;
+  transform: translateY(-50%);
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    transform 0.35s ease;
+}
+
+.history-floating-timeline.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-20px, -50%);
+  pointer-events: none;
+}
+
+.history-floating-timeline-inner {
+  position: relative;
+  width: 54px;
+  overflow: hidden;
+  padding: 18px 12px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(19, 47, 93, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 20px 55px rgba(12, 34, 66, 0.16);
+  backdrop-filter: blur(14px);
+  transition:
+    width 0.35s ease,
+    padding 0.35s ease;
+}
+
+.history-floating-timeline:hover
+.history-floating-timeline-inner,
+.history-floating-timeline.is-open
+.history-floating-timeline-inner {
+  width: 210px;
+  padding: 22px 18px 20px;
+}
+
+.history-floating-title {
+  display: block;
+  width: 150px;
+  margin-bottom: 16px;
+  padding-left: 26px;
+  opacity: 0;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+/* Línea base */
+
+.history-floating-progress {
+  position: absolute;
+  top: 68px;
+  bottom: 34px;
+  left: 25px;
+  width: 2px;
+  overflow: hidden;
+  background: rgba(19, 47, 93, 0.13);
+  border-radius: 20px;
+}
+
+.history-floating-progress span {
+  display: block;
+  width: 100%;
+  height: 0;
+  background:
+    linear-gradient(
+      180deg,
+      var(--gold),
+      var(--wine)
+    );
+  border-radius: inherit;
+  transition: height 0.35s ease;
+}
+
+/* Elementos */
+
+.history-timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 55px;
+  padding: 8px 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.history-timeline-dot {
+  position: relative;
+  z-index: 2;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin-top: 4px;
+  background: #ffffff;
+  border: 3px solid #c8cbd1;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.85);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.history-timeline-text {
+  display: block;
+  min-width: 0;
+}
+
+.history-timeline-text small {
+  display: block;
+  color: #989da6;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.history-timeline-text strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.3;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Capítulos ya recorridos */
+
+.history-timeline-item.done .history-timeline-dot {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.history-timeline-item.done .history-timeline-text small {
+  color: var(--gold-dark, #a87908);
+}
+
+/* Capítulo actual */
+
+.history-timeline-item.active .history-timeline-dot {
+  background: var(--wine);
+  border-color: var(--wine);
+  transform: scale(1.35);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.9),
+    0 0 0 9px rgba(133, 24, 47, 0.12);
+}
+
+.history-timeline-item.active .history-timeline-text small {
+  color: var(--wine);
+}
+
+.history-timeline-item.active .history-timeline-text strong {
+  color: var(--wine);
+  transform: translateX(3px);
+}
+
+/* Hover */
+
+.history-timeline-item:hover .history-timeline-dot {
+  border-color: var(--gold);
+  transform: scale(1.15);
+}
+
+.history-timeline-item:hover .history-timeline-text strong {
+  color: var(--wine);
+}
+
+/* Evita que el título del capítulo quede detrás del header */
+
+section[id^="capitulo-"] {
+  scroll-margin-top: 105px;
+}
+
+/* Ocultar en pantallas pequeñas */
+
+@media (max-width: 1250px) {
+  .history-floating-timeline {
+    left: 12px;
+    width: 185px;
+  }
+
+  .history-floating-timeline-inner {
+    padding-right: 12px;
+    padding-left: 14px;
+  }
+
+  .history-timeline-text strong {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 1050px) {
+  .history-floating-timeline {
+    display: none;
+  }
+}
+
+.history-floating-timeline:hover
+.history-floating-title,
+.history-floating-timeline.is-open
+.history-floating-title {
+  opacity: 1;
+}
+
+.history-floating-progress {
+  position: absolute;
+  top: 65px;
+  bottom: 31px;
+  left: 25px;
+  width: 2px;
+  overflow: hidden;
+  background: rgba(19, 47, 93, 0.13);
+  border-radius: 20px;
+}
+
+.history-timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 175px;
+  min-height: 55px;
+  padding: 8px 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.history-timeline-text {
+  display: block;
+  min-width: 130px;
+  opacity: 0;
+  transform: translateX(-8px);
+  white-space: nowrap;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.history-floating-timeline:hover
+.history-timeline-text,
+.history-floating-timeline.is-open
+.history-timeline-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
