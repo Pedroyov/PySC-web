@@ -1401,3 +1401,287 @@ function initializeHeroParallax() {
 
 initializeHeroParallax();
 
+
+const galleryFolders = {
+  presentaciones: 18,
+  concursos: 9,
+  viajes: 12,
+  proyectos: 15,
+  actividades: 20
+};
+
+const galleryGrid =
+  document.getElementById("galleryGrid");
+
+const filterButtons =
+  document.querySelectorAll(".gallery-filter");
+
+const lightbox =
+  document.getElementById("galleryLightbox");
+
+const lightboxImage =
+  document.getElementById("lightboxImage");
+
+const lightboxCounter =
+  document.getElementById("lightboxCounter");
+
+const lightboxClose =
+  document.getElementById("lightboxClose");
+
+const lightboxPrev =
+  document.getElementById("lightboxPrev");
+
+const lightboxNext =
+  document.getElementById("lightboxNext");
+
+let visibleImages = [];
+let currentImageIndex = 0;
+
+
+/* CREAR GALERÍA */
+
+function buildGallery() {
+  galleryGrid.innerHTML = "";
+
+  Object.entries(galleryFolders).forEach(
+    ([category, total]) => {
+
+      for (let i = 1; i <= total; i++) {
+        const number =
+          String(i).padStart(2, "0");
+
+        const imagePath =
+          `img/galeria/${category}/${number}.jpg`;
+
+        const article =
+          document.createElement("article");
+
+        article.className = "gallery-item";
+        article.dataset.category = category;
+        article.dataset.image = imagePath;
+
+        article.innerHTML = `
+          <button
+            class="gallery-item-button"
+            type="button"
+            aria-label="Ampliar fotografía"
+          >
+            <img
+              src="${imagePath}"
+              alt="Fotografía de ${category}"
+              loading="lazy"
+            >
+
+            <span class="gallery-item-overlay">
+              <span class="gallery-item-icon">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </span>
+            </span>
+          </button>
+        `;
+
+        galleryGrid.appendChild(article);
+      }
+    }
+  );
+
+  addGalleryEvents();
+  updateVisibleImages();
+}
+
+
+/* EVENTOS DE LAS FOTOS */
+
+function addGalleryEvents() {
+  const galleryButtons =
+    document.querySelectorAll(
+      ".gallery-item-button"
+    );
+
+  galleryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const item =
+        button.closest(".gallery-item");
+
+      updateVisibleImages();
+
+      currentImageIndex =
+        visibleImages.indexOf(item);
+
+      openLightbox();
+    });
+  });
+}
+
+
+/* FOTOS VISIBLES SEGÚN FILTRO */
+
+function updateVisibleImages() {
+  visibleImages = Array.from(
+    document.querySelectorAll(
+      ".gallery-item:not(.is-hidden)"
+    )
+  );
+}
+
+
+/* ABRIR LIGHTBOX */
+
+function openLightbox() {
+  const selectedItem =
+    visibleImages[currentImageIndex];
+
+  if (!selectedItem) {
+    return;
+  }
+
+  const image =
+    selectedItem.querySelector("img");
+
+  lightboxImage.src =
+    selectedItem.dataset.image;
+
+  lightboxImage.alt =
+    image.alt;
+
+  lightboxCounter.textContent =
+    `${currentImageIndex + 1} de ${visibleImages.length}`;
+
+  lightbox.classList.add("is-open");
+  lightbox.setAttribute("aria-hidden", "false");
+
+  document.body.classList.add(
+    "lightbox-open"
+  );
+}
+
+
+/* CERRAR LIGHTBOX */
+
+function closeLightbox() {
+  lightbox.classList.remove("is-open");
+  lightbox.setAttribute("aria-hidden", "true");
+
+  document.body.classList.remove(
+    "lightbox-open"
+  );
+
+  lightboxImage.src = "";
+}
+
+
+/* IMAGEN ANTERIOR */
+
+function showPreviousImage() {
+  currentImageIndex--;
+
+  if (currentImageIndex < 0) {
+    currentImageIndex =
+      visibleImages.length - 1;
+  }
+
+  openLightbox();
+}
+
+
+/* IMAGEN SIGUIENTE */
+
+function showNextImage() {
+  currentImageIndex++;
+
+  if (
+    currentImageIndex >= visibleImages.length
+  ) {
+    currentImageIndex = 0;
+  }
+
+  openLightbox();
+}
+
+
+/* FILTROS */
+
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+
+    filterButtons.forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    const filter =
+      button.dataset.filter;
+
+    document
+      .querySelectorAll(".gallery-item")
+      .forEach(item => {
+
+        const shouldShow =
+          filter === "all" ||
+          item.dataset.category === filter;
+
+        item.classList.toggle(
+          "is-hidden",
+          !shouldShow
+        );
+      });
+
+    updateVisibleImages();
+  });
+});
+
+
+/* CONTROLES DEL LIGHTBOX */
+
+lightboxClose.addEventListener(
+  "click",
+  closeLightbox
+);
+
+lightboxPrev.addEventListener(
+  "click",
+  showPreviousImage
+);
+
+lightboxNext.addEventListener(
+  "click",
+  showNextImage
+);
+
+
+/* CERRAR AL HACER CLIC EN EL FONDO */
+
+lightbox.addEventListener("click", event => {
+  if (event.target === lightbox) {
+    closeLightbox();
+  }
+});
+
+
+/* CONTROLES DEL TECLADO */
+
+document.addEventListener("keydown", event => {
+  if (
+    !lightbox.classList.contains("is-open")
+  ) {
+    return;
+  }
+
+  if (event.key === "Escape") {
+    closeLightbox();
+  }
+
+  if (event.key === "ArrowLeft") {
+    showPreviousImage();
+  }
+
+  if (event.key === "ArrowRight") {
+    showNextImage();
+  }
+});
+
+
+/* INICIAR */
+
+buildGallery();
