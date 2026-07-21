@@ -171,14 +171,14 @@ document.addEventListener("DOMContentLoaded", () => {
     "La curiosidad te trajo bastante lejos.",
     "Tranquilo... no le diremos a nadie.",
     "Definitivamente hiciste clic donde no debías.",
-    "Esperamos que no hayas venido a auditar la página."
+    "Esperamos que no hayas venido a criticar la página."
   ];
 
   const groupPhrases = [
-    "Si llegaste hasta aquí, ya puedes ayudar a cargar las sillas.",
-    "Encontrar secretos es fácil. Desmontar el escenario es otra cosa.",
-    "No le cuentes a Omar... todavía.",
-    "Premio desbloqueado: ayudar después del próximo evento.",
+    "Si llegaste hasta aquí, ya puedes ayudar a cargar los trajes.",
+    "Encontrar secretos es fácil. Aprederse los pasos es otra cosa.",
+    "No le cuentes al profe Omar... todavía.",
+    "Premio desbloqueado: ayudar a guardar los trajes la proxima presentación.",
     "Ya conociste nuestras danzas... ahora conoce nuestro lado gamer.",
     "Esto cuenta como ensayo adicional. No aceptamos reclamos."
   ];
