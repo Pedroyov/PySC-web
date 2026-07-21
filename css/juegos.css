@@ -956,6 +956,15 @@
   background: rgba(255, 255, 255, 0.1);
   color: var(--secret-white);
 }
+.secret-status-ready {
+
+    border-color: rgba(45, 184, 107, .35);
+
+    background: rgba(45, 184, 107, .15);
+
+    color: #bff7d4;
+
+}
 
 .secret-game-icon {
   display: flex;

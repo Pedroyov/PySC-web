@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Memoria Folclórica | PySC
+  </title>
+
+  <link
+    rel="icon"
+    href="../img/favicon.ico"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/juego-memoria.css"
+  >
+</head>
+
+<body>
+
+  <main class="love-game-page">
+
+    <section class="love-game-shell">
+
+      <header class="love-game-header">
+
+        <a
+          href="../rincon-secreto.html"
+          class="love-game-back"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+
+          <span>
+            Volver al rincón
+          </span>
+        </a>
+
+        <div class="love-game-title">
+
+          <span class="love-game-eyebrow">
+            Desafío 02
+          </span>
+
+          <h1>
+            Memoria Folklórica
+          </h1>
+
+          <p>
+            Encuentra todas las parejas utilizando tu memoria. Completa el desafío con la menor cantidad de intentos para desbloquear el siguiente juego.
+          </p>
+
+        </div>
+
+        <div class="love-game-logo">
+
+          <img
+            src="../img/logo-pasion-sentimiento.png"
+            alt="Pasión y Sentimiento Cultural"
+          >
+
+        </div>
+
+      </header>
+
+      <section class="love-game-hud">
+
+        <div class="love-hud-item">
+
+            <span class="love-hud-label">
+            Intentos
+            </span>
+
+            <strong id="memoryAttempts">
+            0
+            </strong>
+
+        </div>
+
+        <div class="love-hud-item">
+
+            <span class="love-hud-label">
+            Parejas
+            </span>
+
+            <strong id="memoryPairs">
+            0 / 10
+            </strong>
+
+        </div>
+
+        <div class="love-hud-item">
+
+            <span class="love-hud-label">
+            Tiempo
+            </span>
+
+            <strong id="memoryTime">
+            00:00
+            </strong>
+
+        </div>
+
+      </section>
+
+      <section class="love-game-stage" id="memoryGameStage">
+
+        <div class="love-stage-decoration">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div
+            class="love-countdown"
+            id="loveCountdown"
+            aria-live="polite"
+        >
+        <span id="loveCountdownText">
+            3
+        </span>
+        </div>
+
+        <div class="love-game-welcome">
+
+            <div class="love-welcome-icon">
+                <i class="fa-solid fa-clone"></i>
+            </div>
+
+            <h2>
+                ¿Listo para recordar?
+            </h2>
+
+            <p>
+                Observa las cartas durante tres segundos y luego
+                encuentra las diez parejas con la menor cantidad
+                posible de intentos.
+            </p>
+
+            <button
+                type="button"
+                class="love-start-button"
+                id="memoryStartButton"
+            >
+                <i class="fa-solid fa-play"></i>
+
+                Comenzar partida
+            </button>
+
+        </div>
+
+
+
+        <div class="memory-board" id="memoryBoard">
+
+            
+
+        </div>
+
+      </section>
+
+      <footer class="love-game-footer">
+
+        <p>
+          <i class="fa-solid fa-computer-mouse"></i>
+
+          Encuentra las 10 parejas para superar el desafío.
+        </p>
+
+        <button
+          type="button"
+          class="love-reset-button"
+          id="loveResetButton"
+        >
+          <i class="fa-solid fa-rotate-right"></i>
+
+          Reiniciar
+        </button>
+
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL DE DESBLOQUEO -->
+
+  <div
+    class="love-unlock-modal"
+    id="loveUnlockModal"
+    aria-hidden="true"
+  >
+
+    <div class="love-unlock-backdrop"></div>
+
+    <div
+        class="love-unlock-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="loveUnlockTitle"
+    >
+
+        <div
+            class="love-unlock-icon"
+            id="loveUnlockIcon"
+        >
+            <i class="fa-solid fa-lock-open"></i>
+        </div>
+
+        <span
+            class="love-unlock-label"
+            id="loveUnlockLabel"
+        >
+            Nuevo desafío desbloqueado
+        </span>
+
+        <h2 id="loveUnlockTitle">
+            ¡Desafío superado!
+        </h2>
+
+        <p id="loveUnlockText">
+            Has desbloqueado el siguiente desafío.
+        </p>
+
+        <button
+            type="button"
+            class="love-unlock-button"
+            id="loveUnlockButton"
+        >
+            <span id="loveUnlockButtonText">
+            Continuar
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+  </div>
+
+  <script src="../js/juego-memoria.js"></script>
+
+</body>
+</html>
