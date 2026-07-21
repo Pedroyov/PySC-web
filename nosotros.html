@@ -52,6 +52,7 @@
     rel="stylesheet"
   >
 
+  <link rel="stylesheet" href="css/juegos.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -542,9 +543,17 @@
       <div class="container">
 
         <div
-          class="section-heading center"
-          data-reveal="up"
+        class="section-heading center"
+        data-reveal="up"
         >
+          <button
+            type="button"
+            class="secret-key secret-key-heart"
+            data-secret-key="2"
+            aria-label="Llave secreta"
+          >
+            <i class="fa-solid fa-heart"></i>
+          </button>
           <span class="section-kicker">
             Nuestro equipo
           </span>
@@ -1034,8 +1043,93 @@
 
 </footer>
 
+<div
+  class="secret-key-counter"
+  id="secretKeyCounter"
+  aria-live="polite"
+>
+  <i class="fa-solid fa-key"></i>
+
+  <span id="secretKeyCounterText">
+    0 / 5
+  </span>
+</div>
+
+<div
+  class="secret-key-toast"
+  id="secretKeyToast"
+  role="status"
+  aria-live="polite"
+>
+  <div class="secret-key-toast-icon">
+    <i class="fa-solid fa-key"></i>
+  </div>
+
+  <div class="secret-key-toast-content">
+    <strong id="secretKeyToastTitle">
+      Llave encontrada
+    </strong>
+
+    <span id="secretKeyToastText">
+      Has encontrado una llave secreta.
+    </span>
+  </div>
+</div>
+
+
 <button type="button" class="back-to-top" id="backToTop" aria-label="Volver al inicio de la página"><i class="fa-solid fa-arrow-up"></i></button>
 
+
+<div
+  class="secret-unlock-overlay"
+  id="secretUnlockOverlay"
+>
+  <div
+    class="secret-unlock-particles"
+    id="secretUnlockParticles"
+  ></div>
+
+  <div class="secret-unlock-modal">
+    <div class="secret-unlock-icon">
+      <i class="fa-solid fa-key"></i>
+    </div>
+
+    <p class="secret-unlock-label">
+      Rincón Secreto
+    </p>
+
+    <h2>
+      ¡Felicidades!
+    </h2>
+
+    <p>
+      Has encontrado las cinco llaves antiguas.
+    </p>
+
+    <strong>
+      El Rincón Secreto ha sido desbloqueado.
+    </strong>
+
+    <div class="secret-unlock-actions">
+      <a
+        href="rincon-secreto.html"
+        class="secret-unlock-enter"
+      >
+        Entrar ahora
+      </a>
+
+      <button
+        type="button"
+        class="secret-unlock-close"
+        id="secretUnlockClose"
+      >
+        Seguir explorando
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/secret-progress.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

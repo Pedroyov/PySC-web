@@ -1,0 +1,1369 @@
+/*=========================================
+  Configuración general
+=========================================*/
+
+:root{
+  --love-navy:#071126;
+  --love-navy-light:#0d1c3b;
+  --love-wine:#8d1f3f;
+  --love-wine-light:#b83359;
+  --love-gold:#d6b04a;
+  --love-white:#ffffff;
+  --love-text:rgba(255,255,255,.76);
+  --love-border:rgba(255,255,255,.12);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+
+  font-family:"Nunito Sans",sans-serif;
+
+  color:var(--love-white);
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(141,31,63,.28),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(214,176,74,.14),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #050b18 0%,
+      var(--love-navy) 48%,
+      #040914 100%
+    );
+}
+
+button,
+a{
+  font:inherit;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  border:0;
+}
+
+/*=========================================
+  Página y contenedor principal
+=========================================*/
+
+.love-game-page{
+  position:relative;
+
+  min-height:100vh;
+
+  padding:32px 20px;
+
+  overflow:hidden;
+}
+
+.love-game-page::before,
+.love-game-page::after{
+  content:"";
+
+  position:fixed;
+  z-index:-1;
+
+  width:420px;
+  height:420px;
+
+  border-radius:50%;
+
+  filter:blur(90px);
+  opacity:.22;
+
+  pointer-events:none;
+}
+
+.love-game-page::before{
+  top:-180px;
+  left:-150px;
+
+  background:var(--love-wine);
+}
+
+.love-game-page::after{
+  right:-170px;
+  bottom:-200px;
+
+  background:var(--love-gold);
+}
+
+.love-game-shell{
+  position:relative;
+
+  width:min(100%,1180px);
+  margin:0 auto;
+
+  overflow:hidden;
+
+  border:1px solid rgba(214,176,74,.20);
+  border-radius:30px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.025)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  backdrop-filter:blur(14px);
+}
+
+/*=========================================
+  Encabezado
+=========================================*/
+
+.love-game-header{
+  position:relative;
+
+  display:grid;
+  grid-template-columns:180px 1fr 180px;
+  align-items:center;
+  gap:30px;
+
+  padding:34px 38px;
+
+  border-bottom:1px solid var(--love-border);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(141,31,63,.16),
+      rgba(255,255,255,.02),
+      rgba(214,176,74,.08)
+    );
+}
+
+.love-game-header::after{
+  content:"";
+
+  position:absolute;
+  left:50%;
+  bottom:-1px;
+
+  width:180px;
+  height:2px;
+
+  transform:translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--love-gold),
+      transparent
+    );
+}
+
+.love-game-back{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  width:max-content;
+
+  padding:12px 16px;
+
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+
+  color:rgba(255,255,255,.82);
+  background:rgba(255,255,255,.045);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.86rem;
+  font-weight:500;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.love-game-back:hover{
+  transform:translateX(-4px);
+
+  border-color:rgba(214,176,74,.34);
+  background:rgba(214,176,74,.08);
+}
+
+.love-game-title{
+  text-align:center;
+}
+
+.love-game-eyebrow{
+  display:inline-block;
+
+  margin-bottom:8px;
+
+  color:var(--love-gold);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.76rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.love-game-title h1{
+  margin:0;
+
+  font-family:"Montserrat",sans-serif;
+  font-size:clamp(2rem,5vw,2.4rem);
+  font-weight:600;
+  line-height:1.05;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #f8d98b,
+      #ffffff
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.love-game-title p{
+  max-width:650px;
+  margin:14px auto 0;
+
+  color:var(--love-text);
+
+  font-size:1rem;
+  line-height:1.7;
+}
+
+.love-game-logo{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.love-game-logo img{
+  width:84px;
+  height:84px;
+
+  object-fit:contain;
+
+  padding:10px;
+
+  border:1px solid rgba(214,176,74,.20);
+  border-radius:22px;
+
+  background:rgba(255,255,255,.045);
+
+  box-shadow:0 16px 35px rgba(0,0,0,.24);
+}
+
+/*=========================================
+  HUD
+=========================================*/
+
+.love-game-hud{
+  display:grid;
+  grid-template-columns:1.7fr repeat(3,1fr);
+  gap:14px;
+
+  padding:18px 24px;
+
+  border-bottom:1px solid var(--love-border);
+
+  background:rgba(3,8,20,.42);
+}
+
+.love-hud-item{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+
+  min-height:78px;
+  padding:14px 18px;
+
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.055),
+      rgba(255,255,255,.02)
+    );
+}
+
+.love-hud-label{
+  color:rgba(255,255,255,.55);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.72rem;
+  font-weight:500;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.love-hud-item strong{
+  color:var(--love-white);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:1.2rem;
+  font-weight:600;
+}
+
+.love-hud-lives{
+  align-items:flex-start;
+}
+
+.love-lives-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+
+  color:#ff4f7d;
+
+  font-size:1.32rem;
+
+  filter:drop-shadow(0 0 8px rgba(255,79,125,.28));
+}
+
+/*=========================================
+  Escenario
+=========================================*/
+
+.love-game-stage{
+  position:relative;
+
+  display:grid;
+  place-items:center;
+
+  height: 80vh;
+
+  min-height:650px;
+  padding:40px;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5,11,24,.42),
+      rgba(5,11,24,.82)
+    ),
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(214,176,74,.16),
+      transparent 36%
+    );
+}
+
+.love-game-stage::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,255,255,.025) 50%,
+      transparent 100%
+    );
+
+  pointer-events:none;
+}
+
+.love-game-stage::after{
+  content:"";
+
+  position:absolute;
+  left:8%;
+  right:8%;
+  bottom:28px;
+
+  height:72px;
+
+  border-radius:50%;
+
+  background:rgba(0,0,0,.46);
+
+  filter:blur(18px);
+
+  pointer-events:none;
+}
+
+.love-stage-decoration{
+  position:absolute;
+  inset:0;
+
+  pointer-events:none;
+}
+
+.love-stage-decoration span{
+  position:absolute;
+  top:-90px;
+
+  width:180px;
+  height:500px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.14),
+      transparent 78%
+    );
+
+  filter:blur(10px);
+
+  opacity:.23;
+
+  transform-origin:top;
+}
+
+.love-stage-decoration span:nth-child(1){
+  left:10%;
+  transform:rotate(18deg);
+}
+
+.love-stage-decoration span:nth-child(2){
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.love-stage-decoration span:nth-child(3){
+  right:10%;
+  transform:rotate(-18deg);
+}
+
+/*=========================================
+  Pantalla inicial
+=========================================*/
+
+.love-game-welcome{
+  position:relative;
+  z-index:2;
+
+  width:min(100%,640px);
+
+  padding:42px 34px;
+
+  text-align:center;
+
+  border:1px solid rgba(214,176,74,.20);
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.025)
+    );
+
+  box-shadow:
+    0 24px 55px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  backdrop-filter:blur(10px);
+}
+
+.love-welcome-icon{
+  display:grid;
+  place-items:center;
+
+  width:88px;
+  height:88px;
+
+  margin:0 auto 24px;
+
+  border:1px solid rgba(255,79,125,.30);
+  border-radius:28px;
+
+  color:#ff4f7d;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,79,125,.20),
+      rgba(255,79,125,.06)
+    );
+
+  font-size:2.2rem;
+
+  box-shadow:0 0 35px rgba(255,79,125,.16);
+}
+
+.love-game-welcome h2{
+  margin:0 0 14px;
+
+  font-family:"Montserrat",sans-serif;
+  font-size:clamp(1.65rem,4vw,2.45rem);
+  font-weight:600;
+}
+
+.love-game-welcome p{
+  max-width:540px;
+  margin:0 auto;
+
+  color:var(--love-text);
+
+  font-size:1rem;
+  line-height:1.75;
+}
+
+.love-start-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  margin-top:28px;
+  padding:15px 24px;
+
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+
+  color:var(--love-white);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--love-wine),
+      var(--love-wine-light)
+    );
+
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 14px 30px rgba(141,31,63,.30),
+    inset 0 1px 0 rgba(255,255,255,.15);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.love-start-button:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 18px 38px rgba(141,31,63,.40),
+    inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+.love-start-button:active{
+  transform:translateY(0);
+}
+
+/*=========================================
+  Pie del juego
+=========================================*/
+
+.love-game-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+
+  padding:18px 24px;
+
+  border-top:1px solid var(--love-border);
+
+  background:rgba(3,8,20,.50);
+}
+
+.love-game-footer p{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin:0;
+
+  color:rgba(255,255,255,.58);
+
+  font-size:.92rem;
+}
+
+.love-game-footer p i{
+  color:var(--love-gold);
+}
+
+.love-reset-button{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+
+  padding:11px 16px;
+
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+
+  color:rgba(255,255,255,.76);
+  background:rgba(255,255,255,.045);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.84rem;
+  font-weight:500;
+
+  cursor:pointer;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.love-reset-button:hover{
+  transform:translateY(-2px);
+
+  border-color:rgba(214,176,74,.30);
+  background:rgba(214,176,74,.08);
+}
+
+/*=========================================
+  Responsive
+=========================================*/
+
+@media (max-width:900px){
+
+  .love-game-page{
+    padding:18px 14px;
+  }
+
+  .love-game-header{
+    grid-template-columns:1fr;
+    gap:22px;
+
+    padding:28px 24px;
+  }
+
+  .love-game-back{
+    order:1;
+  }
+
+  .love-game-title{
+    order:2;
+  }
+
+  .love-game-logo{
+    display:none;
+  }
+
+  .love-game-hud{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .love-hud-lives{
+    align-items:center;
+  }
+
+}
+
+
+
+/*=========================================
+  Transición al iniciar la partida
+=========================================*/
+
+.love-game-welcome{
+  transition:
+    opacity .45s ease,
+    transform .45s ease,
+    visibility .45s ease;
+}
+
+.love-game-welcome.is-hidden{
+  opacity:0;
+  visibility:hidden;
+
+  transform:
+    translateY(-20px)
+    scale(.94);
+
+  pointer-events:none;
+}
+
+.love-game-stage.is-playing{
+  min-height:calc(100vh - 260px);
+}
+
+/*=========================================
+  Cuenta regresiva
+=========================================*/
+
+.love-countdown{
+  position:absolute;
+  z-index:10;
+  inset:0;
+
+  display:grid;
+  place-items:center;
+
+  opacity:0;
+  visibility:hidden;
+
+  background:rgba(3,8,20,.28);
+
+  backdrop-filter:blur(3px);
+
+  pointer-events:none;
+
+  transition:
+    opacity .25s ease,
+    visibility .25s ease;
+}
+
+.love-countdown.is-visible{
+  opacity:1;
+  visibility:visible;
+}
+
+.love-countdown span{
+  display:grid;
+  place-items:center;
+
+  min-width:150px;
+  min-height:150px;
+
+  padding:24px;
+
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;
+
+  color:#ffffff;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(184,51,89,.92),
+      rgba(141,31,63,.78)
+    );
+
+  font-family:"Montserrat",sans-serif;
+  font-size:clamp(4rem,10vw,7rem);
+  font-weight:600;
+  line-height:1;
+
+  box-shadow:
+    0 0 50px rgba(184,51,89,.34),
+    inset 0 1px 0 rgba(255,255,255,.20);
+}
+
+.love-countdown span.is-changing{
+  animation:loveCountdownPop .55s ease;
+}
+
+.love-countdown span.is-final{
+  min-width:auto;
+  min-height:auto;
+
+  padding:24px 38px;
+
+  border-radius:999px;
+
+  color:#071126;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8d98b,
+      #d6b04a
+    );
+
+  font-size:clamp(2rem,6vw,4rem);
+
+  box-shadow:
+    0 0 55px rgba(214,176,74,.38),
+    inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+@keyframes loveCountdownPop{
+
+  0%{
+    opacity:0;
+    transform:scale(.55);
+  }
+
+  55%{
+    opacity:1;
+    transform:scale(1.12);
+  }
+
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+/*=========================================
+  Personaje
+=========================================*/
+
+.love-character{
+
+    position:absolute;
+    width:40px;
+    z-index:20;
+    user-select:none;
+    pointer-events:none;
+
+    transition:
+        left 2.5s linear,
+        top 2.5s linear,
+        transform .25s ease,
+        opacity .35s ease;
+
+}
+
+.love-character img{
+
+    width:100%;
+    height:auto;
+    display:block;
+
+}
+
+.love-characters{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+}
+
+.love-character.hidden{
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+}
+
+.love-hearts{
+
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:30;
+
+}
+
+.love-heart{
+
+    position:absolute;
+
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+
+    transform:translate(-50%, -50%);
+
+    transition:
+        left .8s linear,
+        top .8s linear;
+
+}
+.love-objects{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:25;
+
+}
+.love-object{
+    position:absolute;
+    width:40px;
+    user-select:none;
+    pointer-events:none;
+
+    transition:
+      top 4s linear;
+}
+
+.love-object img{
+    width:100%;
+    display:block;
+}
+
+.love-lives-list i{
+    transition: opacity .3s ease;
+}
+
+.love-game-over{
+
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    gap:18px;
+
+    background:rgba(8,12,25,.90);
+
+    z-index:100;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.35s;
+
+}
+
+.love-game-over.is-visible{
+
+    opacity:1;
+    visibility:visible;
+
+}
+
+.love-over-icon{
+
+    font-size:56px;
+    color:#ff4d6d;
+
+}
+.love-reset-button{
+    display:none;
+}
+
+.love-reset-button.is-visible{
+    display:flex;
+}
+
+.love-character.is-hit{
+    animation:loveCharacterHit .35s ease;
+}
+
+@keyframes loveCharacterHit{
+
+    0%{
+        filter:brightness(1);
+    }
+
+    40%{
+        filter:
+            brightness(1.8)
+            drop-shadow(0 0 14px rgba(255,255,255,.9));
+    }
+
+    100%{
+        filter:brightness(1);
+    }
+
+}
+
+.love-object.is-hit{
+    animation:loveObjectHit .35s ease;
+}
+
+@keyframes loveObjectHit{
+
+    0%{
+        transform:translateX(0) rotate(0);
+    }
+
+    20%{
+        transform:translateX(-6px) rotate(-10deg);
+    }
+
+    40%{
+        transform:translateX(6px) rotate(10deg);
+    }
+
+    60%{
+        transform:translateX(-5px) rotate(-8deg);
+    }
+
+    80%{
+        transform:translateX(5px) rotate(8deg);
+    }
+
+    100%{
+        transform:translateX(0) rotate(0);
+    }
+
+}
+
+/* =====================================
+   MODAL DE DESBLOQUEO
+===================================== */
+
+.love-unlock-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.love-unlock-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.love-unlock-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background:
+    rgba(5, 10, 25, 0.82);
+
+  backdrop-filter: blur(7px);
+}
+
+.love-unlock-content {
+  position: relative;
+  z-index: 1;
+
+  width: min(100%, 470px);
+
+  padding: 38px 32px 32px;
+
+  text-align: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(29, 35, 66, 0.98),
+      rgba(80, 24, 58, 0.98)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.45);
+
+  transform:
+    translateY(30px)
+    scale(0.92);
+
+  transition:
+    transform 0.35s ease;
+}
+
+.love-unlock-modal.is-visible
+.love-unlock-content {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.love-unlock-icon {
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  font-size: 34px;
+}
+
+.love-unlock-label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.love-unlock-content h2 {
+  margin: 0 0 14px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(25px, 5vw, 34px);
+  line-height: 1.15;
+}
+
+.love-unlock-content p {
+  margin: 0 auto 18px;
+
+  max-width: 380px;
+
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+
+  opacity: 0.86;
+}
+
+.love-unlock-game-name {
+  display: inline-block;
+
+  margin-bottom: 24px;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.love-unlock-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 48px;
+
+  padding: 12px 22px;
+
+  border: 0;
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.love-unlock-button:hover {
+  transform: translateY(-2px);
+}
+
+.love-unlock-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 520px) {
+
+  .love-unlock-modal {
+    padding: 16px;
+  }
+
+  .love-unlock-content {
+    padding: 32px 22px 26px;
+    border-radius: 22px;
+  }
+
+  .love-unlock-icon {
+    width: 70px;
+    height: 70px;
+
+    font-size: 29px;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width:620px){
+
+  .love-game-page{
+    padding:0;
+  }
+
+  .love-game-shell{
+    min-height:100vh;
+
+    border-radius:0;
+    border-left:0;
+    border-right:0;
+  }
+
+  .love-game-header{
+    padding:24px 18px;
+  }
+
+  .love-game-back span{
+    display:none;
+  }
+
+  .love-game-back{
+    width:44px;
+    height:44px;
+
+    justify-content:center;
+
+    padding:0;
+  }
+
+  .love-game-title p{
+    font-size:.92rem;
+  }
+
+  .love-game-hud{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:5px;
+  }
+
+  .love-hud-item{
+    min-width:0;
+    padding:5px 4px;
+    min-height: 48px;
+  }
+
+  .love-hud-label{
+    font-size:.60rem;
+    letter-spacing:1px;
+  }
+
+  .love-hud-item strong{
+    font-size:1.05rem;
+    white-space:nowrap;
+  }
+
+  .love-hud-lives{
+    grid-column:1 / -1;
+  }
+
+  .love-lives-list{
+    justify-content:center;
+    font-size:1.15rem;
+  }
+
+  .love-game-stage{
+    min-height:520px;
+
+    padding:24px 16px;
+  }
+
+  .love-game-welcome{
+    padding:34px 22px;
+  }
+
+  .love-game-footer{
+    flex-direction:column;
+    align-items:stretch;
+
+    padding:16px;
+  }
+
+  .love-game-footer p{
+    justify-content:center;
+    text-align:center;
+  }
+
+  .love-reset-button{
+    justify-content:center;
+  }
+
+  .love-game-stage.is-playing{
+    min-height:calc(135vh - 500px);
+  }
+
+  .love-countdown span{
+    min-width:120px;
+    min-height:120px;
+  }
+
+  /* Personajes */
+  .love-character{
+      width:32px;
+  }
+
+  /* Objetos */
+  .love-object{
+      width:38px;
+  }
+
+  /* Corazones disparados */
+  .love-heart{
+      width:28px;
+      height:28px;
+      font-size:24px;
+  }
+
+}
+

@@ -1,0 +1,2469 @@
+/* ==================================================
+   RINCÓN SECRETO
+   Estilos exclusivos de rincon-secreto.html
+================================================== */
+
+:root {
+  --secret-dark: #050814;
+  --secret-navy: #0b1530;
+  --secret-navy-light: #14244a;
+  --secret-wine: #7a1631;
+  --secret-wine-light: #a5264b;
+  --secret-gold: #d5ad55;
+  --secret-gold-light: #f5d98e;
+  --secret-white: #ffffff;
+  --secret-muted: #b9bfd0;
+  --secret-card: rgba(18, 29, 59, 0.82);
+  --secret-border: rgba(213, 173, 85, 0.25);
+}
+
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+================================================== */
+
+.secret-page {
+  background: var(--secret-dark);
+}
+
+.secret-page.secret-intro-active {
+  overflow: hidden;
+}
+
+.secret-main {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(122, 22, 49, 0.13),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(213, 173, 85, 0.08),
+      transparent 30%
+    ),
+    var(--secret-dark);
+}
+
+/* ==================================================
+   INTRODUCCIÓN
+================================================== */
+
+.secret-intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at center,
+      #0c1734 0%,
+      #050814 52%,
+      #010205 100%
+    );
+  color: var(--secret-white);
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+}
+
+.secret-intro-screen.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.secret-stars,
+.secret-stars::before,
+.secret-stars::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.secret-stars {
+  opacity: 0.4;
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(245, 217, 142, 0.8) 0 1px,
+      transparent 1.5px
+    );
+  background-size: 85px 85px;
+  animation: secretStarsMove 25s linear infinite;
+}
+
+.secret-stars::before {
+  opacity: 0.35;
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.8) 0 1px,
+      transparent 1.5px
+    );
+  background-size: 130px 130px;
+  transform: translate(25px, 40px);
+}
+
+.secret-stars::after {
+  opacity: 0.25;
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(213, 173, 85, 0.9) 0 2px,
+      transparent 2.5px
+    );
+  background-size: 190px 190px;
+  transform: translate(70px, 10px);
+}
+
+@keyframes secretStarsMove {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(85px);
+  }
+}
+
+/* ==================================================
+   LOGO Y FRASES
+================================================== */
+
+.secret-intro-content {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  width: min(90%, 760px);
+  min-height: 340px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.secret-intro-content.is-hidden {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+.secret-intro-logo {
+  width: min(260px, 70vw);
+  max-height: 170px;
+  object-fit: contain;
+  margin-bottom: 45px;
+  opacity: 0;
+  transform: translateY(15px) scale(0.94);
+  filter:
+    drop-shadow(0 0 15px rgba(213, 173, 85, 0.18))
+    drop-shadow(0 0 40px rgba(122, 22, 49, 0.2));
+  animation: secretLogoReveal 1.5s ease forwards;
+}
+
+@keyframes secretLogoReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.secret-intro-text {
+  min-height: 70px;
+  margin: 0;
+  color: var(--secret-white);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.1rem, 3vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.secret-intro-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================================================
+   PUERTA
+================================================== */
+
+.secret-door-stage {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.9);
+  transition:
+    opacity 0.9s ease,
+    visibility 0.9s ease,
+    transform 0.9s ease;
+}
+
+.secret-door-stage.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+.secret-door-message {
+  margin: 0 0 24px;
+  color: var(--secret-gold-light);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+.secret-door-button {
+  position: relative;
+  display: block;
+  width: min(310px, 68vw);
+  aspect-ratio: 0.77;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 1400px;
+}
+
+.secret-door-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 7px solid var(--secret-gold);
+  border-bottom-width: 11px;
+  border-radius: 150px 150px 10px 10px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(245, 217, 142, 0.9),
+      rgba(213, 173, 85, 0.3)
+    );
+  box-shadow:
+    0 0 15px rgba(213, 173, 85, 0.4),
+    0 0 45px rgba(213, 173, 85, 0.25),
+    0 0 100px rgba(122, 22, 49, 0.3);
+  transform-style: preserve-3d;
+}
+
+.secret-door-glow {
+  position: absolute;
+  inset: -35px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(245, 217, 142, 0.25),
+      transparent 65%
+    );
+  filter: blur(10px);
+  animation: secretDoorGlow 2.6s ease-in-out infinite;
+}
+
+@keyframes secretDoorGlow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.secret-door-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.2%;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06),
+      transparent 12%,
+      transparent 88%,
+      rgba(0, 0, 0, 0.2)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      #461326 0,
+      #461326 7px,
+      #57162e 8px,
+      #57162e 15px
+    );
+  box-shadow:
+    inset 0 0 35px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 2px rgba(213, 173, 85, 0.25);
+  transition: transform 1.55s cubic-bezier(0.65, 0, 0.25, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.secret-door-left {
+  left: 0;
+  border-right: 1px solid rgba(213, 173, 85, 0.4);
+  transform-origin: left center;
+}
+
+.secret-door-right {
+  right: 0;
+  border-left: 1px solid rgba(213, 173, 85, 0.4);
+  transform-origin: right center;
+}
+
+.secret-door-detail {
+  position: absolute;
+  inset: 14% 14%;
+  border: 2px solid rgba(213, 173, 85, 0.45);
+  border-radius: 90px 90px 5px 5px;
+  box-shadow:
+    inset 0 0 0 7px rgba(0, 0, 0, 0.08),
+    inset 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.secret-door-logo {
+  position: absolute;
+  z-index: 5;
+  top: 49%;
+  left: 50%;
+  display: flex;
+  width: 88px;
+  height: 88px;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--secret-gold);
+  border-radius: 50%;
+  background: var(--secret-navy);
+  box-shadow:
+    0 0 0 8px rgba(213, 173, 85, 0.15),
+    0 0 28px rgba(213, 173, 85, 0.4);
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s ease;
+}
+
+.secret-door-logo img {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+}
+
+.secret-door-light {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      var(--secret-gold-light) 30%,
+      var(--secret-gold) 55%,
+      transparent 80%
+    );
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
+}
+
+.secret-door-button.is-opening .secret-door-left {
+  transform: rotateY(-105deg);
+}
+
+.secret-door-button.is-opening .secret-door-right {
+  transform: rotateY(105deg);
+}
+
+.secret-door-button.is-opening .secret-door-logo {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+}
+
+.secret-door-button.is-opening .secret-door-light {
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+.secret-door-instruction {
+  margin: 24px 0 0;
+  color: var(--secret-muted);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  animation: secretInstruction 1.6s ease-in-out infinite;
+}
+
+.secret-door-instruction i {
+  margin-right: 8px;
+  color: var(--secret-gold);
+}
+
+@keyframes secretInstruction {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+/* ==================================================
+   DESTELLO
+================================================== */
+
+.secret-transition-light {
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.secret-transition-light.is-visible {
+  animation: secretWhiteFlash 1.5s ease forwards;
+}
+
+@keyframes secretWhiteFlash {
+  0% {
+    opacity: 0;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ==================================================
+   OMITIR INTRODUCCIÓN
+================================================== */
+
+.secret-skip-button {
+  position: absolute;
+  z-index: 30;
+  right: 24px;
+  bottom: 22px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.68);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.secret-skip-button:hover {
+  border-color: rgba(213, 173, 85, 0.5);
+  background: rgba(213, 173, 85, 0.1);
+  color: var(--secret-white);
+}
+
+/* ==================================================
+   HERO
+================================================== */
+
+.secret-hero {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 150px 20px 100px;
+  color: var(--secret-white);
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(122, 22, 49, 0.33),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #050814,
+      #0b1530 55%,
+      #101a38
+    );
+}
+
+.secret-hero::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.25;
+  background-image:
+    linear-gradient(
+      rgba(213, 173, 85, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(213, 173, 85, 0.05) 1px,
+      transparent 1px
+    );
+  background-size: 70px 70px;
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      #000 25%,
+      #000 75%,
+      transparent
+    );
+}
+
+.secret-hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+}
+
+.secret-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+  padding: 10px 18px;
+  border: 1px solid rgba(213, 173, 85, 0.35);
+  border-radius: 999px;
+  background: rgba(213, 173, 85, 0.08);
+  color: var(--secret-gold-light);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.secret-hero h1 {
+  margin: 0 0 24px;
+  color: var(--secret-white);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(3rem, 8vw, 6.8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.secret-hero h1 span {
+  display: block;
+  color: var(--secret-gold);
+  text-shadow:
+    0 0 25px rgba(213, 173, 85, 0.22);
+}
+
+.secret-hero p {
+  max-width: 720px;
+  margin: 0 auto 36px;
+  color: var(--secret-muted);
+  font-size: clamp(1rem, 2.3vw, 1.2rem);
+  line-height: 1.85;
+}
+
+.secret-hero-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 25px;
+  border: 1px solid var(--secret-gold);
+  border-radius: 999px;
+  background: var(--secret-gold);
+  color: var(--secret-dark);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.secret-hero-button:hover {
+  background: var(--secret-gold-light);
+  box-shadow:
+    0 12px 30px rgba(213, 173, 85, 0.25);
+  transform: translateY(-3px);
+}
+
+.secret-hero-button i {
+  animation: secretArrow 1.4s ease-in-out infinite;
+}
+
+@keyframes secretArrow {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+.secret-hero-particles span {
+  position: absolute;
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--secret-gold-light);
+  box-shadow: 0 0 12px var(--secret-gold);
+  opacity: 0.35;
+  animation: secretParticleFloat 10s linear infinite;
+}
+
+.secret-hero-particles span:nth-child(1) {
+  left: 8%;
+  bottom: -5%;
+  animation-duration: 12s;
+}
+
+.secret-hero-particles span:nth-child(2) {
+  left: 24%;
+  bottom: -10%;
+  animation-delay: 2s;
+  animation-duration: 15s;
+}
+
+.secret-hero-particles span:nth-child(3) {
+  left: 47%;
+  bottom: -5%;
+  animation-delay: 5s;
+  animation-duration: 11s;
+}
+
+.secret-hero-particles span:nth-child(4) {
+  left: 68%;
+  bottom: -8%;
+  animation-delay: 1s;
+  animation-duration: 14s;
+}
+
+.secret-hero-particles span:nth-child(5) {
+  left: 83%;
+  bottom: -3%;
+  animation-delay: 4s;
+  animation-duration: 13s;
+}
+
+.secret-hero-particles span:nth-child(6) {
+  left: 93%;
+  bottom: -7%;
+  animation-delay: 7s;
+  animation-duration: 16s;
+}
+
+@keyframes secretParticleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.7);
+  }
+
+  15% {
+    opacity: 0.5;
+  }
+
+  85% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-110vh) scale(1.4);
+  }
+}
+
+.secret-hero-shadow {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 160px;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      var(--secret-dark)
+    );
+}
+
+/* ==================================================
+   BIENVENIDA
+================================================== */
+
+.secret-welcome {
+  position: relative;
+  padding: 100px 20px;
+}
+
+.secret-welcome-card {
+  display: grid;
+  max-width: 980px;
+  margin: auto;
+  padding: 50px;
+  border: 1px solid var(--secret-border);
+  border-radius: 28px;
+  grid-template-columns: 140px 1fr;
+  gap: 42px;
+  align-items: center;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.015)
+    );
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+.secret-welcome-icon {
+  display: flex;
+  width: 125px;
+  height: 125px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(213, 173, 85, 0.45);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(213, 173, 85, 0.18),
+      rgba(122, 22, 49, 0.18)
+    );
+  color: var(--secret-gold);
+  font-size: 3rem;
+  box-shadow:
+    0 0 45px rgba(213, 173, 85, 0.12);
+}
+
+.secret-section-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--secret-gold);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.77rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.secret-welcome-content h2,
+.secret-section-heading h2 {
+  margin: 0 0 20px;
+  color: var(--secret-white);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+}
+
+.secret-welcome-content p {
+  margin: 0 0 14px;
+  color: var(--secret-muted);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+/* ==================================================
+   SALA DE JUEGOS
+================================================== */
+
+.secret-games-room {
+  position: relative;
+  padding: 110px 20px 125px;
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(11, 21, 48, 0.8) 18%,
+      rgba(11, 21, 48, 0.92)
+    );
+}
+
+.secret-room-decoration {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: min(900px, 90vw);
+  height: 400px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(122, 22, 49, 0.2),
+      transparent 65%
+    );
+  filter: blur(30px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.secret-section-heading {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto 65px;
+  text-align: center;
+}
+
+.secret-section-heading p {
+  margin: 0;
+  color: var(--secret-muted);
+  line-height: 1.8;
+}
+
+.secret-games-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.secret-game-card {
+  position: relative;
+  display: flex;
+  min-height: 330px;
+  overflow: hidden;
+  padding: 38px;
+  border: 1px solid var(--secret-border);
+  border-radius: 25px;
+  align-items: flex-start;
+  flex-direction: column;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(24, 39, 78, 0.92),
+      rgba(10, 17, 37, 0.96)
+    );
+  box-shadow:
+    0 22px 55px rgba(0, 0, 0, 0.25);
+  transition:
+    border-color 0.35s ease,
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.secret-game-card:hover{
+
+    border-color:rgba(214,176,74,.65);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.35),
+        0 0 30px rgba(214,176,74,.12);
+
+}
+
+.secret-game-card::before {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  content: "";
+  background:
+    radial-gradient(
+      circle,
+      rgba(213, 173, 85, 0.14),
+      transparent 68%
+    );
+  transition: transform 0.4s ease;
+}
+
+.secret-game-card:hover {
+  border-color: rgba(213, 173, 85, 0.65);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.38),
+    0 0 35px rgba(213, 173, 85, 0.07);
+  transform: translateY(-8px);
+}
+
+.secret-game-card:hover::before {
+  transform: scale(1.25);
+}
+
+.secret-game-featured {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(122, 22, 49, 0.8),
+      rgba(24, 20, 45, 0.98)
+    );
+}
+
+.secret-game-status {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 7px 12px;
+  border: 1px solid rgba(213, 173, 85, 0.25);
+  border-radius: 999px;
+  background: rgba(213, 173, 85, 0.08);
+  color: var(--secret-gold-light);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.secret-status-development {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--secret-white);
+}
+
+.secret-game-icon {
+  display: flex;
+  width: 70px;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  border: 1px solid rgba(213, 173, 85, 0.35);
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(213, 173, 85, 0.13),
+      rgba(122, 22, 49, 0.1)
+    );
+  color: var(--secret-gold);
+  font-size: 1.9rem;
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.35s ease;
+}
+.secret-game-card:hover .secret-game-icon{
+
+    transform:
+        rotate(-12deg)
+        scale(1.12);
+
+}
+
+.secret-game-card:hover .secret-game-icon {
+  box-shadow:
+    0 10px 30px rgba(213, 173, 85, 0.16);
+  transform: translateY(-5px) rotate(-3deg);
+}
+
+.secret-game-number {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(213, 173, 85, 0.72);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.secret-game-info h3 {
+  margin: 0 0 15px;
+  color: var(--secret-white);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 800;
+}
+
+.secret-game-info p {
+  margin: 0 0 28px;
+  color: var(--secret-muted);
+  line-height: 1.75;
+}
+
+.secret-game-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding: 12px 18px;
+  border: 1px solid rgba(213, 173, 85, 0.28);
+  border-radius: 999px;
+  background: rgba(213, 173, 85, 0.08);
+  color: var(--secret-gold-light);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.77rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.secret-game-button:hover {
+  border-color: var(--secret-gold);
+  background: var(--secret-gold);
+  color: var(--secret-dark);
+}
+
+.secret-mystery-card {
+  border-style: dashed;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 12px,
+      transparent 12px,
+      transparent 24px
+    ),
+    rgba(7, 12, 26, 0.92);
+}
+
+/* ==================================================
+   FRASE FINAL
+================================================== */
+
+.secret-ending {
+  padding: 105px 20px;
+  text-align: center;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 21, 48, 0.92),
+      #050814
+    );
+}
+
+.secret-ending-content {
+  max-width: 760px;
+  margin: auto;
+}
+
+.secret-ending-content > i {
+  margin-bottom: 24px;
+  color: var(--secret-gold);
+  font-size: 2rem;
+}
+
+.secret-ending-content p {
+  margin: 0 0 18px;
+  color: var(--secret-white);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.4rem, 4vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.secret-ending-content span {
+  color: var(--secret-muted);
+  font-size: 0.9rem;
+}
+
+/* ==================================================
+   MENSAJE FLOTANTE
+================================================== */
+
+.secret-toast {
+  position: fixed;
+  z-index: 5000;
+  right: 22px;
+  bottom: 22px;
+  display: flex;
+  width: min(390px, calc(100% - 44px));
+  padding: 18px 20px;
+  border: 1px solid rgba(213, 173, 85, 0.3);
+  border-radius: 18px;
+  align-items: center;
+  gap: 15px;
+  background: rgba(7, 12, 26, 0.95);
+  color: var(--secret-white);
+  box-shadow:
+    0 20px 55px rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(25px);
+  backdrop-filter: blur(12px);
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    transform 0.35s ease;
+}
+
+.secret-toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.secret-toast > i {
+  color: var(--secret-gold);
+  font-size: 1.6rem;
+}
+
+.secret-toast div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.secret-toast strong {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+}
+
+.secret-toast span {
+  color: var(--secret-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 850px) {
+  .secret-welcome-card {
+    padding: 40px 30px;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    text-align: center;
+  }
+
+  .secret-welcome-icon {
+    margin: auto;
+  }
+
+  .secret-games-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .secret-hero {
+    min-height: 92vh;
+    padding: 130px 18px 85px;
+  }
+
+  .secret-eyebrow {
+    font-size: 0.68rem;
+  }
+
+  .secret-welcome,
+  .secret-games-room,
+  .secret-ending {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .secret-welcome-card {
+    padding: 34px 22px;
+    border-radius: 22px;
+  }
+
+  .secret-game-card {
+    min-height: 0;
+    padding: 30px 24px;
+  }
+
+  .secret-game-status {
+    top: 18px;
+    right: 18px;
+    max-width: 115px;
+    text-align: center;
+  }
+
+  .secret-door-button {
+    width: min(250px, 66vw);
+  }
+
+  .secret-door-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .secret-door-logo img {
+    width: 53px;
+    height: 53px;
+  }
+
+  .secret-skip-button {
+    right: 50%;
+    bottom: 15px;
+    transform: translateX(50%);
+  }
+}
+
+/* ==================================================
+   MOVIMIENTO REDUCIDO
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .secret-page *,
+  .secret-page *::before,
+  .secret-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.secret-hero-watermark {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  color: rgba(255, 255, 255, 0.025);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(8rem, 28vw, 24rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  transform: translate(-50%, -50%);
+}
+
+.secret-light-beam{
+
+    position:absolute;
+
+    top:-220px;
+
+    left:50%;
+
+    width:850px;
+
+    height:900px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        radial-gradient(
+            ellipse at top,
+            rgba(245,217,142,.22),
+            rgba(245,217,142,.08) 35%,
+            transparent 72%
+        );
+
+    filter:blur(25px);
+
+    pointer-events:none;
+
+    z-index:2;
+
+}
+
+.secret-light-beam{
+
+    animation:
+        beamBreath
+        7s
+        ease-in-out
+        infinite;
+
+}
+
+@keyframes beamBreath{
+
+    0%,100%{
+
+        opacity:.75;
+
+        transform:
+            translateX(-50%)
+            scale(1);
+
+    }
+
+    50%{
+
+        opacity:1;
+
+        transform:
+            translateX(-50%)
+            scale(1.06);
+
+    }
+
+}
+
+/*=========================================
+  Aparición de tarjetas
+=========================================*/
+
+.secret-game-card{
+
+    opacity:0;
+    transform-style: preserve-3d;
+    will-change: transform;
+
+    transform:
+        translateY(50px)
+        scale(.96);
+
+    transition:
+        transform .18s ease-out,
+        box-shadow .35s ease,
+        border-color .35s ease;
+
+}
+
+.secret-game-card.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+/*=========================================
+  Optimización para celulares
+=========================================*/
+
+@media (max-width: 768px) {
+
+  .secret-hero {
+    min-height: 100svh;
+    padding:
+      110px
+      20px
+      70px;
+  }
+
+  .secret-hero-content {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .secret-hero-title {
+    max-width: 340px;
+    margin-inline: auto;
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    line-height: 0.95;
+  }
+
+  .secret-hero-description {
+    max-width: 330px;
+    margin-inline: auto;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .secret-hero-watermark {
+    font-size: clamp(7rem, 37vw, 13rem);
+    opacity: 0.8;
+  }
+
+  .secret-light-beam {
+    top: -130px;
+    width: 145vw;
+    height: 720px;
+  }
+
+  .secret-games-section {
+    padding:
+      75px
+      16px;
+  }
+
+  .secret-games-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .secret-game-card {
+    width: 100%;
+    min-height: 230px;
+    padding:
+      28px
+      22px;
+  }
+
+  .secret-game-card-title {
+    font-size: 1.35rem;
+  }
+
+  .secret-game-card-description {
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .secret-game-card-button {
+    width: 100%;
+    min-height: 54px;
+    padding:
+      16px
+      22px;
+  }
+
+  .secret-welcome {
+    padding:
+      70px
+      16px;
+  }
+
+  .secret-welcome-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding:
+      30px
+      22px;
+    text-align: center;
+  }
+
+  .secret-welcome-logo {
+    max-width: 150px;
+    margin-inline: auto;
+  }
+
+  .secret-intro-skip {
+    right: 50%;
+    bottom: 22px;
+    min-height: 50px;
+    padding:
+      14px
+      24px;
+    transform: translateX(50%);
+  }
+}
+
+.floating-icons{
+
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+
+}
+
+.floating-icons span{
+
+    position:absolute;
+    bottom:-20px;
+    font-size:18px;
+    color:var(--secret-gold);
+    opacity:0;
+    transition:opacity .3s;
+
+}
+
+.floating-icons span:nth-child(1){
+    left:18%;
+}
+
+.floating-icons span:nth-child(2){
+    left:42%;
+}
+
+.floating-icons span:nth-child(3){
+    left:67%;
+}
+
+.floating-icons span:nth-child(4){
+    left:82%;
+}
+
+@keyframes floatingIcon{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translateY(0)
+            scale(.7)
+            rotate(-12deg);
+
+    }
+
+    20%{
+
+        opacity:.9;
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+            translateY(-170px)
+            scale(1.25)
+            rotate(12deg);
+
+    }
+
+}
+.secret-game-card:hover .floating-icons span{
+    animation:
+        floatingIcon
+        2.2s
+        infinite;
+}
+
+.secret-game-card:hover .floating-icons span:nth-child(2){
+
+    animation-delay:.25s;
+
+}
+
+.secret-game-card:hover .floating-icons span:nth-child(3){
+
+    animation-delay:.55s;
+
+}
+
+.secret-game-card:hover .floating-icons span:nth-child(4){
+
+    animation-delay:.85s;
+
+}
+
+/*=========================================
+  Juegos bloqueados
+=========================================*/
+
+.secret-game-locked {
+  cursor: not-allowed;
+}
+
+.secret-game-locked::after {
+  content: "";
+
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(5, 12, 30, 0.1),
+      rgba(5, 12, 30, 0.48)
+    );
+
+  pointer-events: none;
+}
+
+.secret-game-locked .secret-game-icon,
+.secret-game-locked .secret-game-info {
+  opacity: 0.58;
+  filter: grayscale(0.45);
+}
+
+.secret-status-locked {
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(9, 18, 40, 0.78);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.secret-locked-button {
+  position: relative;
+  z-index: 6;
+
+  cursor: not-allowed;
+  opacity: 0.72;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.secret-locked-button:hover {
+  transform: none;
+}
+
+.secret-game-locked:hover .floating-icons span {
+  animation: none;
+}
+
+.secret-game-locked:hover .secret-game-icon {
+  transform: none;
+}
+
+.secret-game-locked:hover::before {
+  left: -120%;
+}
+
+/*=========================================
+  Diario del Explorador
+=========================================*/
+
+.secret-journal {
+  position: relative;
+  padding: 80px 20px;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(214, 176, 74, 0.06),
+      transparent 55%
+    ),
+    #071126;
+}
+
+.secret-journal-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  width: min(100%, 900px);
+  margin-inline: auto;
+  padding: 38px;
+  overflow: hidden;
+  border: 1px solid rgba(214, 176, 74, 0.25);
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.025)
+    );
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.secret-journal-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 38px;
+  width: 110px;
+  height: 3px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d6b04a,
+    transparent
+  );
+}
+
+.secret-journal-icon {
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  border: 1px solid rgba(214, 176, 74, 0.25);
+  border-radius: 22px;
+  color: #d6b04a;
+  background: rgba(214, 176, 74, 0.08);
+  font-size: 2rem;
+}
+
+.secret-journal-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #d6b04a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.secret-journal-content h2 {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+}
+
+.secret-journal-content p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.75;
+}
+
+.secret-journal-progress {
+  margin-top: 28px;
+}
+
+.secret-journal-progress-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+}
+
+.secret-journal-progress-info strong {
+  color: #ffffff;
+}
+
+.secret-journal-progress-bar {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.secret-journal-progress-bar span {
+  display: block;
+  width: 20%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #8d1f3f,
+    #d6b04a
+  );
+  box-shadow: 0 0 18px rgba(214, 176, 74, 0.35);
+}
+
+.secret-journal {
+  padding: 60px 16px;
+}
+
+.secret-journal-card {
+  grid-template-columns: 1fr;
+  gap: 22px;
+  padding: 30px 22px;
+}
+
+.secret-journal-icon {
+  width: 70px;
+  height: 70px;
+}
+
+.secret-journal-progress-info {
+  flex-direction: column;
+  gap: 5px;
+}
+
+/*=========================================
+  Última actualización
+=========================================*/
+
+.secret-updates{
+    padding:0 20px 80px;
+    background:#071126;
+}
+
+.secret-update-card{
+    display:flex;
+    align-items:center;
+    gap:22px;
+
+    width:min(100%,900px);
+    margin:0 auto;
+
+    padding:28px;
+
+    border:1px solid rgba(214,176,74,.18);
+    border-radius:20px;
+
+    background:rgba(255,255,255,.04);
+
+    transition:.3s;
+}
+
+.secret-update-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(214,176,74,.35);
+}
+
+.secret-update-icon{
+    flex-shrink:0;
+
+    width:68px;
+    height:68px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:18px;
+
+    background:rgba(214,176,74,.10);
+
+    color:#d6b04a;
+
+    font-size:1.6rem;
+}
+
+.secret-update-label{
+    display:inline-block;
+
+    margin-bottom:6px;
+
+    color:#d6b04a;
+
+    font-size:.8rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+}
+
+.secret-update-content h3{
+    margin:0 0 10px;
+    color:#fff;
+}
+
+.secret-update-content p{
+    margin:0;
+    color:rgba(255,255,255,.72);
+    line-height:1.7;
+}
+
+.secret-update-date{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    margin-top:16px;
+
+    color:rgba(255,255,255,.55);
+    font-size:.9rem;
+}
+
+.secret-updates{
+    padding:0 16px 60px;
+}
+
+.secret-update-card{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.secret-key {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  color: #d6ad4f;
+  font-size: 1.35rem;
+
+  cursor: pointer;
+  opacity: 0.72;
+
+  filter:
+    drop-shadow(0 0 4px rgba(214, 173, 79, 0.35));
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease,
+    filter 0.25s ease;
+}
+
+.secret-key::before {
+  content: "";
+
+  position: absolute;
+  inset: 4px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 224, 139, 0.2),
+      transparent 70%
+    );
+
+  opacity: 0;
+  transform: scale(0.6);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.secret-key:hover {
+  opacity: 1;
+  transform:
+    translateY(-3px)
+    rotate(-8deg)
+    scale(1.08);
+
+  filter:
+    drop-shadow(0 0 8px rgba(214, 173, 79, 0.75));
+}
+
+.secret-key:hover::before {
+  opacity: 1;
+  transform: scale(1.35);
+}
+
+.secret-key:focus-visible {
+  outline: 2px solid #d6ad4f;
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+.secret-key-found {
+  pointer-events: none;
+  animation:
+    secretKeyFound 0.75s ease forwards;
+}
+
+@keyframes secretKeyFound {
+  0% {
+    opacity: 1;
+    transform:
+      translateY(0)
+      rotate(0deg)
+      scale(1);
+  }
+
+  45% {
+    opacity: 1;
+    transform:
+      translateY(-10px)
+      rotate(18deg)
+      scale(1.45);
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translateY(-40px)
+      rotate(90deg)
+      scale(0.2);
+  }
+}
+
+.secret-key-counter {
+  position: fixed;
+  top: 95px;
+  right: 24px;
+  z-index: 1200;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 14px;
+
+  border: 1px solid rgba(214, 173, 79, 0.3);
+  border-radius: 999px;
+
+  background: rgba(20, 24, 38, 0.92);
+
+  color: #f4cf73;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.24),
+    0 0 18px rgba(214, 173, 79, 0.15);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease;
+}
+
+.secret-key-counter.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.secret-key-counter i {
+  font-size: 1rem;
+}
+
+.secret-key-counter.is-updating {
+  animation: secretCounterUpdate 0.45s ease;
+}
+
+@keyframes secretCounterUpdate {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(0) scale(1.15);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .secret-key-counter {
+    top: 78px;
+    right: 14px;
+
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+}
+
+.secret-key-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1300;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  width: min(360px, calc(100% - 32px));
+  padding: 16px 18px;
+
+  border: 1px solid rgba(214, 173, 79, 0.28);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(19, 24, 39, 0.97),
+      rgba(34, 28, 44, 0.97)
+    );
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.3),
+    0 0 24px rgba(214, 173, 79, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform:
+    translateY(20px)
+    scale(0.96);
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease;
+}
+
+.secret-key-toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.secret-key-toast-icon {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 220, 120, 0.24),
+      rgba(214, 173, 79, 0.08)
+    );
+
+  color: #f4cf73;
+  font-size: 1.25rem;
+
+  box-shadow:
+    0 0 16px rgba(214, 173, 79, 0.2);
+}
+
+.secret-key-toast-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.secret-key-toast-content strong {
+  color: #ffffff;
+
+  font-family:
+    "Montserrat",
+    sans-serif;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.secret-key-toast-content span {
+  color: rgba(255, 255, 255, 0.76);
+
+  font-family:
+    "Nunito Sans",
+    sans-serif;
+
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .secret-key-toast {
+    right: 16px;
+    bottom: 16px;
+
+    width: calc(100% - 32px);
+    padding: 14px 16px;
+  }
+}
+
+.secret-key-flying {
+  position: fixed;
+  z-index: 3000;
+
+  margin: 0;
+  pointer-events: none;
+
+  opacity: 1;
+  visibility: visible;
+
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.secret-unlock-overlay {
+
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,.72);
+
+    backdrop-filter: blur(6px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: .35s;
+
+    z-index: 5000;
+}
+
+.secret-unlock-overlay.active {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+.secret-unlock-modal {
+
+    width: min(92%, 460px);
+
+    padding: 40px;
+
+    border-radius: 22px;
+
+    background: #fff;
+
+    text-align: center;
+
+    position: relative;
+
+    transform: scale(.85);
+
+    transition: .35s ease;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.35);
+}
+
+.secret-unlock-overlay.active
+.secret-unlock-modal {
+
+    transform: scale(1);
+}
+
+.secret-unlock-icon{
+
+    width:90px;
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f7c948,
+        #d4a017
+    );
+
+    color:white;
+
+    font-size:38px;
+
+    box-shadow:
+    0 10px 30px rgba(212,160,23,.45);
+
+    margin-bottom:20px;
+}
+
+.secret-unlock-label{
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    font-size:.8rem;
+
+    color:#888;
+
+    margin-bottom:10px;
+}
+
+.secret-unlock-modal h2{
+
+    margin-bottom:15px;
+
+    color:#8B1E3F;
+}
+
+.secret-unlock-modal strong{
+
+    display:block;
+
+    margin:18px 0 30px;
+
+    color:#0d4f3c;
+
+    font-size:1.05rem;
+}
+
+.secret-unlock-actions{
+
+    display:flex;
+
+    gap:12px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+}
+
+.secret-unlock-enter,
+.secret-unlock-close{
+
+    padding:12px 22px;
+
+    border-radius:999px;
+
+    border:none;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.secret-unlock-enter{
+
+    background:#8B1E3F;
+
+    color:white;
+}
+
+.secret-unlock-enter:hover{
+
+    transform:translateY(-2px);
+}
+
+.secret-unlock-close{
+
+    background:#ececec;
+}
+
+.secret-unlock-particles {
+  position: fixed;
+  inset: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+
+  z-index: 5001;
+}
+
+.secret-unlock-particle {
+  position: absolute;
+  display: block;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #fffbe0 0%,
+      #f7c948 45%,
+      #d4a017 100%
+    );
+
+  box-shadow:
+    0 0 12px
+    rgba(247, 201, 72, .95);
+
+  pointer-events: none;
+}
+
+.secret-unlock-modal {
+  z-index: 5002;
+}
+
+.secret-key {
+
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+
+    z-index: 20;
+}
+
+.secret-key-map {
+    top: 42%;
+    left: 65%;
+}
+
+.secret-key-heart {
+    top: 28%;
+    left: 2%;
+}
+
+.secret-key-scroll {
+    top: 82%;
+    left: 46%;
+}
+
+.secret-key-handshake {
+    top: 45%;
+    left: 39%;
+}
+
+.secret-key-camera {
+    top: 17%;
+    left: 45%;
+}
+
+@media (max-width: 768px) {
+  .secret-key-map {
+    top: 87%;
+    left: 80%;
+  }
+
+  .secret-key-heart {
+      top: 5%;
+      left: 90%;
+  }
+
+  .secret-key-scroll {
+      top: 84%;
+      left: 26%;
+  }
+
+  .secret-key-handshake {
+      top: 40%;
+      left: 41%;
+  }
+
+  .secret-key-camera {
+      top: 17%;
+      left: 45%;
+  }
+}
+
+.footer-secret-game{
+
+    display:none;
+
+    width:100%;
+    height:40px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--primary-color);
+    font-size: 26px;
+
+    transition:.3s;
+}
+
+.footer-secret-game:hover{
+
+    transform:translateY(-3px) scale(1.1);
+
+    color:#d4a017;
+}
+
+.footer-secret-game.visible{
+    display:flex;
+}

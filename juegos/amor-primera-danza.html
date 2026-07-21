@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Amor a Primera Danza | PySC
+  </title>
+
+  <link
+    rel="icon"
+    href="../img/favicon.ico"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/juego-amor.css"
+  >
+</head>
+
+<body>
+
+  <main class="love-game-page">
+
+    <section class="love-game-shell">
+
+      <header class="love-game-header">
+
+        <a
+          href="../rincon-secreto.html"
+          class="love-game-back"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+
+          <span>
+            Volver al rincón
+          </span>
+        </a>
+
+        <div class="love-game-title">
+
+          <span class="love-game-eyebrow">
+            Desafío 01
+          </span>
+
+          <h1>
+            Amor a Primera Danza
+          </h1>
+
+          <p>
+            Lanza corazones a los integrantes de PySC
+            y evita tocar los objetos equivocados.
+          </p>
+
+        </div>
+
+        <div class="love-game-logo">
+
+          <img
+            src="../img/logo-pasion-sentimiento.png"
+            alt="Pasión y Sentimiento Cultural"
+          >
+
+        </div>
+
+      </header>
+
+      <section class="love-game-hud">
+
+        <div class="love-hud-item love-hud-lives">
+
+          <span class="love-hud-label">
+            Vidas
+          </span>
+
+          <div class="love-lives-list">
+
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-heart"></i>
+
+          </div>
+
+        </div>
+
+        <div class="love-hud-item">
+
+          <span class="love-hud-label">
+            Puntos
+          </span>
+
+          <strong id="loveScore">
+            0
+          </strong>
+
+        </div>
+
+        <div class="love-hud-item">
+
+          <span class="love-hud-label">
+            Récord
+          </span>
+
+          <strong id="loveBestScore">
+            0
+          </strong>
+
+        </div>
+
+        <div class="love-hud-item">
+
+          <span class="love-hud-label">
+            Tiempo
+          </span>
+
+          <strong id="loveTime">
+            00:00
+          </strong>
+
+        </div>
+
+      </section>
+
+      <section class="love-game-stage" id="loveGameStage">
+
+        <div class="love-stage-decoration">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div
+            class="love-countdown"
+            id="loveCountdown"
+            aria-live="polite"
+        >
+        <span id="loveCountdownText">
+            3
+        </span>
+        </div>
+
+        <div class="love-game-welcome">
+
+          <div class="love-welcome-icon">
+            <i class="fa-solid fa-heart"></i>
+          </div>
+
+          <h2>
+            ¿Listo para jugar?
+          </h2>
+
+          <p>
+            Tendrás cinco vidas. Cada integrante acertado
+            sumará puntos, pero cada objeto equivocado
+            te hará perder una vida.
+          </p>
+
+          <button
+            type="button"
+            class="love-start-button"
+            id="loveStartButton"
+          >
+            <i class="fa-solid fa-play"></i>
+
+            Comenzar partida
+          </button>
+
+        </div>
+
+        <div class="love-game-over">
+
+          <div class="love-over-icon">
+            <i class="fa-solid fa-heart-crack"></i>
+          </div>
+
+          <h2>¡Game Over!</h2>
+
+          <p>
+
+            Lograste conseguir
+
+            <strong id="loveFinalScore">
+              0
+            </strong>
+
+            puntos.
+
+          </p>
+
+          <button
+              id="loveRestartButton"
+              class="love-start-button">
+
+              <i class="fa-solid fa-rotate-right"></i>
+
+              Jugar nuevamente
+
+          </button>
+
+        </div>
+
+        <div class="love-characters" id="loveCharacters"></div>
+        <div class="love-objects" id="loveObjects"></div>
+        <div class="love-hearts" id="loveHearts"></div>
+
+      </section>
+
+      <footer class="love-game-footer">
+
+        <p>
+          <i class="fa-solid fa-computer-mouse"></i>
+
+          Haz clic o toca la pantalla para lanzar corazones.
+        </p>
+
+        <button
+          type="button"
+          class="love-reset-button"
+          id="loveResetButton"
+        >
+          <i class="fa-solid fa-rotate-right"></i>
+
+          Reiniciar
+        </button>
+
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL: SEGUNDO JUEGO DESBLOQUEADO -->
+
+  <div
+    class="love-unlock-modal"
+    id="loveUnlockModal"
+    aria-hidden="true"
+  >
+
+    <div class="love-unlock-backdrop"></div>
+
+    <div
+      class="love-unlock-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="loveUnlockTitle"
+    >
+
+      <div class="love-unlock-icon">
+        <i class="fa-solid fa-lock-open"></i>
+      </div>
+
+      <span class="love-unlock-label">
+        Nuevo desafío desbloqueado
+      </span>
+
+      <h2 id="loveUnlockTitle">
+        ¡Llegaste a 200 puntos!
+      </h2>
+
+      <p>
+        Has demostrado tu amor por la danza y desbloqueaste
+        el segundo desafío del Rincón Secreto.
+      </p>
+
+      <button
+        type="button"
+        class="love-unlock-button"
+        id="loveUnlockButton"
+      >
+        Continuar jugando
+
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+  <script src="../js/juego-amor.js"></script>
+
+</body>
+</html>
