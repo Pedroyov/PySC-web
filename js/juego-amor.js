@@ -1,5 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  const secretRoomUnlocked =
+    localStorage.getItem(
+      "secretRoomUnlocked"
+    ) === "true";
+
+  if (!secretRoomUnlocked) {
+    window.location.replace("index.html");
+    return;
+  }
   const startButton =
     document.getElementById("loveStartButton");
 
