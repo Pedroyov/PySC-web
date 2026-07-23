@@ -1685,3 +1685,16 @@ document.addEventListener("keydown", event => {
 /* INICIAR */
 
 buildGallery();
+
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/PySC-web/sw.js")
+            .then(() => {
+                console.log("Service Worker registrado");
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+}
