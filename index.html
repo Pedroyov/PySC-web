@@ -1356,15 +1356,15 @@
   }
 
   function setNotificationsBlocked() {
-    notificationsButton.disabled = true;
+    notificationsButton.disabled = false;
 
     notificationsButton.innerHTML = `
-      <i class="fa-solid fa-bell-slash"></i>
-      <span>Notificaciones bloqueadas</span>
+      <i class="fa-solid fa-circle-info"></i>
+      <span>¿Cómo activarlas?</span>
     `;
 
     notificationsStatus.textContent =
-      "Debes permitir las notificaciones desde la configuración del navegador.";
+      "Las notificaciones están bloqueadas en este navegador.";
 
     notificationsStatus.classList.remove(
       "is-success"
@@ -1388,7 +1388,49 @@
     );
   }
 
+  function highlightNotificationsSection() {
+    const notificationsSection =
+      document.getElementById("notifications");
+
+    if (!notificationsSection) {
+      return;
+    }
+
+    setTimeout(() => {
+      notificationsSection.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+      notificationsSection.classList.add(
+        "is-highlighted"
+      );
+
+      setTimeout(() => {
+        notificationsSection.classList.remove(
+          "is-highlighted"
+        );
+      }, 1800);
+    }, 800);
+  }
+
   async function enableNotifications() {
+    if (
+      "Notification" in window &&
+      Notification.permission === "denied"
+    ) {
+      alert(
+        "Las notificaciones están bloqueadas.\n\n" +
+        "Para volver a activarlas:\n\n" +
+        "1. Haz clic en el candado 🔒 junto a la dirección de la página.\n" +
+        "2. Abre 'Configuración del sitio'.\n" +
+        "3. Cambia 'Notificaciones' a 'Permitir'.\n" +
+        "4. Recarga la página."
+      );
+
+      return;
+    }
+
     notificationsButton.disabled = true;
 
     notificationsButton.innerHTML = `
@@ -1442,13 +1484,27 @@
     }
   }
 
-  if ("Notification" in window) {
-    if (Notification.permission === "granted") {
-      setNotificationsActive();
-    }
+  if (
+    notificationsButton &&
+    notificationsStatus
+  ) {
+    notificationsButton.addEventListener(
+      "click",
+      enableNotifications
+    );
 
-    if (Notification.permission === "denied") {
-      setNotificationsBlocked();
+    if ("Notification" in window) {
+      if (
+        Notification.permission === "granted"
+      ) {
+        setNotificationsActive();
+      } else if (
+        Notification.permission === "denied"
+      ) {
+        setNotificationsBlocked();
+      } else {
+        highlightNotificationsSection();
+      }
     }
   }
 </script>

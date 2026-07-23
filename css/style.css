@@ -12817,3 +12817,17 @@ body.lightbox-open{
     opacity 0.35s ease,
     transform 0.35s ease;
 }
+
+.notifications-card {
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.notifications-section.is-highlighted
+.notifications-card {
+  transform: scale(1.015);
+  box-shadow:
+    0 0 0 4px rgba(226, 170, 22, 0.22),
+    0 18px 45px rgba(19, 47, 93, 0.16);
+}
