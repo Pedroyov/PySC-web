@@ -12576,8 +12576,8 @@ body.lightbox-open{
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 28px;
-  padding: 34px 38px;
+  gap: 20px;
+  padding: 22px 28px;
   overflow: hidden;
   border: 1px solid rgba(140, 24, 50, 0.12);
   border-radius: 24px;
@@ -12608,10 +12608,10 @@ body.lightbox-open{
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 76px;
-  height: 76px;
+  width: 58px;
+  height: 58px;
   flex-shrink: 0;
-  border-radius: 22px;
+  border-radius: 16px;
   color: #ffffff;
   background:
     linear-gradient(
@@ -12621,7 +12621,7 @@ body.lightbox-open{
     );
   box-shadow:
     0 12px 28px rgba(140, 24, 50, 0.25);
-  font-size: 30px;
+  font-size: 22px;
 }
 
 .notifications-content {
@@ -12644,7 +12644,7 @@ body.lightbox-open{
   margin: 0 0 10px;
   color: #132f5d;
   font-family: "Montserrat", sans-serif;
-  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
 }
 
 .notifications-content p {
@@ -12688,8 +12688,8 @@ body.lightbox-open{
   justify-content: center;
   gap: 10px;
   width: 100%;
-  min-height: 52px;
-  padding: 13px 20px;
+  min-height: 46px;
+  padding: 10px 18px;
   border: 0;
   border-radius: 14px;
   color: #ffffff;
@@ -12797,4 +12797,23 @@ body.lightbox-open{
     width: 100%;
     min-width: 0;
   }
+}
+
+.notifications-section {
+  transition:
+    opacity .35s ease,
+    transform .35s ease;
+}
+
+.notifications-section.is-hidden {
+  opacity: 0;
+  transform: translateY(-15px);
+  pointer-events: none;
+  display: none;
+}
+
+.notifications-section {
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }

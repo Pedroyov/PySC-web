@@ -267,9 +267,7 @@
           <h2>Recibe los avisos de PySC</h2>
 
           <p>
-            Activa las notificaciones para recibir recordatorios
-            de ensayos, presentaciones, convocatorias,
-            cumpleaños y actividades importantes.
+            Recibe avisos de ensayos, presentaciones, convocatorias y actividades del grupo.
           </p>
 
           <div class="notifications-types">
@@ -1341,26 +1339,39 @@
     );
 
   function setNotificationsActive() {
-    notificationsButton.classList.add(
-      "is-active"
-    );
+    const notificationsSection =
+      document.getElementById("notifications");
 
+    if (!notificationsSection) {
+      return;
+    }
+
+    notificationsSection.style.opacity = "0";
+    notificationsSection.style.transform =
+      "translateY(-15px)";
+
+    setTimeout(() => {
+      notificationsSection.style.display = "none";
+    }, 350);
+  }
+
+  function setNotificationsBlocked() {
     notificationsButton.disabled = true;
 
     notificationsButton.innerHTML = `
-      <i class="fa-solid fa-circle-check"></i>
-      <span>Notificaciones activadas</span>
+      <i class="fa-solid fa-bell-slash"></i>
+      <span>Notificaciones bloqueadas</span>
     `;
 
     notificationsStatus.textContent =
-      "Recibirás los próximos avisos de PySC.";
+      "Debes permitir las notificaciones desde la configuración del navegador.";
 
     notificationsStatus.classList.remove(
-      "is-error"
+      "is-success"
     );
 
     notificationsStatus.classList.add(
-      "is-success"
+      "is-error"
     );
   }
 
@@ -1402,11 +1413,6 @@
         token
       );
 
-      localStorage.setItem(
-        "pyscNotificationsEnabled",
-        "true"
-      );
-
       setNotificationsActive();
     } catch (error) {
       console.error(
@@ -1436,32 +1442,13 @@
     }
   }
 
-  if (
-    notificationsButton &&
-    notificationsStatus
-  ) {
-    notificationsButton.addEventListener(
-      "click",
-      enableNotifications
-    );
-
-    if (
-      "Notification" in window &&
-      Notification.permission === "granted" &&
-      localStorage.getItem(
-        "pyscNotificationsEnabled"
-      ) === "true"
-    ) {
+  if ("Notification" in window) {
+    if (Notification.permission === "granted") {
       setNotificationsActive();
     }
 
-    if (
-      "Notification" in window &&
-      Notification.permission === "denied"
-    ) {
-      setNotificationsError(
-        "Las notificaciones están bloqueadas en este navegador."
-      );
+    if (Notification.permission === "denied") {
+      setNotificationsBlocked();
     }
   }
 </script>
