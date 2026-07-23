@@ -95,6 +95,16 @@ document.addEventListener("DOMContentLoaded", () => {
       "thirdGameUnlocked"
     ) === "true";
 
+  const fourthGameCard =
+    document.querySelector(
+      ".secret-games-grid .secret-game-card:nth-child(4)"
+    );
+
+  const fourthGameUnlocked =
+    localStorage.getItem(
+      "fourthGameUnlocked"
+    ) === "true";
+
   if (
     secondGameUnlocked &&
     secondGameCard
@@ -167,6 +177,64 @@ document.addEventListener("DOMContentLoaded", () => {
     if (status) {
 
       status.textContent =
+        "Listo para jugar";
+
+      status.classList.remove(
+        "secret-status-locked"
+      );
+
+      status.classList.add(
+        "secret-status-ready"
+      );
+
+    }
+
+    const button =
+      thirdGameCard.querySelector(
+        ".secret-game-button"
+      );
+
+    if (button) {
+
+      button.removeAttribute(
+        "aria-disabled"
+      );
+
+      button.classList.remove(
+        "secret-locked-button",
+        "secret-coming-button"
+      );
+
+      button.innerHTML = `
+        <i class="fa-solid fa-play"></i>
+        Jugar ahora
+      `;
+
+    }
+
+    enableCardEffect(
+      thirdGameCard
+    );
+
+  }
+
+  if (
+    fourthGameUnlocked &&
+    fourthGameCard
+  ) {
+
+    fourthGameCard.classList.remove(
+      "secret-game-locked"
+    );
+
+    const status =
+      fourthGameCard.querySelector(
+        ".secret-game-status"
+      );
+
+    if (status) {
+
+      status.textContent =
         "En desarrollo";
 
       status.classList.remove(
@@ -180,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const button =
-      thirdGameCard.querySelector(
+      fourthGameCard.querySelector(
         ".secret-game-button"
       );
 
@@ -192,6 +260,13 @@ document.addEventListener("DOMContentLoaded", () => {
         "secret-locked-button"
       );
 
+      button.classList.add(
+        "secret-coming-button"
+      );
+
+      button.dataset.gameName =
+        "Rompecabezas";
+
       button.innerHTML = `
         En desarrollo
         <i class="fa-solid fa-hammer"></i>
@@ -200,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     enableCardEffect(
-      thirdGameCard
+      fourthGameCard
     );
 
   }
@@ -442,13 +517,32 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   comingButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const gameName =
-        button.dataset.gameName ||
-        "Juego en construcción";
 
-      showComingSoonMessage(gameName);
-    });
+    button.addEventListener(
+      "click",
+      (event) => {
+
+        if (
+          !button.classList.contains(
+            "secret-coming-button"
+          )
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const gameName =
+          button.dataset.gameName ||
+          "Juego en construcción";
+
+        showComingSoonMessage(
+          gameName
+        );
+
+      }
+    );
+
   });
 });
 
