@@ -18,7 +18,7 @@ const firebaseConfig = {
 };
 
 const vapidKey =
-  "BITQL_sOyKmfuqWqaD4agugPfyS2pHLEIRdFFMA4qeZltJjv6ACqWrHL4bz5mE3jjaMStFKQ4blf4472YV5uTEc";
+  "BGdlHDCrZBY3AHLIh4oPamVXZqTh5s5YoyTmoVVmFAH6MruJGQFf4i_NdRvNq58GSdFbBaT4HZfQxrdxx51vVik";
 
 const firebaseApp =
   initializeApp(firebaseConfig);
