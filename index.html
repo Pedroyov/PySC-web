@@ -1485,9 +1485,7 @@
       if (
         Notification.permission === "denied"
       ) {
-        setNotificationsError(
-          "Las notificaciones están bloqueadas en el navegador. Debes permitirlas desde la configuración del sitio."
-        );
+        setNotificationsBlocked();
       } else {
         setNotificationsError(
           error.message ||
@@ -1495,6 +1493,48 @@
         );
       }
     }
+  }
+
+  async function checkExistingNotifications() {
+    if (!("Notification" in window)) {
+      return;
+    }
+
+    if (
+      Notification.permission === "granted"
+    ) {
+      try {
+        const token =
+          await activateNotifications();
+
+        console.log(
+          "Token FCM comprobado:",
+          token
+        );
+
+        setNotificationsActive();
+      } catch (error) {
+        console.error(
+          "No se pudo comprobar la suscripción:",
+          error
+        );
+
+        setNotificationsError(
+          "No se pudo actualizar la suscripción. Pulsa el botón para intentarlo nuevamente."
+        );
+      }
+
+      return;
+    }
+
+    if (
+      Notification.permission === "denied"
+    ) {
+      setNotificationsBlocked();
+      return;
+    }
+
+    highlightNotificationsSection();
   }
 
   if (
@@ -1506,19 +1546,7 @@
       enableNotifications
     );
 
-    if ("Notification" in window) {
-      if (
-        Notification.permission === "granted"
-      ) {
-        setNotificationsActive();
-      } else if (
-        Notification.permission === "denied"
-      ) {
-        setNotificationsBlocked();
-      } else {
-        highlightNotificationsSection();
-      }
-    }
+    checkExistingNotifications();
   }
 </script>
 

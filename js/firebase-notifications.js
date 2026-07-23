@@ -17,6 +17,10 @@ const firebaseConfig = {
   appId: "1:303778740151:web:3ece8d0762843783981a32"
 };
 
+/*
+  Coloca aquí la nueva clave pública
+  que aparece en Firebase.
+*/
 const vapidKey =
   "BGdlHDCrZBY3AHLIh4oPamVXZqTh5s5YoyTmoVVmFAH6MruJGQFf4i_NdRvNq58GSdFbBaT4HZfQxrdxx51vVik";
 
@@ -70,7 +74,7 @@ export async function activateNotifications() {
   }
 
   console.log(
-    "Token de notificaciones:",
+    "Token FCM del dispositivo:",
     token
   );
 
