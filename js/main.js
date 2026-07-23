@@ -1693,7 +1693,7 @@ if (
   );
 }
 
-/* INICIAR GALERÍA */
+/* INICIAR GALERÍA BITQL_sOyKmfuqWqaD4agugPfyS2pHLEIRdFFMA4qeZltJjv6ACqWrHL4bz5mE3jjaMStFKQ4blf4472YV5uTEc */
 
 if (galleryGrid) {
   buildGallery();

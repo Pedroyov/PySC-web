@@ -252,6 +252,68 @@
     </div>
   </section>
 
+  <section class="notifications-section section" id="notifications">
+    <div class="container">
+      <article class="notifications-card">
+        <div class="notifications-icon">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+
+        <div class="notifications-content">
+          <span class="notifications-kicker">
+            Mantente informado
+          </span>
+
+          <h2>Recibe los avisos de PySC</h2>
+
+          <p>
+            Activa las notificaciones para recibir recordatorios
+            de ensayos, presentaciones, convocatorias,
+            cumpleaños y actividades importantes.
+          </p>
+
+          <div class="notifications-types">
+            <span>
+              <i class="fa-solid fa-check"></i>
+              Ensayos
+            </span>
+
+            <span>
+              <i class="fa-solid fa-check"></i>
+              Presentaciones
+            </span>
+
+            <span>
+              <i class="fa-solid fa-check"></i>
+              Convocatorias
+            </span>
+
+            <span>
+              <i class="fa-solid fa-check"></i>
+              Cumpleaños
+            </span>
+          </div>
+        </div>
+
+        <div class="notifications-action">
+          <button
+            type="button"
+            class="notifications-button"
+            id="notificationsButton"
+          >
+            <i class="fa-solid fa-bell"></i>
+            <span>Activar notificaciones</span>
+          </button>
+
+          <p
+            class="notifications-status"
+            id="notificationsStatus"
+            aria-live="polite"
+          ></p>
+        </div>
+      </article>
+    </div>
+  </section>
   
   <section class="agenda-section section" id="agenda">
     <div class="agenda-decoration agenda-decoration-one"></div>
@@ -1262,5 +1324,147 @@
 <script src="js/secret-progress.js"></script>
 <script src="js/main.js"></script>
 <script src="js/birthday-story.js"></script>
+
+<script type="module">
+  import {
+    activateNotifications
+  } from "./js/firebase-notifications.js";
+
+  const notificationsButton =
+    document.getElementById(
+      "notificationsButton"
+    );
+
+  const notificationsStatus =
+    document.getElementById(
+      "notificationsStatus"
+    );
+
+  function setNotificationsActive() {
+    notificationsButton.classList.add(
+      "is-active"
+    );
+
+    notificationsButton.disabled = true;
+
+    notificationsButton.innerHTML = `
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Notificaciones activadas</span>
+    `;
+
+    notificationsStatus.textContent =
+      "Recibirás los próximos avisos de PySC.";
+
+    notificationsStatus.classList.remove(
+      "is-error"
+    );
+
+    notificationsStatus.classList.add(
+      "is-success"
+    );
+  }
+
+  function setNotificationsError(message) {
+    notificationsStatus.textContent =
+      message;
+
+    notificationsStatus.classList.remove(
+      "is-success"
+    );
+
+    notificationsStatus.classList.add(
+      "is-error"
+    );
+  }
+
+  async function enableNotifications() {
+    notificationsButton.disabled = true;
+
+    notificationsButton.innerHTML = `
+      <i class="fa-solid fa-circle-notch fa-spin"></i>
+      <span>Activando...</span>
+    `;
+
+    notificationsStatus.textContent =
+      "Confirma el permiso cuando aparezca.";
+
+    notificationsStatus.classList.remove(
+      "is-error",
+      "is-success"
+    );
+
+    try {
+      const token =
+        await activateNotifications();
+
+      console.log(
+        "Token FCM del dispositivo:",
+        token
+      );
+
+      localStorage.setItem(
+        "pyscNotificationsEnabled",
+        "true"
+      );
+
+      setNotificationsActive();
+    } catch (error) {
+      console.error(
+        "No se pudieron activar las notificaciones:",
+        error
+      );
+
+      notificationsButton.disabled = false;
+
+      notificationsButton.innerHTML = `
+        <i class="fa-solid fa-bell"></i>
+        <span>Activar notificaciones</span>
+      `;
+
+      if (
+        Notification.permission === "denied"
+      ) {
+        setNotificationsError(
+          "Las notificaciones están bloqueadas en el navegador. Debes permitirlas desde la configuración del sitio."
+        );
+      } else {
+        setNotificationsError(
+          error.message ||
+          "No se pudieron activar las notificaciones."
+        );
+      }
+    }
+  }
+
+  if (
+    notificationsButton &&
+    notificationsStatus
+  ) {
+    notificationsButton.addEventListener(
+      "click",
+      enableNotifications
+    );
+
+    if (
+      "Notification" in window &&
+      Notification.permission === "granted" &&
+      localStorage.getItem(
+        "pyscNotificationsEnabled"
+      ) === "true"
+    ) {
+      setNotificationsActive();
+    }
+
+    if (
+      "Notification" in window &&
+      Notification.permission === "denied"
+    ) {
+      setNotificationsError(
+        "Las notificaciones están bloqueadas en este navegador."
+      );
+    }
+  }
+</script>
+
 </body>
 </html>
