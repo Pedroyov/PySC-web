@@ -87,20 +87,22 @@ function detectOperatingSystem() {
 }
 
 async function saveToken(token) {
-  await fetch(tokenRegistrationUrl, {
+  console.log("Enviando token...");
+
+  const response = await fetch(tokenRegistrationUrl, {
     method: "POST",
-    mode: "no-cors",
     headers: {
-      "Content-Type": "text/plain;charset=utf-8"
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
       action: "registerToken",
-      token: token,
+      token,
       browser: detectBrowser(),
-      operatingSystem:
-        detectOperatingSystem()
+      operatingSystem: detectOperatingSystem()
     })
   });
+
+  console.log(response);
 }
 
 export async function activateNotifications() {
