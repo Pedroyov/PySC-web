@@ -1634,57 +1634,70 @@ filterButtons.forEach(button => {
 
 /* CONTROLES DEL LIGHTBOX */
 
-lightboxClose.addEventListener(
-  "click",
-  closeLightbox
-);
+if (
+  lightbox &&
+  lightboxImage &&
+  lightboxClose &&
+  lightboxPrev &&
+  lightboxNext
+) {
+  lightboxClose.addEventListener(
+    "click",
+    closeLightbox
+  );
 
-lightboxPrev.addEventListener(
-  "click",
-  showPreviousImage
-);
+  lightboxPrev.addEventListener(
+    "click",
+    showPreviousImage
+  );
 
-lightboxNext.addEventListener(
-  "click",
-  showNextImage
-);
+  lightboxNext.addEventListener(
+    "click",
+    showNextImage
+  );
 
+  /* CERRAR AL HACER CLIC EN EL FONDO */
 
-/* CERRAR AL HACER CLIC EN EL FONDO */
+  lightbox.addEventListener(
+    "click",
+    (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    }
+  );
 
-lightbox.addEventListener("click", event => {
-  if (event.target === lightbox) {
-    closeLightbox();
-  }
-});
+  /* CONTROLES DEL TECLADO */
 
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        !lightbox.classList.contains("is-open")
+      ) {
+        return;
+      }
 
-/* CONTROLES DEL TECLADO */
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
 
-document.addEventListener("keydown", event => {
-  if (
-    !lightbox.classList.contains("is-open")
-  ) {
-    return;
-  }
+      if (event.key === "ArrowLeft") {
+        showPreviousImage();
+      }
 
-  if (event.key === "Escape") {
-    closeLightbox();
-  }
+      if (event.key === "ArrowRight") {
+        showNextImage();
+      }
+    }
+  );
+}
 
-  if (event.key === "ArrowLeft") {
-    showPreviousImage();
-  }
+/* INICIAR GALERÍA */
 
-  if (event.key === "ArrowRight") {
-    showNextImage();
-  }
-});
-
-
-/* INICIAR */
-
-buildGallery();
+if (galleryGrid) {
+  buildGallery();
+}
 
 
 if ("serviceWorker" in navigator) {
