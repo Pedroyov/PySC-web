@@ -24,8 +24,84 @@ const firebaseConfig = {
 const vapidKey =
   "BGdlHDCrZBY3AHLIh4oPamVXZqTh5s5YoyTmoVVmFAH6MruJGQFf4i_NdRvNq58GSdFbBaT4HZfQxrdxx51vVik";
 
+const tokenRegistrationUrl =
+  "https://script.google.com/macros/s/AKfycbzsZC3ntbE28yjN8_Bh724yBk-qkwcSOZWpq8ZqKPfsL_wb5KiK07RHIa-GVQTgDJFd/exec";
+
 const firebaseApp =
   initializeApp(firebaseConfig);
+
+function detectBrowser() {
+  const userAgent =
+    navigator.userAgent;
+
+  if (userAgent.includes("Edg/")) {
+    return "Edge";
+  }
+
+  if (userAgent.includes("Firefox/")) {
+    return "Firefox";
+  }
+
+  if (
+    userAgent.includes("CriOS") ||
+    userAgent.includes("Chrome")
+  ) {
+    return "Chrome";
+  }
+
+  if (
+    userAgent.includes("Safari") &&
+    !userAgent.includes("Chrome")
+  ) {
+    return "Safari";
+  }
+
+  return "Otro";
+}
+
+function detectOperatingSystem() {
+  const userAgent =
+    navigator.userAgent;
+
+  if (/android/i.test(userAgent)) {
+    return "Android";
+  }
+
+  if (/iPhone|iPad|iPod/i.test(userAgent)) {
+    return "iOS";
+  }
+
+  if (/Windows/i.test(userAgent)) {
+    return "Windows";
+  }
+
+  if (/Macintosh|Mac OS/i.test(userAgent)) {
+    return "macOS";
+  }
+
+  if (/Linux/i.test(userAgent)) {
+    return "Linux";
+  }
+
+  return "Otro";
+}
+
+async function saveToken(token) {
+  await fetch(tokenRegistrationUrl, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({
+      action: "registerToken",
+      token: token,
+      browser: detectBrowser(),
+      operatingSystem:
+        detectOperatingSystem()
+    })
+  });
+}
 
 export async function activateNotifications() {
   if (
@@ -69,13 +145,14 @@ export async function activateNotifications() {
 
   if (!token) {
     throw new Error(
-      "No se pudo generar el identificador del dispositivo."
+        "No se pudo generar el identificador del dispositivo."
     );
   }
 
+  await saveToken(token);
+
   console.log(
-    "Token FCM del dispositivo:",
-    token
+    "Dispositivo enviado para su registro."
   );
 
   return token;
