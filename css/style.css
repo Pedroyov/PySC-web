@@ -2156,6 +2156,30 @@ el fondo seguirá viéndose azul gracias al color inferior.
   );
 }
 
+.agenda-presentation {
+  background: #dcfce7;
+}
+
+.agenda-presentation::before {
+  background: linear-gradient(
+    90deg,
+    #15803D,
+    #4ADE80
+  );
+}
+
+.agenda-contest {
+  background: #fde7c7;
+}
+
+.agenda-contest::before {
+  background: linear-gradient(
+    90deg,
+    #D97706,
+    #F59E0B
+  );
+}
+
 .agenda-general {
   background: #f8eddb;
 }

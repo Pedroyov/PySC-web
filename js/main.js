@@ -275,6 +275,21 @@ const agendaTypes = {
     label: "Evento",
     className: "agenda-event"
   },
+  presentacion: {
+    emoji: "💃",
+    label: "Presentación",
+    className: "agenda-presentation"
+  },
+  presentación: {
+    emoji: "💃",
+    label: "Presentación",
+    className: "agenda-presentation"
+  },
+  concurso: {
+    emoji: "🏆",
+    label: "Concurso",
+    className: "agenda-contest"
+  },
   aviso: {
     emoji: "⚠️",
     label: "Aviso",
@@ -295,9 +310,9 @@ const agendaTypes = {
     label: "Cumpleaños",
     className: "agenda-birthday"
   },
-  taller: {
+  ensayo: {
     emoji: "🩰",
-    label: "Taller",
+    label: "Ensayo",
     className: "agenda-workshop"
   },
   viaje: {
