@@ -8,6 +8,20 @@ import {
   isSupported
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-messaging.js";
 
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInAnonymously
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  serverTimestamp,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC28HBU7cdTWoheMO5-QTw2Wo2sEe7ww-Q",
   authDomain: "pysc-web.firebaseapp.com",
@@ -29,6 +43,15 @@ const tokenRegistrationUrl =
 
 const firebaseApp =
   initializeApp(firebaseConfig);
+
+export const firebaseAuth =
+  getAuth(firebaseApp);
+
+export const firestoreDatabase =
+  getFirestore(firebaseApp);
+
+
+
 
 function detectBrowser() {
   const userAgent =
@@ -168,3 +191,120 @@ export async function activateNotifications() {
 
   return token;
 }
+
+export function getCurrentPlayer() {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const unsubscribe =
+        onAuthStateChanged(
+          firebaseAuth,
+          async (user) => {
+
+            unsubscribe();
+
+            if (user) {
+              resolve(user);
+              return;
+            }
+
+            try {
+
+              const credential =
+                await signInAnonymously(
+                  firebaseAuth
+                );
+
+              resolve(
+                credential.user
+              );
+
+            } catch (error) {
+
+              console.error(
+                "No se pudo iniciar la sesión anónima:",
+                error
+              );
+
+              reject(error);
+
+            }
+
+          }
+        );
+
+    }
+  );
+
+}
+
+export async function ensurePlayerProfile() {
+
+  const user =
+    await getCurrentPlayer();
+
+  const playerReference =
+    doc(
+      firestoreDatabase,
+      "players",
+      user.uid
+    );
+
+  const playerSnapshot =
+    await getDoc(
+      playerReference
+    );
+
+  if (!playerSnapshot.exists()) {
+
+    await setDoc(
+      playerReference,
+      {
+        nombre: "",
+        avatar: "",
+        fechaRegistro:
+          serverTimestamp(),
+        juegosCompletados: 0,
+        puntosTotales: 0
+      }
+    );
+
+    console.log(
+      "Perfil del jugador creado:",
+    );
+
+  } else {
+
+    console.log(
+      "Perfil del jugador encontrado:",
+    );
+
+  }
+
+  return {
+    user,
+    reference: playerReference,
+    data: playerSnapshot.exists()
+      ? playerSnapshot.data()
+      : null
+  };
+
+}
+
+ensurePlayerProfile()
+  .then(({ user }) => {
+
+    console.log(
+      "Jugador preparado:",
+    );
+
+  })
+  .catch((error) => {
+
+    console.error(
+      "No se pudo preparar el jugador:",
+      error
+    );
+
+  });

@@ -1,3 +1,16 @@
+import {
+  GAMES
+} from "./game-config.js";
+
+import {
+  checkMinesweeperResult,
+  saveBestMinesweeperResult,
+  getMinesweeperRanking
+} from "./firebase-ranking.js";
+
+const GAME =
+  GAMES.MINESWEEPER;
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const secretRoomUnlocked =
@@ -14,27 +27,27 @@ document.addEventListener("DOMContentLoaded", () => {
     {
         rows: 8,
         columns: 8,
-        mines: 10
+        mines: 5
     },
     {
         rows: 8,
         columns: 8,
+        mines: 6
+    },
+    {
+        rows: 8,
+        columns: 8,
+        mines: 8
+    },
+    {
+        rows: 10,
+        columns: 10,
         mines: 12
     },
     {
-        rows: 8,
-        columns: 8,
+        rows: 12,
+        columns: 12,
         mines: 15
-    },
-    {
-        rows: 10,
-        columns: 10,
-        mines: 20
-    },
-    {
-        rows: 10,
-        columns: 10,
-        mines: 30
     }
   ];
 
@@ -119,6 +132,76 @@ document.addEventListener("DOMContentLoaded", () => {
         "minesweeperLevelMessage"
     );
 
+  const rankingModal =
+    document.getElementById(
+        "rankingModal"
+    );
+
+  const rankingModalTitle =
+    document.getElementById(
+        "rankingModalTitle"
+    );
+
+  const rankingModalText =
+    document.getElementById(
+        "rankingModalText"
+    );
+
+  const rankingModalScore =
+    document.getElementById(
+        "rankingModalScore"
+    );
+
+  const rankingNameGroup =
+    document.getElementById(
+        "rankingNameGroup"
+    );
+
+  const rankingPlayerName =
+    document.getElementById(
+        "rankingPlayerName"
+    );
+
+  const rankingNameError =
+    document.getElementById(
+        "rankingNameError"
+    );
+
+  const rankingSaveButton =
+    document.getElementById(
+        "rankingSaveButton"
+    );
+
+  const leaderboardModal =
+    document.getElementById(
+        "leaderboardModal"
+    );
+
+  const leaderboardList =
+    document.getElementById(
+        "leaderboardList"
+    );
+
+  const leaderboardLoading =
+    document.getElementById(
+        "leaderboardLoading"
+    );
+
+  const leaderboardEmpty =
+    document.getElementById(
+        "leaderboardEmpty"
+    );
+
+  const leaderboardOpenButton =
+    document.getElementById(
+        "leaderboardOpenButton"
+    );
+
+  const leaderboardCloseButton =
+    document.getElementById(
+        "leaderboardCloseButton"
+    );
+
   const victorySound =
     new Audio("../audio/victory.mp3");
 
@@ -151,6 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let board = [];
   let levelCompleted = false;
   let firstMove = true;
+  let pendingRankingResult = null;
 
 
   const livesElement =
@@ -381,15 +465,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
 
-        if (lives <= 0) {
-            currentLevel = 1;
-            lives = 5;
-
-            updateLives();
-            updateLevel();
-        }
-
         createBoard();
+
         boardLocked = false;
 
     }, 2100);
@@ -512,15 +589,270 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  function finishGame() {
+  function formatTime(
+    totalSeconds
+    ) {
 
-    clearInterval(
-        timerInterval
+    const minutes =
+        Math.floor(
+        totalSeconds / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+    return (
+        `${String(minutes).padStart(2, "0")}:` +
+        `${String(seconds).padStart(2, "0")}`
     );
 
-    boardLocked = true;
+  }
 
+  async function processMinesweeperRanking(
+    finalTime,
+    finalLives
+    ) {
+
+    try {
+
+        const result =
+        await checkMinesweeperResult(
+            GAME.id,
+            finalTime,
+            finalLives
+        );
+
+        if (!result.newPersonalRecord) {
+        return false;
+        }
+
+        pendingRankingResult = {
+        ...result,
+        time: finalTime,
+        lives: finalLives
+        };
+
+        rankingModalScore.textContent =
+        `${formatTime(finalTime)} · ${finalLives} ${
+            finalLives === 1
+            ? "vida"
+            : "vidas"
+        }`;
+
+        rankingNameError.textContent = "";
+
+        if (
+        result.qualifiesTop10 &&
+        !result.hasName
+        ) {
+
+        rankingModalTitle.textContent =
+            "¡Entraste al Top 10!";
+
+        rankingModalText.textContent =
+            `Tu resultado ocuparía el puesto ${result.position}. Escribe tu nombre o apodo para aparecer en el Salón de la Fama.`;
+
+        rankingNameGroup.hidden = false;
+        rankingPlayerName.value = "";
+
+        } else {
+
+        rankingModalTitle.textContent =
+            "¡Nuevo récord personal!";
+
+        rankingModalText.textContent =
+            result.qualifiesTop10
+            ? `Tu nuevo resultado ocuparía el puesto ${result.position} del ranking.`
+            : "Has mejorado tu tiempo anterior.";
+
+        rankingNameGroup.hidden = true;
+
+        }
+
+        rankingModal.classList.add(
+        "is-visible"
+        );
+
+        rankingModal.setAttribute(
+        "aria-hidden",
+        "false"
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+        "No se pudo comprobar el ranking de Buscaminas:",
+        error
+        );
+
+        return false;
+
+    }
+  }
+
+  async function openMinesweeperLeaderboard() {
+
+    leaderboardModal.classList.add(
+        "is-visible"
+    );
+
+    leaderboardModal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    leaderboardLoading.hidden = false;
+    leaderboardLoading.textContent =
+        "Cargando clasificación...";
+
+    leaderboardEmpty.hidden = true;
+    leaderboardList.innerHTML = "";
+
+    try {
+
+        const ranking =
+        await getMinesweeperRanking(
+            GAME.id
+        );
+
+        leaderboardLoading.hidden = true;
+
+        if (!ranking.length) {
+
+        leaderboardEmpty.hidden = false;
+
+        return;
+
+        }
+
+        ranking.forEach((player) => {
+
+        const item =
+            document.createElement("li");
+
+        item.classList.add(
+            `leaderboard-rank-${player.position}`
+        );
+
+        let positionContent =
+            player.position;
+
+        if (player.position === 1) {
+            positionContent = "🥇";
+        }
+
+        if (player.position === 2) {
+            positionContent = "🥈";
+        }
+
+        if (player.position === 3) {
+            positionContent = "🥉";
+        }
+
+        const livesText =
+            player.lives === 1
+            ? "1 vida"
+            : `${player.lives} vidas`;
+
+        item.innerHTML = `
+            <span class="leaderboard-position">
+            ${positionContent}
+            </span>
+
+            <span class="leaderboard-player">
+            ${player.name}
+            </span>
+
+            <strong class="leaderboard-score">
+            ${formatTime(player.time)} · ${livesText}
+            </strong>
+        `;
+
+        leaderboardList.appendChild(
+            item
+        );
+
+        });
+
+    } catch (error) {
+
+        leaderboardLoading.hidden = false;
+
+        leaderboardLoading.textContent =
+        "No se pudo cargar la clasificación.";
+
+        console.error(
+        "Error cargando el ranking de Buscaminas:",
+        error
+        );
+
+    }
+
+  }
+
+  function showMinesweeperUnlockModal() {
+
+    setTimeout(() => {
+
+        unlockModal.classList.add(
+        "is-visible"
+        );
+
+    }, 350);
+
+  }
+
+  function finishFailedGame() {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+
+    boardLocked = true;
+    passed = false;
+
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+
+    unlockIcon.innerHTML =
+        '<i class="fa-solid fa-bomb"></i>';
+
+    unlockLabel.textContent =
+        "Desafío no superado";
+
+    unlockTitle.textContent =
+        "¡Te quedaste sin vidas!";
+
+    unlockText.textContent =
+        "No lograste completar los cinco niveles. Inténtalo nuevamente para desbloquear el siguiente desafío.";
+
+    unlockButtonText.textContent =
+        "Intentar nuevamente";
+
+    setTimeout(() => {
+
+        unlockModal.classList.add(
+            "is-visible"
+        );
+
+    }, 2100);
+
+  }
+
+  async function finishGame() {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+
+    boardLocked = true;
     passed = true;
+
+    const finalTime =
+        gameSeconds;
+
+    const finalLives =
+        lives;
 
     backgroundMusic.pause();
 
@@ -547,9 +879,17 @@ document.addEventListener("DOMContentLoaded", () => {
     unlockButtonText.textContent =
         "Continuar";
 
-    unlockModal.classList.add(
-        "is-visible"
-    );
+    const rankingOpened =
+        await processMinesweeperRanking(
+        finalTime,
+        finalLives
+        );
+
+    if (!rankingOpened) {
+
+        showMinesweeperUnlockModal();
+
+    }
 
   }
 
@@ -1020,6 +1360,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateLives();
         showAllMines();
+
+        if (lives <= 0) {
+
+            finishFailedGame();
+
+            return;
+
+        }
+
         restartCurrentLevel();
 
         return;
@@ -1160,6 +1509,106 @@ document.addEventListener("DOMContentLoaded", () => {
         restartGame();
 
         }
+
+    }
+  );
+
+  rankingSaveButton.addEventListener(
+    "click",
+    async () => {
+
+        if (!pendingRankingResult) {
+        return;
+        }
+
+        let playerName =
+        pendingRankingResult.playerName;
+
+        if (
+        pendingRankingResult.qualifiesTop10 &&
+        !pendingRankingResult.hasName
+        ) {
+
+        playerName =
+            rankingPlayerName.value.trim();
+
+        if (playerName.length < 2) {
+
+            rankingNameError.textContent =
+            "Escribe al menos 2 caracteres.";
+
+            rankingPlayerName.focus();
+
+            return;
+
+        }
+
+        }
+
+        rankingSaveButton.disabled = true;
+
+        try {
+
+        await saveBestMinesweeperResult(
+            GAME.id,
+            pendingRankingResult.time,
+            pendingRankingResult.lives,
+            playerName
+        );
+
+        rankingModal.classList.remove(
+            "is-visible"
+        );
+
+        rankingModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        showMinesweeperUnlockModal();
+
+        pendingRankingResult = null;
+
+        } catch (error) {
+
+        console.error(
+            "No se pudo guardar el resultado de Buscaminas:",
+            error
+        );
+
+        rankingNameError.textContent =
+            "No se pudo guardar. Inténtalo nuevamente.";
+
+        } finally {
+
+        rankingSaveButton.disabled = false;
+
+        }
+
+    }
+  );
+
+  leaderboardOpenButton.addEventListener(
+    "click",
+    () => {
+
+        openMinesweeperLeaderboard();
+
+    }
+    );
+
+    leaderboardCloseButton.addEventListener(
+    "click",
+    () => {
+
+        leaderboardModal.classList.remove(
+        "is-visible"
+        );
+
+        leaderboardModal.setAttribute(
+        "aria-hidden",
+        "true"
+        );
 
     }
   );

@@ -2476,3 +2476,200 @@
 .footer-secret-game.visible{
     display:flex;
 }
+
+/*==================================================
+  SALÓN DE LA FAMA
+==================================================*/
+
+.hall-of-fame{
+    margin-top:5rem;
+}
+
+.hall-of-fame-card{
+
+    background:linear-gradient(
+        180deg,
+        rgba(22,30,56,.98),
+        rgba(13,18,35,.98)
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:28px;
+
+    padding:2.2rem;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35);
+
+}
+
+.hall-of-fame-heading{
+
+    text-align:center;
+
+    max-width:720px;
+
+    margin:0 auto 2rem;
+
+}
+
+.hall-of-fame-heading h2{
+
+    margin:.6rem 0;
+
+    color:#fff;
+
+}
+
+.hall-of-fame-heading p{
+
+    color:rgba(255,255,255,.72);
+
+}
+
+.hall-of-fame-tabs{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:1rem;
+
+    flex-wrap:wrap;
+
+    margin-bottom:2rem;
+
+}
+
+.hall-of-fame-tab{
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:.9rem 1.3rem;
+
+    border-radius:999px;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.55rem;
+
+    background:rgba(255,255,255,.07);
+
+    color:#fff;
+
+    transition:.25s;
+
+}
+
+.hall-of-fame-tab:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.12);
+
+}
+
+.hall-of-fame-tab.is-active{
+
+    background:linear-gradient(
+        135deg,
+        #f5c542,
+        #ffb400
+    );
+
+    color:#101010;
+
+}
+
+.hall-of-fame-loading,
+.hall-of-fame-empty,
+.hall-of-fame-error{
+
+    text-align:center;
+
+    color:#fff;
+
+    padding:2rem 0;
+
+}
+
+.hall-of-fame-list{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.85rem;
+
+}
+
+.hall-of-fame-item{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:1rem;
+
+    padding:1rem 1.2rem;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.05);
+
+    transition:.25s;
+
+}
+
+.hall-of-fame-item:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.hall-position{
+
+    width:46px;
+
+    font-size:1.2rem;
+
+    font-weight:800;
+
+    text-align:center;
+
+}
+
+.hall-player{
+
+    flex:1;
+
+    color:#fff;
+
+    font-weight:700;
+
+}
+
+.hall-score{
+
+    color:#ffd45d;
+
+    font-weight:800;
+
+}

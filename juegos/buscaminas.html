@@ -120,6 +120,15 @@
           Reiniciar
         </button>
 
+        <button
+          type="button"
+          class="leaderboard-open-button"
+          id="leaderboardOpenButton"
+        >
+          <i class="fa-solid fa-trophy"></i>
+          Ver clasificación
+        </button>
+
       </footer>
 
     </section>
@@ -181,7 +190,131 @@
 
   </div>
 
-  <script src="../js/buscaminas.js"></script>
+  <div
+    class="ranking-modal"
+    id="rankingModal"
+    aria-hidden="true"
+  >
+    <div class="ranking-modal-backdrop"></div>
+
+    <div
+      class="ranking-modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="rankingModalTitle"
+    >
+      <div class="ranking-modal-icon">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+
+      <span class="ranking-modal-label">
+        Salón de la Fama
+      </span>
+
+      <h2 id="rankingModalTitle">
+        ¡Nuevo récord!
+      </h2>
+
+      <p id="rankingModalText">
+        Has conseguido un nuevo récord personal.
+      </p>
+
+      <strong id="rankingModalScore">
+        00:00 · 5 vidas
+      </strong>
+
+      <div
+        class="ranking-name-group"
+        id="rankingNameGroup"
+      >
+        <label for="rankingPlayerName">
+          ¿Cómo quieres aparecer?
+        </label>
+
+        <input
+          type="text"
+          id="rankingPlayerName"
+          maxlength="24"
+          autocomplete="nickname"
+          placeholder="Nombre o apodo"
+        >
+
+        <small id="rankingNameError"></small>
+      </div>
+
+      <button
+        type="button"
+        class="ranking-save-button"
+        id="rankingSaveButton"
+      >
+        Guardar resultado
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="leaderboard-modal"
+    id="leaderboardModal"
+    aria-hidden="true"
+  >
+    <div class="leaderboard-modal-backdrop"></div>
+
+    <div
+      class="leaderboard-modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="leaderboardTitle"
+    >
+      <button
+        type="button"
+        class="leaderboard-close-button"
+        id="leaderboardCloseButton"
+        aria-label="Cerrar clasificación"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="leaderboard-icon">
+        <i class="fa-solid fa-ranking-star"></i>
+      </div>
+
+      <span class="leaderboard-label">
+        Salón de la Fama
+      </span>
+
+      <h2 id="leaderboardTitle">
+        Top 10
+      </h2>
+
+      <p>
+        Buscaminas
+      </p>
+
+      <div
+        class="leaderboard-loading"
+        id="leaderboardLoading"
+      >
+        Cargando clasificación...
+      </div>
+
+      <ol
+        class="leaderboard-list"
+        id="leaderboardList"
+      ></ol>
+
+      <p
+        class="leaderboard-empty"
+        id="leaderboardEmpty"
+        hidden
+      >
+        Todavía no hay resultados registrados.
+      </p>
+    </div>
+  </div>
+
+
+  <script type="module" src="../js/buscaminas.js"></script>
 
 </body>
 </html>

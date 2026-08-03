@@ -1,3 +1,16 @@
+import {
+  GAMES
+} from "./game-config.js";
+
+import {
+  checkMemoryResult,
+  saveBestMemoryResult,
+  getMemoryRanking
+} from "./firebase-ranking.js";
+
+const GAME =
+  GAMES.MEMORY;
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const secretRoomUnlocked =
@@ -100,6 +113,76 @@ document.addEventListener("DOMContentLoaded", () => {
         "loveUnlockButton"
     );
 
+  const rankingModal =
+    document.getElementById(
+      "rankingModal"
+    );
+
+  const rankingModalTitle =
+    document.getElementById(
+      "rankingModalTitle"
+    );
+
+  const rankingModalText =
+    document.getElementById(
+      "rankingModalText"
+    );
+
+  const rankingModalScore =
+    document.getElementById(
+      "rankingModalScore"
+    );
+
+  const rankingNameGroup =
+    document.getElementById(
+      "rankingNameGroup"
+    );
+
+  const rankingPlayerName =
+    document.getElementById(
+      "rankingPlayerName"
+    );
+
+  const rankingNameError =
+    document.getElementById(
+      "rankingNameError"
+    );
+
+  const rankingSaveButton =
+    document.getElementById(
+      "rankingSaveButton"
+    );
+
+  const leaderboardModal =
+    document.getElementById(
+      "leaderboardModal"
+    );
+
+  const leaderboardList =
+    document.getElementById(
+      "leaderboardList"
+    );
+
+  const leaderboardLoading =
+    document.getElementById(
+      "leaderboardLoading"
+    );
+
+  const leaderboardEmpty =
+    document.getElementById(
+      "leaderboardEmpty"
+    );
+
+  const leaderboardOpenButton =
+    document.getElementById(
+      "leaderboardOpenButton"
+    );
+
+  const leaderboardCloseButton =
+    document.getElementById(
+      "leaderboardCloseButton"
+    );
+
   const startSound =
     new Audio("../audio/start.mp3");
 
@@ -125,6 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let attempts = 0;
   let matchedPairs = 0;
   let passed = false;
+  let pendingRankingResult = null;
 
   if (
     !startButton ||
@@ -514,7 +598,217 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  function finishGame() {
+  function formatTime(
+    totalSeconds
+  ) {
+
+    const minutes =
+      Math.floor(
+        totalSeconds / 60
+      );
+
+    const seconds =
+      totalSeconds % 60;
+
+    return (
+      `${String(minutes).padStart(2, "0")}:` +
+      `${String(seconds).padStart(2, "0")}`
+    );
+
+  }
+
+  async function processMemoryRanking(
+    finalAttempts,
+    finalTime
+  ) {
+
+    try {
+
+      const result =
+        await checkMemoryResult(
+          GAME.id,
+          finalAttempts,
+          finalTime
+        );
+
+      if (!result.newPersonalRecord) {
+        return false;
+      }
+
+      pendingRankingResult = {
+        ...result,
+        attempts: finalAttempts,
+        time: finalTime
+      };
+
+      rankingModalScore.textContent =
+        `${finalAttempts} intentos · ${formatTime(finalTime)}`;
+
+      rankingNameError.textContent = "";
+
+      if (
+        result.qualifiesTop10 &&
+        !result.hasName
+      ) {
+
+        rankingModalTitle.textContent =
+          "¡Entraste al Top 10!";
+
+        rankingModalText.textContent =
+          `Tu resultado ocuparía el puesto ${result.position}. Escribe tu nombre o apodo para aparecer en el Salón de la Fama.`;
+
+        rankingNameGroup.hidden = false;
+        rankingPlayerName.value = "";
+
+      } else {
+
+        rankingModalTitle.textContent =
+          "¡Nuevo récord personal!";
+
+        rankingModalText.textContent =
+          result.qualifiesTop10
+            ? `Tu nuevo resultado ocuparía el puesto ${result.position} del ranking.`
+            : "Has mejorado tu resultado anterior.";
+
+        rankingNameGroup.hidden = true;
+
+      }
+
+      rankingModal.classList.add(
+        "is-visible"
+      );
+
+      rankingModal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      return true;
+
+    } catch (error) {
+
+      console.error(
+        "No se pudo comprobar el ranking de Memoria:",
+        error
+      );
+
+      return false;
+
+    }
+
+  }
+
+  async function openMemoryLeaderboard() {
+
+    leaderboardModal.classList.add(
+      "is-visible"
+    );
+
+    leaderboardModal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    leaderboardLoading.hidden = false;
+    leaderboardEmpty.hidden = true;
+
+    leaderboardList.innerHTML = "";
+
+    try {
+
+      const ranking =
+        await getMemoryRanking(
+          GAME.id
+        );
+
+      leaderboardLoading.hidden = true;
+
+      if (!ranking.length) {
+
+        leaderboardEmpty.hidden = false;
+
+        return;
+
+      }
+
+      ranking.forEach((player) => {
+
+        const item =
+          document.createElement("li");
+
+        item.classList.add(
+          `leaderboard-rank-${player.position}`
+        );
+
+        let positionContent =
+          player.position;
+
+        if (player.position === 1) {
+          positionContent = "🥇";
+        }
+
+        if (player.position === 2) {
+          positionContent = "🥈";
+        }
+
+        if (player.position === 3) {
+          positionContent = "🥉";
+        }
+
+        item.innerHTML = `
+          <span class="leaderboard-position">
+            ${positionContent}
+          </span>
+
+          <span class="leaderboard-player">
+            ${player.name}
+          </span>
+
+          <strong class="leaderboard-score">
+            ${player.attempts} intentos · ${formatTime(player.time)}
+          </strong>
+        `;
+
+        leaderboardList.appendChild(
+          item
+        );
+
+      });
+
+    } catch (error) {
+
+      leaderboardLoading.textContent =
+        "No se pudo cargar la clasificación.";
+
+      console.error(
+        "Error cargando el ranking de Memoria:",
+        error
+      );
+
+    }
+
+  }
+
+  function showUnlockResultModal() {
+
+    setTimeout(() => {
+
+      unlockModal.classList.add(
+        "is-visible"
+      );
+
+    }, 350);
+
+  }
+
+  async function finishGame() {
+
+    const finalAttempts =
+      attempts;
+
+    const finalTime =
+      gameSeconds;
+
 
     clearInterval(timerInterval);
     timerInterval = null;
@@ -574,13 +868,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    setTimeout(() => {
+    const rankingOpened =
+      await processMemoryRanking(
+        finalAttempts,
+        finalTime
+      );
 
-        unlockModal.classList.add(
-            "is-visible"
-        );
+    if (!rankingOpened) {
 
-    },1200);
+      showUnlockResultModal();
+
+    }
 
   }
 
@@ -659,6 +957,106 @@ document.addEventListener("DOMContentLoaded", () => {
         restartGame();
 
         }
+
+    }
+  );
+
+  rankingSaveButton.addEventListener(
+    "click",
+    async () => {
+
+      if (!pendingRankingResult) {
+        return;
+      }
+
+      let playerName =
+        pendingRankingResult.playerName;
+
+      if (
+        pendingRankingResult.qualifiesTop10 &&
+        !pendingRankingResult.hasName
+      ) {
+
+        playerName =
+          rankingPlayerName.value.trim();
+
+        if (playerName.length < 2) {
+
+          rankingNameError.textContent =
+            "Escribe al menos 2 caracteres.";
+
+          rankingPlayerName.focus();
+
+          return;
+
+        }
+
+      }
+
+      rankingSaveButton.disabled = true;
+
+      try {
+
+        await saveBestMemoryResult(
+          GAME.id,
+          pendingRankingResult.attempts,
+          pendingRankingResult.time,
+          playerName
+        );
+
+        rankingModal.classList.remove(
+          "is-visible"
+        );
+
+        rankingModal.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        showUnlockResultModal();
+
+        pendingRankingResult = null;
+
+      } catch (error) {
+
+        console.error(
+          "No se pudo guardar el resultado de Memoria:",
+          error
+        );
+
+        rankingNameError.textContent =
+          "No se pudo guardar. Inténtalo nuevamente.";
+
+      } finally {
+
+        rankingSaveButton.disabled = false;
+
+      }
+
+    }
+  );
+
+  leaderboardOpenButton.addEventListener(
+    "click",
+    () => {
+
+      openMemoryLeaderboard();
+
+    }
+  );
+
+  leaderboardCloseButton.addEventListener(
+    "click",
+    () => {
+
+      leaderboardModal.classList.remove(
+        "is-visible"
+      );
+
+      leaderboardModal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
 
     }
   );
