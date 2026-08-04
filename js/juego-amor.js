@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(
       "loveRestartButton"
     );
-  
+
   const resetButton =
     document.getElementById(
       "loveResetButton"
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(
       "loveBestScore"
     );
-  
+
   const GAME =
     GAMES.LOVE;
 
@@ -194,40 +194,40 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "../img/juegos/objetos/celular.png"
     },
     {
-      name:"Audifonos",
-      image:"../img/juegos/objetos/audifonos.png"
+      name: "Audifonos",
+      image: "../img/juegos/objetos/audifonos.png"
     },
     {
-      name:"Televisor",
-      image:"../img/juegos/objetos/tele.png"
+      name: "Televisor",
+      image: "../img/juegos/objetos/tele.png"
     },
     {
-      name:"Cama",
-      image:"../img/juegos/objetos/cama.png"
+      name: "Cama",
+      image: "../img/juegos/objetos/cama.png"
     },
     {
-      name:"Cerveza",
-      image:"../img/juegos/objetos/cerveza.png"
+      name: "Cerveza",
+      image: "../img/juegos/objetos/cerveza.png"
     },
     {
-      name:"Dinero",
-      image:"../img/juegos/objetos/dinero.png"
+      name: "Dinero",
+      image: "../img/juegos/objetos/dinero.png"
     },
     {
-      name:"Hamburguesa",
-      image:"../img/juegos/objetos/hamburguesa.png"
+      name: "Hamburguesa",
+      image: "../img/juegos/objetos/hamburguesa.png"
     },
     {
-      name:"Piedra",
-      image:"../img/juegos/objetos/piedra.png"
+      name: "Piedra",
+      image: "../img/juegos/objetos/piedra.png"
     },
     {
-      name:"sombrero",
-      image:"../img/juegos/objetos/sombrero.png"
+      name: "sombrero",
+      image: "../img/juegos/objetos/sombrero.png"
     },
     {
-      name:"Tijera",
-      image:"../img/juegos/objetos/tijera.png"
+      name: "Tijera",
+      image: "../img/juegos/objetos/tijera.png"
     }
   ];
 
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startSound.preload = "auto";
   gameOverSound.preload = "auto";
   unlockSound.preload = "auto";
-  
+
 
   let gameSeconds = 0;
   let timerInterval = null;
@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     !resetButton ||
     !bestScoreElement ||
     !objectsContainer
-    
+
   ) {
     console.error(
       "No se encontraron todos los elementos necesarios del juego."
@@ -451,15 +451,15 @@ document.addEventListener("DOMContentLoaded", () => {
     addObject();
 
   }
-  
+
   function addObject() {
 
     const randomItem =
       badObjects[
-        Math.floor(
-          Math.random() *
-          badObjects.length
-        )
+      Math.floor(
+        Math.random() *
+        badObjects.length
+      )
       ];
 
     const object =
@@ -652,24 +652,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  async function processRankingResult() {
+  async function processRankingResult(
+    finalScore
+  ) {
 
     try {
 
       const result =
         await checkScoreResult(
           GAME.id,
-          score
+          finalScore
         );
 
       if (!result.newPersonalRecord) {
-        return;
+        return false;
       }
 
-      pendingRankingResult = result;
+      pendingRankingResult = {
+        ...result,
+        score: finalScore
+      };
 
       rankingModalScore.textContent =
-        `${score} puntos`;
+        `${finalScore} puntos`;
 
       rankingNameError.textContent = "";
 
@@ -711,12 +716,16 @@ document.addEventListener("DOMContentLoaded", () => {
         "false"
       );
 
+      return true;
+
     } catch (error) {
 
       console.error(
         "No se pudo comprobar el ranking:",
         error
       );
+
+      return false;
 
     }
 
@@ -810,13 +819,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  function endGame() {
+  async function endGame() {
+
+    const finalScore =
+      score;
 
     gameOver = true;
+
     gameOverSound.currentTime = 0;
-    gameOverSound.play().catch(() => {});
+    gameOverSound.play().catch(() => { });
 
     clearInterval(timerInterval);
+    timerInterval = null;
 
     gameCharacters.forEach((character) => {
 
@@ -830,18 +844,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    console.log("GAME OVER");
     finalScoreElement.textContent =
-        score;
-
-    processRankingResult();
+      finalScore;
 
     gameOverScreen.classList.add(
-        "is-visible"
+      "is-visible"
     );
 
     resetButton.classList.remove(
       "is-visible"
+    );
+
+    await processRankingResult(
+      finalScore
     );
 
   }
@@ -914,7 +929,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function moveCharacter(character) {
 
-    if(gameOver || !character.isConnected){
+    if (gameOver || !character.isConnected) {
       return;
     }
 
@@ -1033,37 +1048,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  function launchHeart(targetX, targetY){
+  function launchHeart(targetX, targetY) {
 
     const heart =
-        document.createElement("div");
+      document.createElement("div");
 
     heart.className =
-        "love-heart";
+      "love-heart";
 
     heart.textContent = "❤️";
 
     const startX =
-        gameStage.clientWidth / 2;
+      gameStage.clientWidth / 2;
 
     const startY =
-        gameStage.clientHeight + 40;
+      gameStage.clientHeight + 40;
 
     heart.style.left =
-        `${startX}px`;
+      `${startX}px`;
 
     heart.style.top =
-        `${startY}px`;
+      `${startY}px`;
 
     heartsContainer.appendChild(heart);
 
-    requestAnimationFrame(()=>{
+    requestAnimationFrame(() => {
 
-        heart.style.left =
-            `${targetX}px`;
+      heart.style.left =
+        `${targetX}px`;
 
-        heart.style.top =
-            `${targetY}px`;
+      heart.style.top =
+        `${targetY}px`;
 
     });
 
@@ -1133,14 +1148,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  function checkHeartCollision(heart){
+  function checkHeartCollision(heart) {
 
     const heartRect =
       heart.getBoundingClientRect();
 
-    for(const character of gameCharacters){
+    for (const character of gameCharacters) {
 
-      if(character.dataset.active !== "true"){
+      if (character.dataset.active !== "true") {
         continue;
       }
 
@@ -1172,7 +1187,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }, 350);
         hitSound.currentTime = 0;
-        hitSound.play().catch(() => {});
+        hitSound.play().catch(() => { });
 
         addPoint();
 
@@ -1186,34 +1201,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  gameStage.addEventListener("click",(event)=>{
-  
-      if(
-          !gameStage.classList.contains("is-playing") || gameOver
-      ){
-          return;
-      }
-  
-      const rect =
-          gameStage.getBoundingClientRect();
-  
-      const x =
-          event.clientX - rect.left;
-  
-      const y =
-          event.clientY - rect.top;
-  
-      launchHeart(x,y);
-  
+  gameStage.addEventListener("click", (event) => {
+
+    if (
+      !gameStage.classList.contains("is-playing") || gameOver
+    ) {
+      return;
+    }
+
+    const rect =
+      gameStage.getBoundingClientRect();
+
+    const x =
+      event.clientX - rect.left;
+
+    const y =
+      event.clientY - rect.top;
+
+    launchHeart(x, y);
+
   });
-  
-  function createObject(item){
+
+  function createObject(item) {
 
     const object =
-        document.createElement("div");
+      document.createElement("div");
 
     object.className =
-        "love-object";
+      "love-object";
 
     object.innerHTML = `
         <img
@@ -1373,7 +1388,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }, 350);
         wrongSound.currentTime = 0;
-        wrongSound.play().catch(() => {});
+        wrongSound.play().catch(() => { });
 
         return object;
 
@@ -1404,9 +1419,9 @@ document.addEventListener("DOMContentLoaded", () => {
         shuffledMembers[i],
         shuffledMembers[randomIndex]
       ] = [
-        shuffledMembers[randomIndex],
-        shuffledMembers[i]
-      ];
+          shuffledMembers[randomIndex],
+          shuffledMembers[i]
+        ];
 
     }
 
@@ -1502,7 +1517,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         await saveBestScore(
           GAME.id,
-          score,
+          pendingRankingResult.score,
           playerName
         );
 
