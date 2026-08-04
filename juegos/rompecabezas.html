@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rompecabezas | PySC</title>
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/rompecabezas.css">
+</head>
+
+<body>
+
+    <main class="love-game-page">
+
+        <section class="love-game-shell">
+
+            <header class="love-game-header">
+
+                <a href="../rincon-secreto.html" class="love-game-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al rincón</span>
+                </a>
+
+                <div class="love-game-title">
+
+                    <span class="love-game-eyebrow">Desafío 04</span>
+                    <h1>Rompecabezas</h1>
+                    <p>
+                        Reconstruye cinco fotografías de PySC intercambiando
+                        sus piezas. Completa todos los niveles antes de perder
+                        tus tres vidas.
+                    </p>
+                </div>
+
+                <div class="love-game-logo">
+                    <img src="../img/logo-pasion-sentimiento.png" alt="Pasión y Sentimiento Cultural">
+                </div>
+
+            </header>
+
+            <section class="love-game-hud">
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Nivel
+                    </span>
+
+                    <strong id="puzzleLevel">
+                        1 / 5
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Vidas
+                    </span>
+
+                    <div class="love-lives-list" id="puzzleLives">
+                        ❤️❤️❤️
+                    </div>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Movimientos
+                    </span>
+
+                    <strong id="puzzleMoves">
+                        0 / 18
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Tiempo
+                    </span>
+
+                    <strong id="puzzleTime">
+                        00:00
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+
+                    <span class="love-hud-label">
+                        Ayuda
+                    </span>
+
+                    <button
+                        type="button"
+                        class="puzzle-preview-button"
+                        id="puzzlePreviewButton"
+                    >
+                        <i class="fa-solid fa-eye"></i>
+                        Ver
+                    </button>
+
+                </div>
+
+            </section>
+
+            <section class="love-game-stage" id="puzzleGameStage">
+
+                <div class="love-stage-decoration">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="love-countdown" id="loveCountdown" aria-live="polite">
+                    <span id="loveCountdownText">
+                        3
+                    </span>
+                </div>
+
+                <div class="love-game-welcome">
+
+                    <div class="love-welcome-icon">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+
+                    <h2>¿Listo para reconstruir?</h2>
+                    <p>Observa cada fotografía durante tres segundos y luego
+                        intercambia las piezas para reconstruirla antes de superar
+                        el límite de movimientos.</p>
+
+                    <button type="button" class="love-start-button" id="puzzleStartButton">
+                        <i class="fa-solid fa-play"></i>
+                        Comenzar partida
+                    </button>
+
+                </div>
+
+
+                <div class="puzzle-preview" id="puzzlePreview" aria-hidden="true">
+                    <img id="puzzlePreviewImage" src="" alt="Vista previa del rompecabezas">
+                </div>
+
+                <div class="puzzle-level-message" id="puzzleLevelMessage"></div>
+
+                <div class="puzzle-board" id="puzzleBoard" aria-label="Tablero del rompecabezas"></div>
+
+                <div class="minesweeper-level-message" id="minesweeperLevelMessage"></div>
+                <div class="minesweeper-board" id="minesweeperBoard" aria-label="Tablero de Buscaminas"></div>
+
+            </section>
+
+
+
+            <footer class="love-game-footer">
+
+                <p>
+                    <i class="fa-solid fa-computer-mouse"></i>
+                    Selecciona una pieza y luego otra para intercambiarlas.
+                </p>
+
+                <button type="button" class="love-reset-button" id="puzzleResetButton">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reiniciar
+                </button>
+
+                <button type="button" class="leaderboard-open-button" id="leaderboardOpenButton">
+                    <i class="fa-solid fa-trophy"></i>
+                    Ver clasificación
+                </button>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DESBLOQUEO -->
+
+    <div class="love-unlock-modal" id="loveUnlockModal" aria-hidden="true">
+
+        <div class="love-unlock-backdrop"></div>
+
+        <div class="love-unlock-content" role="dialog" aria-modal="true" aria-labelledby="loveUnlockTitle">
+
+            <div class="love-unlock-icon" id="loveUnlockIcon">
+                <i class="fa-solid fa-lock-open"></i>
+            </div>
+
+            <span class="love-unlock-label" id="loveUnlockLabel">
+                Nuevo desafío desbloqueado
+            </span>
+
+            <h2 id="loveUnlockTitle">
+                ¡Desafío superado!
+            </h2>
+
+            <p id="loveUnlockText">
+                Has desbloqueado el siguiente desafío.
+            </p>
+
+            <button type="button" class="love-unlock-button" id="loveUnlockButton">
+                <span id="loveUnlockButtonText">
+                    Continuar
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+        <div class="ranking-modal-backdrop"></div>
+
+        <div class="ranking-modal-content" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+            <div class="ranking-modal-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="ranking-modal-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="rankingModalTitle">
+                ¡Nuevo récord!
+            </h2>
+
+            <p id="rankingModalText">
+                Has conseguido un nuevo récord personal.
+            </p>
+
+            <strong id="rankingModalScore">
+                00:00 · 0 movimientos · 3 vidas
+            </strong>
+
+            <div class="ranking-name-group" id="rankingNameGroup">
+                <label for="rankingPlayerName">
+                    ¿Cómo quieres aparecer?
+                </label>
+
+                <input type="text" id="rankingPlayerName" maxlength="24" autocomplete="nickname"
+                    placeholder="Nombre o apodo">
+
+                <small id="rankingNameError"></small>
+            </div>
+
+            <button type="button" class="ranking-save-button" id="rankingSaveButton">
+                Guardar resultado
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="leaderboard-modal" id="leaderboardModal" aria-hidden="true">
+        <div class="leaderboard-modal-backdrop"></div>
+
+        <div class="leaderboard-modal-content" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="leaderboard-close-button" id="leaderboardCloseButton"
+                aria-label="Cerrar clasificación">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="leaderboard-icon">
+                <i class="fa-solid fa-ranking-star"></i>
+            </div>
+
+            <span class="leaderboard-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="leaderboardTitle">
+                Top 10
+            </h2>
+
+            <p>
+                Rompecabezas
+            </p>
+
+            <div class="leaderboard-loading" id="leaderboardLoading">
+                Cargando clasificación...
+            </div>
+
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden>
+                Todavía no hay resultados registrados.
+            </p>
+        </div>
+    </div>
+
+
+    <script type="module" src="../js/rompecabezas.js"></script>
+
+</body>
+
+</html>

@@ -32,22 +32,22 @@ document.addEventListener("DOMContentLoaded", () => {
     {
         rows: 8,
         columns: 8,
-        mines: 6
+        mines: 7
     },
     {
         rows: 8,
         columns: 8,
-        mines: 8
+        mines: 9
     },
     {
         rows: 10,
         columns: 10,
-        mines: 12
+        mines: 15
     },
     {
-        rows: 12,
-        columns: 12,
-        mines: 15
+        rows: 11,
+        columns: 11,
+        mines: 18
     }
   ];
 

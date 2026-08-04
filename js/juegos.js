@@ -72,9 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const secretToastText =
     document.getElementById("secretToastText");
 
-  const comingButtons =
-    document.querySelectorAll(".secret-coming-button");
-
   const secondGameCard =
     document.querySelector(
       ".secret-games-grid .secret-game-card:nth-child(2)"
@@ -104,6 +101,18 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.getItem(
       "fourthGameUnlocked"
     ) === "true";
+
+  const fifthGameCard =
+    document.querySelector(
+      ".secret-games-grid .secret-game-card:nth-child(5)"
+    );
+
+  const fifthGameUnlocked =
+    localStorage.getItem(
+      "fifthGameUnlocked"
+    ) === "true";
+
+
 
   if (
     secondGameUnlocked &&
@@ -235,10 +244,70 @@ document.addEventListener("DOMContentLoaded", () => {
     if (status) {
 
       status.textContent =
+        "Listo para jugar";
+
+      status.classList.remove(
+        "secret-status-locked",
+        "secret-status-development"
+      );
+
+      status.classList.add(
+        "secret-status-ready"
+      );
+
+    }
+
+    const button =
+      fourthGameCard.querySelector(
+        ".secret-game-button"
+      );
+
+    if (button) {
+
+      button.removeAttribute(
+        "aria-disabled"
+      );
+
+      button.classList.remove(
+        "secret-locked-button",
+        "secret-coming-button"
+      );
+
+      button.innerHTML = `
+        <i class="fa-solid fa-play"></i>
+        Jugar ahora
+      `;
+
+    }
+
+    enableCardEffect(
+      fourthGameCard
+    );
+
+  }
+
+  if (
+    fifthGameUnlocked &&
+    fifthGameCard
+  ) {
+
+    fifthGameCard.classList.remove(
+      "secret-game-locked"
+    );
+
+    const status =
+      fifthGameCard.querySelector(
+        ".secret-game-status"
+      );
+
+    if (status) {
+
+      status.textContent =
         "En desarrollo";
 
       status.classList.remove(
-        "secret-status-locked"
+        "secret-status-locked",
+        "secret-status-ready"
       );
 
       status.classList.add(
@@ -248,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const button =
-      fourthGameCard.querySelector(
+      fifthGameCard.querySelector(
         ".secret-game-button"
       );
 
@@ -265,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       button.dataset.gameName =
-        "Rompecabezas";
+        "Trivia Cultural";
 
       button.innerHTML = `
         En desarrollo
@@ -275,7 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     enableCardEffect(
-      fourthGameCard
+      fifthGameCard
     );
 
   }
@@ -516,34 +585,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   );
 
-  comingButtons.forEach((button) => {
+  document.addEventListener(
+    "click",
+    (event) => {
 
-    button.addEventListener(
-      "click",
-      (event) => {
-
-        if (
-          !button.classList.contains(
-            "secret-coming-button"
-          )
-        ) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const gameName =
-          button.dataset.gameName ||
-          "Juego en construcción";
-
-        showComingSoonMessage(
-          gameName
+      const button =
+        event.target.closest(
+          ".secret-coming-button"
         );
 
+      if (!button) {
+        return;
       }
-    );
 
-  });
+      event.preventDefault();
+
+      const gameName =
+        button.dataset.gameName ||
+        "Juego en construcción";
+
+      showComingSoonMessage(
+        gameName
+      );
+
+    }
+  );
+
 });
 
 function revealCards() {

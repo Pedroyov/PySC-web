@@ -31,6 +31,15 @@ const RANKINGS = {
     direction1: "asc",
     field2: "lives",
     direction2: "desc"
+  },
+
+  "rompecabezas": {
+    field1: "time",
+    direction1: "asc",
+    field2: "moves",
+    direction2: "asc",
+    field3: "lives",
+    direction3: "desc"
   }
 
 };
@@ -95,22 +104,28 @@ document.addEventListener(
           "juego",
           "==",
           gameId
-        ),
-
-        orderBy(
-          ranking.field1,
-          ranking.direction1
         )
 
       ];
 
-      if (ranking.field2) {
+      for (
+        let index = 1;
+        ;
+        index++
+      ) {
+
+        const field =
+          ranking[`field${index}`];
+
+        if (!field) {
+          break;
+        }
 
         constraints.push(
 
           orderBy(
-            ranking.field2,
-            ranking.direction2
+            field,
+            ranking[`direction${index}`]
           )
 
         );
@@ -120,6 +135,7 @@ document.addEventListener(
       constraints.push(
         limit(10)
       );
+
 
       try {
 
@@ -150,78 +166,86 @@ document.addEventListener(
         }
 
         snapshot.docs.forEach(
-            (
-                documentSnapshot,
-                index
-            ) => {
+          (
+            documentSnapshot,
+            index
+          ) => {
 
-                const data =
-                documentSnapshot.data();
+            const data =
+              documentSnapshot.data();
 
-                const item =
-                document.createElement(
-                    "li"
-                );
+            const item =
+              document.createElement(
+                "li"
+              );
 
-                item.className =
-                "hall-of-fame-item";
+            item.className =
+              "hall-of-fame-item";
 
-                let medal =
-                `${index + 1}`;
+            let medal =
+              `${index + 1}`;
 
-                if (index === 0) {
-                medal = "🥇";
-                }
+            if (index === 0) {
+              medal = "🥇";
+            }
 
-                if (index === 1) {
-                medal = "🥈";
-                }
+            if (index === 1) {
+              medal = "🥈";
+            }
 
-                if (index === 2) {
-                medal = "🥉";
-                }
+            if (index === 2) {
+              medal = "🥉";
+            }
 
-                let scoreText = "";
+            let scoreText = "";
 
-                switch (gameId) {
+            switch (gameId) {
 
-                case "amor-primera-danza":
+              case "amor-primera-danza":
 
-                    scoreText =
-                    `${data.score} pts`;
+                scoreText =
+                  `${data.score} pts`;
 
-                    break;
+                break;
 
-                case "memoria-folklorica":
+              case "memoria-folklorica":
 
-                    scoreText =
-                    `${data.attempts} intentos · ${formatTime(data.time)}`;
+                scoreText =
+                  `${data.attempts} intentos · ${formatTime(data.time)}`;
 
-                    break;
+                break;
 
-                case "buscaminas":
+              case "buscaminas":
 
-                    scoreText =
-                    `${formatTime(data.time)} · ${data.lives} ${
-                        data.lives === 1
-                        ? "vida"
-                        : "vidas"
-                    }`;
+                scoreText =
+                  `${formatTime(data.time)} · ${data.lives} ${data.lives === 1
+                    ? "vida"
+                    : "vidas"
+                  }`;
 
-                    break;
+                break;
 
-                }
+              case "rompecabezas":
 
-                item.innerHTML = `
+                scoreText =
+                  `${formatTime(data.time)} · ${data.moves} movimientos · ${data.lives} ${data.lives === 1
+                    ? "vida"
+                    : "vidas"
+                  }`;
+
+                break;
+
+            }
+
+            item.innerHTML = `
                 <span class="hall-position">
                     ${medal}
                 </span>
 
                 <span class="hall-player">
-                    ${
-                    data.nombre ||
-                    "Jugador anónimo"
-                    }
+                    ${data.nombre ||
+              "Jugador anónimo"
+              }
                 </span>
 
                 <strong class="hall-score">
@@ -229,11 +253,11 @@ document.addEventListener(
                 </strong>
                 `;
 
-                list.appendChild(
-                item
-                );
+            list.appendChild(
+              item
+            );
 
-            }
+          }
         );
 
       } catch (exception) {
@@ -252,18 +276,18 @@ document.addEventListener(
 
     function formatTime(totalSeconds) {
 
-        const minutes =
-            Math.floor(
-            totalSeconds / 60
-            );
-
-        const seconds =
-            totalSeconds % 60;
-
-        return (
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`
+      const minutes =
+        Math.floor(
+          totalSeconds / 60
         );
+
+      const seconds =
+        totalSeconds % 60;
+
+      return (
+        `${String(minutes).padStart(2, "0")}:` +
+        `${String(seconds).padStart(2, "0")}`
+      );
 
     }
 
@@ -274,38 +298,38 @@ document.addEventListener(
 
     tabs.forEach((tab) => {
 
-        tab.addEventListener(
-            "click",
-            () => {
+      tab.addEventListener(
+        "click",
+        () => {
 
-            tabs.forEach((button) => {
+          tabs.forEach((button) => {
 
-                button.classList.remove(
-                "is-active"
-                );
-
-                button.setAttribute(
-                "aria-selected",
-                "false"
-                );
-
-            });
-
-            tab.classList.add(
-                "is-active"
+            button.classList.remove(
+              "is-active"
             );
 
-            tab.setAttribute(
-                "aria-selected",
-                "true"
+            button.setAttribute(
+              "aria-selected",
+              "false"
             );
 
-            loadRanking(
-                tab.dataset.rankingGame
-            );
+          });
 
-            }
-        );
+          tab.classList.add(
+            "is-active"
+          );
+
+          tab.setAttribute(
+            "aria-selected",
+            "true"
+          );
+
+          loadRanking(
+            tab.dataset.rankingGame
+          );
+
+        }
+      );
 
     });
 

@@ -1749,7 +1749,7 @@
 
 .secret-journal-progress-bar span {
   display: block;
-  width: 60%;
+  width: 80%;
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(

@@ -885,3 +885,337 @@ export async function getMinesweeperRanking(
   );
 
 }
+
+
+/**
+ rompecabezas
+ */
+
+export async function checkPuzzleResult(
+  gameId,
+  time,
+  moves,
+  lives
+) {
+
+  const user =
+    await getCurrentPlayer();
+
+  const playerReference =
+    doc(
+      firestoreDatabase,
+      "players",
+      user.uid
+    );
+
+  const playerSnapshot =
+    await getDoc(
+      playerReference
+    );
+
+  const playerData =
+    playerSnapshot.exists()
+      ? playerSnapshot.data()
+      : {};
+
+  const playerName =
+    typeof playerData.nombre === "string"
+      ? playerData.nombre.trim()
+      : "";
+
+  const scoreId =
+    `${gameId}_${user.uid}`;
+
+  const scoreReference =
+    doc(
+      firestoreDatabase,
+      "scores",
+      scoreId
+    );
+
+  const scoreSnapshot =
+    await getDoc(
+      scoreReference
+    );
+
+  const previousData =
+    scoreSnapshot.exists()
+      ? scoreSnapshot.data()
+      : null;
+
+  const previousTime =
+    previousData
+      ? Number(previousData.time)
+      : null;
+
+  const previousMoves =
+    previousData
+      ? Number(previousData.moves)
+      : null;
+
+  const previousLives =
+    previousData
+      ? Number(previousData.lives)
+      : null;
+
+  const newPersonalRecord =
+    previousData === null ||
+    time < previousTime ||
+    (
+      time === previousTime &&
+      moves < previousMoves
+    ) ||
+    (
+      time === previousTime &&
+      moves === previousMoves &&
+      lives > previousLives
+    );
+
+  if (!newPersonalRecord) {
+
+    return {
+      user,
+      playerName,
+      hasName: playerName !== "",
+      previousTime,
+      previousMoves,
+      previousLives,
+      newPersonalRecord: false,
+      qualifiesTop10: false,
+      position: null
+    };
+
+  }
+
+  const scoresReference =
+    collection(
+      firestoreDatabase,
+      "scores"
+    );
+
+  const rankingQuery =
+    query(
+      scoresReference,
+      where(
+        "juego",
+        "==",
+        gameId
+      ),
+      orderBy(
+        "time",
+        "asc"
+      ),
+      orderBy(
+        "moves",
+        "asc"
+      ),
+      orderBy(
+        "lives",
+        "desc"
+      ),
+      limit(10)
+    );
+
+  const rankingSnapshot =
+    await getDocs(
+      rankingQuery
+    );
+
+  const otherResults =
+    rankingSnapshot.docs
+      .filter(
+        (documentSnapshot) =>
+          documentSnapshot.id !== scoreId
+      )
+      .map(
+        (documentSnapshot) =>
+          documentSnapshot.data()
+      );
+
+  const betterResults =
+    otherResults.filter(
+      (result) => {
+
+        const resultTime =
+          Number(result.time);
+
+        const resultMoves =
+          Number(result.moves);
+
+        const resultLives =
+          Number(result.lives);
+
+        return (
+          resultTime < time ||
+          (
+            resultTime === time &&
+            resultMoves < moves
+          ) ||
+          (
+            resultTime === time &&
+            resultMoves === moves &&
+            resultLives > lives
+          )
+        );
+
+      }
+    ).length;
+
+  const position =
+    betterResults + 1;
+
+  const qualifiesTop10 =
+    otherResults.length < 10 ||
+    position <= 10;
+
+  return {
+    user,
+    playerName,
+    hasName: playerName !== "",
+    previousTime,
+    previousMoves,
+    previousLives,
+    newPersonalRecord: true,
+    qualifiesTop10,
+    position
+  };
+
+}
+
+export async function saveBestPuzzleResult(
+  gameId,
+  time,
+  moves,
+  lives,
+  playerName = ""
+) {
+
+  const user =
+    await getCurrentPlayer();
+
+  const cleanName =
+    playerName.trim();
+
+  const playerReference =
+    doc(
+      firestoreDatabase,
+      "players",
+      user.uid
+    );
+
+  if (cleanName !== "") {
+
+    await setDoc(
+      playerReference,
+      {
+        nombre: cleanName
+      },
+      {
+        merge: true
+      }
+    );
+
+  }
+
+  const scoreId =
+    `${gameId}_${user.uid}`;
+
+  const scoreReference =
+    doc(
+      firestoreDatabase,
+      "scores",
+      scoreId
+    );
+
+  await setDoc(
+    scoreReference,
+    {
+      playerId: user.uid,
+      juego: gameId,
+      time,
+      moves,
+      lives,
+      nombre: cleanName,
+      actualizadoEn:
+        serverTimestamp()
+    },
+    {
+      merge: true
+    }
+  );
+
+  return {
+    saved: true,
+    time,
+    moves,
+    lives,
+    playerName: cleanName
+  };
+
+}
+
+export async function getPuzzleRanking(
+  gameId,
+  maxResults = 10
+) {
+
+  const scoresReference =
+    collection(
+      firestoreDatabase,
+      "scores"
+    );
+
+  const rankingQuery =
+    query(
+      scoresReference,
+      where(
+        "juego",
+        "==",
+        gameId
+      ),
+      orderBy(
+        "time",
+        "asc"
+      ),
+      orderBy(
+        "moves",
+        "asc"
+      ),
+      orderBy(
+        "lives",
+        "desc"
+      ),
+      limit(
+        maxResults
+      )
+    );
+
+  const rankingSnapshot =
+    await getDocs(
+      rankingQuery
+    );
+
+  return rankingSnapshot.docs.map(
+    (documentSnapshot, index) => {
+
+      const data =
+        documentSnapshot.data();
+
+      return {
+        position: index + 1,
+        playerId: data.playerId,
+        name:
+          data.nombre?.trim() ||
+          "Jugador anónimo",
+        time:
+          Number(data.time) || 0,
+        moves:
+          Number(data.moves) || 0,
+        lives:
+          Number(data.lives) || 0
+      };
+
+    }
+  );
+
+}
