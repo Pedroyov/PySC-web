@@ -1726,3 +1726,79 @@ if ("serviceWorker" in navigator) {
             });
     });
 }
+
+/* =========================
+   MENÚ DESPLEGABLE "MÁS"
+========================= */
+
+const moreDropdown =
+  document.getElementById("moreDropdown");
+
+const moreDropdownToggle =
+  document.getElementById("moreDropdownToggle");
+
+function closeMoreDropdown() {
+  if (!moreDropdown || !moreDropdownToggle) {
+    return;
+  }
+
+  moreDropdown.classList.remove("open");
+
+  moreDropdownToggle.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+}
+
+if (moreDropdown && moreDropdownToggle) {
+  moreDropdownToggle.addEventListener(
+    "click",
+    (event) => {
+      event.stopPropagation();
+
+      const isOpen =
+        moreDropdown.classList.toggle("open");
+
+      moreDropdownToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+      );
+    }
+  );
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (!moreDropdown.contains(event.target)) {
+        closeMoreDropdown();
+      }
+    }
+  );
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Escape") {
+        closeMoreDropdown();
+      }
+    }
+  );
+}
+
+/* =========================
+   ACCESOS DEL RINCÓN SECRETO
+========================= */
+
+const secretRoomUnlocked =
+  localStorage.getItem("secretRoomUnlocked") === "true";
+
+const footerSecretGame =
+  document.getElementById("footerSecretGame");
+
+const navbarSecretGame =
+  document.getElementById("navbarSecretGame");
+
+if (secretRoomUnlocked) {
+  footerSecretGame?.classList.add("visible");
+  navbarSecretGame?.classList.add("visible");
+}

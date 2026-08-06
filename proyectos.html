@@ -77,7 +77,47 @@
         <a href="historia.html">Historia</a>
         <a href="proyectos.html" class="active">Proyectos</a>
         <a href="galeria.html">Galería</a>
-        <a href="contacto.html">Contacto</a>
+        <div class="nav-dropdown" id="moreDropdown">
+          <button
+            type="button"
+            class="nav-dropdown-toggle"
+            id="moreDropdownToggle"
+            aria-expanded="false"
+            aria-controls="moreDropdownMenu"
+          >
+            Más
+
+            <i
+              class="fa-solid fa-chevron-down"
+              aria-hidden="true"
+            ></i>
+          </button>
+
+          <div
+            class="nav-dropdown-menu"
+            id="moreDropdownMenu"
+          >
+            <a href="contacto.html">
+              <i class="fa-solid fa-envelope"></i>
+              Contacto
+            </a>
+
+            <a href="pysc-awards.html">
+              <i class="fa-solid fa-trophy"></i>
+              Premios PySC
+            </a>
+
+            <a
+              href="rincon-secreto.html"
+              class="navbar-secret-game"
+              id="navbarSecretGame"
+              aria-label="Rincón Secreto"
+            >
+              <i class="fa-solid fa-gamepad"></i>
+              Rincón Secreto
+            </a>
+          </div>
+        </div>
       </div>
 
     </nav>
