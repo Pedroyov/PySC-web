@@ -40,6 +40,15 @@ const RANKINGS = {
     direction2: "asc",
     field3: "lives",
     direction3: "desc"
+  },
+
+  "trivia-cultural": {
+    field1: "score",
+    direction1: "desc",
+    field2: "time",
+    direction2: "asc",
+    field3: "lives",
+    direction3: "desc"
   }
 
 };
@@ -231,6 +240,20 @@ document.addEventListener(
                   `${formatTime(data.time)} · ${data.moves} movim · ${data.lives} ${data.lives === 1
                     ? "vida"
                     : "vidas"
+                  }`;
+
+                break;
+
+              case "trivia-cultural":
+
+                scoreText =
+                  `${data.score} puntos · ` +
+                  `${data.correctAnswers} correctas · ` +
+                  `${formatTime(data.time)} · ` +
+                  `${data.lives} ${
+                    data.lives === 1
+                      ? "vida"
+                      : "vidas"
                   }`;
 
                 break;
