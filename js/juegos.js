@@ -10,19 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const footerSecretGame =
-      document.getElementById(
-          "footerSecretGame"
-      );
+    document.getElementById(
+      "footerSecretGame"
+    );
 
   if (
-      footerSecretGame &&
-      localStorage.getItem(
-          "secretRoomUnlocked"
-      ) === "true"
+    footerSecretGame &&
+    localStorage.getItem(
+      "secretRoomUnlocked"
+    ) === "true"
   ) {
-      footerSecretGame.classList.add(
-          "visible"
-      );
+    footerSecretGame.classList.add(
+      "visible"
+    );
   }
   const header = document.querySelector(".header");
 
@@ -303,15 +303,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (status) {
 
       status.textContent =
-        "En desarrollo";
+        "Listo para jugar";
 
       status.classList.remove(
         "secret-status-locked",
-        "secret-status-ready"
+        "secret-status-development"
       );
 
       status.classList.add(
-        "secret-status-development"
+        "secret-status-ready"
       );
 
     }
@@ -325,21 +325,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       button.disabled = false;
 
-      button.classList.remove(
-        "secret-locked-button"
+      button.removeAttribute(
+        "aria-disabled"
       );
 
-      button.classList.add(
+      button.classList.remove(
+        "secret-locked-button",
         "secret-coming-button"
       );
 
-      button.dataset.gameName =
-        "Trivia Cultural";
+      button.removeAttribute(
+        "data-game-name"
+      );
 
       button.innerHTML = `
-        En desarrollo
-        <i class="fa-solid fa-hammer"></i>
-      `;
+      <i class="fa-solid fa-play"></i>
+      Jugar ahora
+    `;
 
     }
 
@@ -615,115 +617,115 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function revealCards() {
 
-    const cards =
-        document.querySelectorAll(".secret-game-card");
+  const cards =
+    document.querySelectorAll(".secret-game-card");
 
-    cards.forEach((card, index) => {
+  cards.forEach((card, index) => {
 
-        setTimeout(() => {
+    setTimeout(() => {
 
-            card.classList.add("show");
+      card.classList.add("show");
 
-        }, index * 180);
+    }, index * 180);
 
-    });
+  });
 
 }
 
 const gamesSection =
-    document.querySelector(".secret-games-grid");
+  document.querySelector(".secret-games-grid");
 
 if (gamesSection) {
 
-    const observer =
-        new IntersectionObserver((entries) => {
+  const observer =
+    new IntersectionObserver((entries) => {
 
-            entries.forEach(entry => {
+      entries.forEach(entry => {
 
-                if (entry.isIntersecting) {
+        if (entry.isIntersecting) {
 
-                    revealCards();
+          revealCards();
 
-                    observer.disconnect();
+          observer.disconnect();
 
-                }
+        }
 
-            });
+      });
 
-        }, {
+    }, {
 
-            threshold: 0.05,
-            rootMargin: "0px 0px -50px 0px"
+      threshold: 0.05,
+      rootMargin: "0px 0px -50px 0px"
 
-        });
+    });
 
-    if (window.innerWidth <= 768) {
+  if (window.innerWidth <= 768) {
 
-        revealCards();
+    revealCards();
 
-    } else {
+  } else {
 
-        observer.observe(gamesSection);
+    observer.observe(gamesSection);
 
-    }
+  }
 
 }
 
 function enableCardEffect(card) {
 
-    card.addEventListener("mousemove", (event) => {
+  card.addEventListener("mousemove", (event) => {
 
-        if (window.innerWidth <= 768) {
-            return;
-        }
+    if (window.innerWidth <= 768) {
+      return;
+    }
 
-        const rect =
-            card.getBoundingClientRect();
+    const rect =
+      card.getBoundingClientRect();
 
-        const x =
-            event.clientX - rect.left;
+    const x =
+      event.clientX - rect.left;
 
-        const y =
-            event.clientY - rect.top;
+    const y =
+      event.clientY - rect.top;
 
-        const rotateY =
-            ((x / rect.width) - 0.5) * 12;
+    const rotateY =
+      ((x / rect.width) - 0.5) * 12;
 
-        const rotateX =
-            ((0.5 - y / rect.height)) * 12;
+    const rotateX =
+      ((0.5 - y / rect.height)) * 12;
 
-        card.style.transform = `
+    card.style.transform = `
             perspective(900px)
             rotateX(${rotateX}deg)
             rotateY(${rotateY}deg)
             translateY(-10px)
         `;
 
-    });
+  });
 
-    card.addEventListener("mouseleave", () => {
+  card.addEventListener("mouseleave", () => {
 
-        card.style.transform = "";
+    card.style.transform = "";
 
-    });
+  });
 
 }
 
 const gameCards =
-    document.querySelectorAll(
-        ".secret-game-card"
-    );
+  document.querySelectorAll(
+    ".secret-game-card"
+  );
 
 gameCards.forEach((card) => {
 
-    if (
-        card.classList.contains(
-            "secret-game-locked"
-        )
-    ) {
-        return;
-    }
+  if (
+    card.classList.contains(
+      "secret-game-locked"
+    )
+  ) {
+    return;
+  }
 
-    enableCardEffect(card);
+  enableCardEffect(card);
 
 });

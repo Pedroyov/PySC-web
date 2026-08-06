@@ -228,7 +228,7 @@ document.addEventListener(
               case "rompecabezas":
 
                 scoreText =
-                  `${formatTime(data.time)} · ${data.moves} movimientos · ${data.lives} ${data.lives === 1
+                  `${formatTime(data.time)} · ${data.moves} movim · ${data.lives} ${data.lives === 1
                     ? "vida"
                     : "vidas"
                   }`;

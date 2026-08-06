@@ -1219,3 +1219,349 @@ export async function getPuzzleRanking(
   );
 
 }
+
+
+
+
+
+export async function checkTriviaResult(
+    gameId,
+    score,
+    time,
+    lives
+) {
+
+    const user =
+        await getCurrentPlayer();
+
+    const playerReference =
+        doc(
+            firestoreDatabase,
+            "players",
+            user.uid
+        );
+
+    const playerSnapshot =
+        await getDoc(
+            playerReference
+        );
+
+    const playerData =
+        playerSnapshot.exists()
+            ? playerSnapshot.data()
+            : {};
+
+    const playerName =
+        typeof playerData.nombre === "string"
+            ? playerData.nombre.trim()
+            : "";
+
+    const scoreId =
+        `${gameId}_${user.uid}`;
+
+    const scoreReference =
+        doc(
+            firestoreDatabase,
+            "scores",
+            scoreId
+        );
+
+    const scoreSnapshot =
+        await getDoc(
+            scoreReference
+        );
+
+    const previousData =
+        scoreSnapshot.exists()
+            ? scoreSnapshot.data()
+            : null;
+
+    const previousScore =
+        previousData
+            ? Number(previousData.score) || 0
+            : null;
+
+    const previousTime =
+        previousData
+            ? Number(previousData.time) || 0
+            : null;
+
+    const previousLives =
+        previousData
+            ? Number(previousData.lives) || 0
+            : null;
+
+    const newPersonalRecord =
+        previousData === null ||
+        score > previousScore ||
+        (
+            score === previousScore &&
+            time < previousTime
+        ) ||
+        (
+            score === previousScore &&
+            time === previousTime &&
+            lives > previousLives
+        );
+
+    if (!newPersonalRecord) {
+
+        return {
+            user,
+            playerName,
+            hasName: playerName !== "",
+            previousScore,
+            newPersonalRecord: false,
+            qualifiesTop10: false,
+            position: null
+        };
+
+    }
+
+    const scoresReference =
+        collection(
+            firestoreDatabase,
+            "scores"
+        );
+
+    const topScoresQuery =
+        query(
+            scoresReference,
+            where(
+                "juego",
+                "==",
+                gameId
+            ),
+            orderBy(
+                "score",
+                "desc"
+            ),
+            orderBy(
+                "time",
+                "asc"
+            ),
+            orderBy(
+                "lives",
+                "desc"
+            ),
+            limit(10)
+        );
+
+    const topScoresSnapshot =
+        await getDocs(
+            topScoresQuery
+        );
+
+    const results =
+        topScoresSnapshot.docs
+            .filter(
+                documentSnapshot =>
+                    documentSnapshot.id !==
+                    scoreId
+            )
+            .map(
+                documentSnapshot =>
+                    documentSnapshot.data()
+            );
+
+    const higherResults =
+        results.filter(
+            result => {
+
+                const resultScore =
+                    Number(result.score) || 0;
+
+                const resultTime =
+                    Number(result.time) || 0;
+
+                const resultLives =
+                    Number(result.lives) || 0;
+
+                return (
+                    resultScore > score ||
+                    (
+                        resultScore === score &&
+                        resultTime < time
+                    ) ||
+                    (
+                        resultScore === score &&
+                        resultTime === time &&
+                        resultLives > lives
+                    )
+                );
+
+            }
+        ).length;
+
+    const position =
+        higherResults + 1;
+
+    return {
+        user,
+        playerName,
+        hasName:
+            playerName !== "",
+        previousScore,
+        newPersonalRecord: true,
+        qualifiesTop10:
+            results.length < 10 ||
+            position <= 10,
+        position
+    };
+
+}
+
+export async function saveBestTriviaResult(
+    gameId,
+    score,
+    correctAnswers,
+    time,
+    lives,
+    playerName = ""
+) {
+
+    const user =
+        await getCurrentPlayer();
+
+    const cleanName =
+        playerName.trim();
+
+    const playerReference =
+        doc(
+            firestoreDatabase,
+            "players",
+            user.uid
+        );
+
+    if (cleanName !== "") {
+
+        await setDoc(
+            playerReference,
+            {
+                nombre: cleanName
+            },
+            {
+                merge: true
+            }
+        );
+
+    }
+
+    const scoreReference =
+        doc(
+            firestoreDatabase,
+            "scores",
+            `${gameId}_${user.uid}`
+        );
+
+    await setDoc(
+        scoreReference,
+        {
+            playerId: user.uid,
+            juego: gameId,
+            score,
+            correctAnswers,
+            time,
+            lives,
+            nombre: cleanName,
+            actualizadoEn:
+                serverTimestamp()
+        },
+        {
+            merge: true
+        }
+    );
+
+    return {
+        saved: true,
+        score,
+        correctAnswers,
+        time,
+        lives,
+        playerName: cleanName
+    };
+
+}
+
+export async function getTriviaRanking(
+    gameId
+) {
+
+    const rankingQuery =
+        query(
+            collection(
+                firestoreDatabase,
+                "scores"
+            ),
+
+            where(
+                "juego",
+                "==",
+                gameId
+            ),
+
+            orderBy(
+                "score",
+                "desc"
+            ),
+
+            orderBy(
+                "time",
+                "asc"
+            ),
+
+            orderBy(
+                "lives",
+                "desc"
+            ),
+
+            limit(10)
+        );
+
+    const rankingSnapshot =
+        await getDocs(
+            rankingQuery
+        );
+
+    return rankingSnapshot.docs.map(
+        (
+            documentSnapshot,
+            index
+        ) => {
+
+            const data =
+                documentSnapshot.data();
+
+            return {
+                position:
+                    index + 1,
+
+                name:
+                    data.nombre ||
+                    "Jugador anónimo",
+
+                score:
+                    Number(
+                        data.score
+                    ) || 0,
+
+                correctAnswers:
+                    Number(
+                        data.correctAnswers
+                    ) || 0,
+
+                time:
+                    Number(
+                        data.time
+                    ) || 0,
+
+                lives:
+                    Number(
+                        data.lives
+                    ) || 0
+            };
+
+        }
+    );
+
+}

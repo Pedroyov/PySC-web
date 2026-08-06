@@ -1,0 +1,2397 @@
+/*=========================================
+  Configuración general
+=========================================*/
+
+:root{
+  --love-navy:#071126;
+  --love-navy-light:#0d1c3b;
+  --love-wine:#8d1f3f;
+  --love-wine-light:#b83359;
+  --love-gold:#d6b04a;
+  --love-white:#ffffff;
+  --love-text:rgba(255,255,255,.76);
+  --love-border:rgba(255,255,255,.12);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+
+  font-family:"Nunito Sans",sans-serif;
+
+  color:var(--love-white);
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(141,31,63,.28),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(214,176,74,.14),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #050b18 0%,
+      var(--love-navy) 48%,
+      #040914 100%
+    );
+}
+
+button,
+a{
+  font:inherit;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  border:0;
+}
+
+/*=========================================
+  Página y contenedor principal
+=========================================*/
+
+.love-game-page{
+  position:relative;
+
+  min-height:100vh;
+
+  padding:32px 20px;
+
+  overflow:hidden;
+}
+
+.love-game-page::before,
+.love-game-page::after{
+  content:"";
+
+  position:fixed;
+  z-index:-1;
+
+  width:420px;
+  height:420px;
+
+  border-radius:50%;
+
+  filter:blur(90px);
+  opacity:.22;
+
+  pointer-events:none;
+}
+
+.love-game-page::before{
+  top:-180px;
+  left:-150px;
+
+  background:var(--love-wine);
+}
+
+.love-game-page::after{
+  right:-170px;
+  bottom:-200px;
+
+  background:var(--love-gold);
+}
+
+.love-game-shell{
+  position:relative;
+
+  width:min(100%,1180px);
+  margin:0 auto;
+
+  overflow:visible;
+
+  border:1px solid rgba(214,176,74,.20);
+  border-radius:30px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.025)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  backdrop-filter:blur(14px);
+}
+
+/*=========================================
+  Encabezado
+=========================================*/
+
+.love-game-header{
+  position:relative;
+
+  display:grid;
+  grid-template-columns:180px 1fr 180px;
+  align-items:center;
+  gap:30px;
+
+  padding:34px 38px;
+
+  border-bottom:1px solid var(--love-border);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(141,31,63,.16),
+      rgba(255,255,255,.02),
+      rgba(214,176,74,.08)
+    );
+}
+
+.love-game-header::after{
+  content:"";
+
+  position:absolute;
+  left:50%;
+  bottom:-1px;
+
+  width:180px;
+  height:2px;
+
+  transform:translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--love-gold),
+      transparent
+    );
+}
+
+.love-game-back{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  width:max-content;
+
+  padding:12px 16px;
+
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+
+  color:rgba(255,255,255,.82);
+  background:rgba(255,255,255,.045);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.86rem;
+  font-weight:500;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.love-game-back:hover{
+  transform:translateX(-4px);
+
+  border-color:rgba(214,176,74,.34);
+  background:rgba(214,176,74,.08);
+}
+
+.love-game-title{
+  text-align:center;
+}
+
+.love-game-eyebrow{
+  display:inline-block;
+
+  margin-bottom:8px;
+
+  color:var(--love-gold);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.76rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.love-game-title h1{
+  margin:0;
+
+  font-family:"Montserrat",sans-serif;
+  font-size:clamp(2rem,5vw,2.4rem);
+  font-weight:600;
+  line-height:1.05;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #f8d98b,
+      #ffffff
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.love-game-title p{
+  max-width:650px;
+  margin:14px auto 0;
+
+  color:var(--love-text);
+
+  font-size:1rem;
+  line-height:1.7;
+}
+
+.love-game-logo{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.love-game-logo img{
+  width:84px;
+  height:84px;
+
+  object-fit:contain;
+
+  padding:10px;
+
+  border:1px solid rgba(214,176,74,.20);
+  border-radius:22px;
+
+  background:rgba(255,255,255,.045);
+
+  box-shadow:0 16px 35px rgba(0,0,0,.24);
+}
+
+/*=========================================
+  HUD
+=========================================*/
+
+.love-game-hud{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+
+  padding:18px 24px;
+
+  border-bottom:1px solid var(--love-border);
+
+  background:rgba(3,8,20,.42);
+}
+
+.love-hud-item{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+
+  min-height:78px;
+  padding:14px 18px;
+
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.055),
+      rgba(255,255,255,.02)
+    );
+}
+
+.love-hud-label{
+  color:rgba(255,255,255,.55);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.72rem;
+  font-weight:500;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.love-hud-item strong{
+  color:var(--love-white);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:1.2rem;
+  font-weight:600;
+}
+
+
+.love-lives-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+
+  color:#ff4f7d;
+
+  font-size:1.32rem;
+
+  filter:drop-shadow(0 0 8px rgba(255,79,125,.28));
+}
+
+/*=========================================
+  Escenario
+=========================================*/
+
+.love-game-stage{
+  position:relative;
+
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+
+  min-height:650px;
+  padding:40px;
+
+  overflow:visible;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5,11,24,.42),
+      rgba(5,11,24,.82)
+    ),
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(214,176,74,.16),
+      transparent 36%
+    );
+}
+
+.love-game-stage::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,255,255,.025) 50%,
+      transparent 100%
+    );
+
+  pointer-events:none;
+}
+
+.love-game-stage::after{
+  content:"";
+
+  position:absolute;
+  left:8%;
+  right:8%;
+  bottom:28px;
+
+  height:72px;
+
+  border-radius:50%;
+
+  background:rgba(0,0,0,.46);
+
+  filter:blur(18px);
+
+  pointer-events:none;
+}
+
+.love-stage-decoration{
+  position:absolute;
+  inset:0;
+
+  pointer-events:none;
+}
+
+.love-stage-decoration span{
+  position:absolute;
+  top:-90px;
+
+  width:180px;
+  height:500px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.14),
+      transparent 78%
+    );
+
+  filter:blur(10px);
+
+  opacity:.23;
+
+  transform-origin:top;
+}
+
+.love-stage-decoration span:nth-child(1){
+  left:10%;
+  transform:rotate(18deg);
+}
+
+.love-stage-decoration span:nth-child(2){
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.love-stage-decoration span:nth-child(3){
+  right:10%;
+  transform:rotate(-18deg);
+}
+
+/*=========================================
+  Pantalla inicial
+=========================================*/
+
+.love-game-welcome{
+  position:relative;
+  z-index:2;
+
+  width:min(100%,640px);
+
+  padding:42px 34px;
+
+  text-align:center;
+
+  border:1px solid rgba(214,176,74,.20);
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.025)
+    );
+
+  box-shadow:
+    0 24px 55px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  backdrop-filter:blur(10px);
+}
+
+.love-welcome-icon{
+  display:grid;
+  place-items:center;
+
+  width:88px;
+  height:88px;
+
+  margin:0 auto 24px;
+
+  border:1px solid rgba(255,79,125,.30);
+  border-radius:28px;
+
+  color:#ff4f7d;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,79,125,.20),
+      rgba(255,79,125,.06)
+    );
+
+  font-size:2.2rem;
+
+  box-shadow:0 0 35px rgba(255,79,125,.16);
+}
+
+.love-game-welcome h2{
+  margin:0 0 14px;
+
+  font-family:"Montserrat",sans-serif;
+  font-size:clamp(1.65rem,4vw,2.45rem);
+  font-weight:600;
+}
+
+.love-game-welcome p{
+  max-width:540px;
+  margin:0 auto;
+
+  color:var(--love-text);
+
+  font-size:1rem;
+  line-height:1.75;
+}
+
+.love-start-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  margin-top:28px;
+  padding:15px 24px;
+
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+
+  color:var(--love-white);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--love-wine),
+      var(--love-wine-light)
+    );
+
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 14px 30px rgba(141,31,63,.30),
+    inset 0 1px 0 rgba(255,255,255,.15);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.love-start-button:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 18px 38px rgba(141,31,63,.40),
+    inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+.love-start-button:active{
+  transform:translateY(0);
+}
+
+/*=========================================
+  Pie del juego
+=========================================*/
+
+.love-game-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+
+  padding:18px 24px;
+
+  border-top:1px solid var(--love-border);
+
+  background:rgba(3,8,20,.50);
+}
+
+.love-game-footer p{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin:0;
+
+  color:rgba(255,255,255,.58);
+
+  font-size:.92rem;
+}
+
+.love-game-footer p i{
+  color:var(--love-gold);
+}
+
+.love-reset-button{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+
+  padding:11px 16px;
+
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+
+  color:rgba(255,255,255,.76);
+  background:rgba(255,255,255,.045);
+
+  font-family:"Montserrat",sans-serif;
+  font-size:.84rem;
+  font-weight:500;
+
+  cursor:pointer;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.love-reset-button:hover{
+  transform:translateY(-2px);
+
+  border-color:rgba(214,176,74,.30);
+  background:rgba(214,176,74,.08);
+}
+
+/*=========================================
+  Responsive
+=========================================*/
+
+@media (max-width:900px){
+
+  .love-game-page{
+    padding:18px 14px;
+  }
+
+  .love-game-header{
+    grid-template-columns:1fr;
+    gap:22px;
+
+    padding:28px 24px;
+  }
+
+  .love-game-back{
+    order:1;
+  }
+
+  .love-game-title{
+    order:2;
+  }
+
+  .love-game-logo{
+    display:none;
+  }
+
+  .love-game-hud{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+
+
+/*=========================================
+  Transición al iniciar la partida
+=========================================*/
+
+.love-game-welcome{
+  transition:
+    opacity .45s ease,
+    transform .45s ease,
+    visibility .45s ease;
+}
+
+.love-game-welcome.is-hidden{
+  position: absolute;
+  opacity:0;
+  visibility:hidden;
+
+  transform:
+    translateY(-20px)
+    scale(.94);
+
+  pointer-events:none;
+}
+
+.love-game-stage.is-playing{
+  min-height:calc(100vh - 260px);
+}
+
+/*=========================================
+  Cuenta regresiva
+=========================================*/
+
+.love-countdown{
+  position:absolute;
+  z-index:10;
+  inset:0;
+
+  display:grid;
+  place-items:center;
+
+  opacity:0;
+  visibility:hidden;
+
+  background:rgba(3,8,20,.28);
+
+  backdrop-filter:blur(3px);
+
+  pointer-events:none;
+
+  transition:
+    opacity .25s ease,
+    visibility .25s ease;
+}
+
+.love-countdown.is-visible{
+  opacity:1;
+  visibility:visible;
+}
+
+.love-countdown span{
+  display:grid;
+  place-items:center;
+
+  min-width:150px;
+  min-height:150px;
+
+  padding:24px;
+
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;
+
+  color:#ffffff;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(184,51,89,.92),
+      rgba(141,31,63,.78)
+    );
+
+  font-family:"Montserrat",sans-serif;
+  font-size:clamp(4rem,10vw,7rem);
+  font-weight:600;
+  line-height:1;
+
+  box-shadow:
+    0 0 50px rgba(184,51,89,.34),
+    inset 0 1px 0 rgba(255,255,255,.20);
+}
+
+.love-countdown span.is-changing{
+  animation:loveCountdownPop .55s ease;
+}
+
+.love-countdown span.is-final{
+  min-width:auto;
+  min-height:auto;
+
+  padding:24px 38px;
+
+  border-radius:999px;
+
+  color:#071126;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8d98b,
+      #d6b04a
+    );
+
+  font-size:clamp(2rem,6vw,4rem);
+
+  box-shadow:
+    0 0 55px rgba(214,176,74,.38),
+    inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+@keyframes loveCountdownPop{
+
+  0%{
+    opacity:0;
+    transform:scale(.55);
+  }
+
+  55%{
+    opacity:1;
+    transform:scale(1.12);
+  }
+
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+.love-reset-button{
+    display:none;
+}
+
+.love-reset-button.is-visible{
+    display:flex;
+}
+
+/* =====================================
+   MODAL DE DESBLOQUEO
+===================================== */
+
+.love-unlock-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.love-unlock-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.love-unlock-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background:
+    rgba(5, 10, 25, 0.82);
+
+  backdrop-filter: blur(7px);
+}
+
+.love-unlock-content {
+  position: relative;
+  z-index: 1;
+
+  width: min(100%, 470px);
+
+  padding: 38px 32px 32px;
+
+  text-align: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(29, 35, 66, 0.98),
+      rgba(80, 24, 58, 0.98)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.45);
+
+  transform:
+    translateY(30px)
+    scale(0.92);
+
+  transition:
+    transform 0.35s ease;
+}
+
+.love-unlock-modal.is-visible
+.love-unlock-content {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.love-unlock-icon {
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  font-size: 34px;
+}
+
+.love-unlock-label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.love-unlock-content h2 {
+  margin: 0 0 14px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(25px, 5vw, 34px);
+  line-height: 1.15;
+}
+
+.love-unlock-content p {
+  margin: 0 auto 18px;
+
+  max-width: 380px;
+
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+
+  opacity: 0.86;
+}
+
+.love-unlock-game-name {
+  display: inline-block;
+
+  margin-bottom: 24px;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.love-unlock-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 48px;
+
+  padding: 12px 22px;
+
+  border: 0;
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.love-unlock-button:hover {
+  transform: translateY(-2px);
+}
+
+.love-unlock-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 520px) {
+
+  .love-unlock-modal {
+    padding: 16px;
+  }
+
+  .love-unlock-content {
+    padding: 32px 22px 26px;
+    border-radius: 22px;
+  }
+
+  .love-unlock-icon {
+    width: 70px;
+    height: 70px;
+
+    font-size: 29px;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width:620px){
+
+  .love-game-page{
+    padding:0;
+  }
+
+  .love-game-shell{
+    min-height:100vh;
+
+    border-radius:0;
+    border-left:0;
+    border-right:0;
+  }
+
+  .love-game-header{
+    padding:24px 18px;
+  }
+
+  .love-game-back span{
+    display:none;
+  }
+
+  .love-game-back{
+    width:44px;
+    height:44px;
+
+    justify-content:center;
+
+    padding:0;
+  }
+
+  .love-game-title p{
+    font-size:.92rem;
+  }
+
+  .love-game-hud{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:5px;
+  }
+
+  .love-hud-item{
+    min-width:0;
+    padding:5px 4px;
+    min-height: 48px;
+  }
+
+  .love-hud-label{
+    font-size:.60rem;
+    letter-spacing:1px;
+  }
+
+  .love-hud-item strong{
+    font-size:1.05rem;
+    white-space:nowrap;
+  }
+
+
+  .love-game-stage{
+    min-height:520px;
+
+    padding:4px 16px;
+  }
+
+  .love-game-welcome{
+    padding:34px 22px;
+  }
+
+  .love-game-footer{
+    flex-direction:column;
+    align-items:stretch;
+
+    padding:16px;
+  }
+
+  .love-game-footer p{
+    justify-content:center;
+    text-align:center;
+  }
+
+  .love-reset-button{
+    justify-content:center;
+  }
+
+  .love-game-stage.is-playing{
+    min-height:calc(135vh - 500px);
+  }
+
+  .love-countdown span{
+    min-width:120px;
+    min-height:120px;
+  }
+
+
+}
+
+
+/*=========================================
+  Modal del ranking
+=========================================*/
+
+.ranking-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity .3s ease,
+    visibility .3s ease;
+}
+
+.ranking-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.ranking-modal-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(3, 8, 20, .82);
+
+  backdrop-filter: blur(7px);
+}
+
+.ranking-modal-content {
+  position: relative;
+  z-index: 1;
+
+  width: min(100%, 470px);
+
+  padding: 38px 32px 32px;
+
+  text-align: center;
+
+  border: 1px solid rgba(214, 176, 74, .25);
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(29, 35, 66, .98),
+      rgba(80, 24, 58, .98)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, .45);
+
+  transform:
+    translateY(30px)
+    scale(.92);
+
+  transition:
+    transform .35s ease;
+}
+
+.ranking-modal.is-visible
+.ranking-modal-content {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.ranking-modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 82px;
+  height: 82px;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  color: #071126;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8d98b,
+      #d6b04a
+    );
+
+  font-size: 34px;
+
+  box-shadow:
+    0 0 30px rgba(214, 176, 74, .28);
+}
+
+.ranking-modal-label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #f8d98b;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.ranking-modal-content h2 {
+  margin: 0 0 14px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(25px, 5vw, 34px);
+  line-height: 1.15;
+}
+
+.ranking-modal-content p {
+  max-width: 380px;
+  margin: 0 auto 18px;
+
+  color: rgba(255, 255, 255, .8);
+
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.ranking-modal-content > strong {
+  display: block;
+
+  margin-bottom: 22px;
+
+  color: #f8d98b;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.35rem;
+}
+
+.ranking-name-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 22px;
+
+  text-align: left;
+}
+
+.ranking-name-group[hidden] {
+  display: none;
+}
+
+.ranking-name-group label {
+  color: rgba(255, 255, 255, .85);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .86rem;
+  font-weight: 700;
+}
+
+.ranking-name-group input {
+  width: 100%;
+
+  padding: 13px 15px;
+
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 14px;
+
+  color: #ffffff;
+  background: rgba(255, 255, 255, .07);
+
+  font: inherit;
+
+  outline: none;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.ranking-name-group input:focus {
+  border-color: rgba(214, 176, 74, .65);
+
+  box-shadow:
+    0 0 0 3px rgba(214, 176, 74, .12);
+}
+
+.ranking-name-group small {
+  min-height: 18px;
+
+  color: #ff8aa5;
+
+  font-size: .82rem;
+}
+
+.ranking-save-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 48px;
+
+  padding: 12px 22px;
+
+  border: 0;
+  border-radius: 999px;
+
+  color: #071126;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8d98b,
+      #d6b04a
+    );
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
+}
+
+.ranking-save-button:hover {
+  transform: translateY(-2px);
+}
+
+.ranking-save-button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+@media (max-width: 520px) {
+
+  .ranking-modal {
+    padding: 14px;
+  }
+
+  .ranking-modal-content {
+    padding: 32px 22px 26px;
+    border-radius: 22px;
+  }
+
+  .ranking-modal-icon {
+    width: 70px;
+    height: 70px;
+
+    font-size: 29px;
+  }
+
+}
+
+/*=========================================
+  Clasificación
+=========================================*/
+
+.leaderboard-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity .3s ease,
+    visibility .3s ease;
+}
+
+.leaderboard-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.leaderboard-modal-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(3, 8, 20, .84);
+  backdrop-filter: blur(7px);
+}
+
+.leaderboard-modal-content {
+  position: relative;
+  z-index: 1;
+
+  width: min(100%, 520px);
+  max-height: min(82vh, 720px);
+  overflow-y: auto;
+
+  padding: 36px 28px 30px;
+
+  border: 1px solid rgba(214, 176, 74, .25);
+  border-radius: 28px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(29, 35, 66, .98),
+      rgba(80, 24, 58, .98)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, .45);
+
+  transform:
+    translateY(30px)
+    scale(.92);
+
+  transition:
+    transform .35s ease;
+}
+
+.leaderboard-modal.is-visible
+.leaderboard-modal-content {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.leaderboard-close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  display: grid;
+  place-items: center;
+
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 50%;
+
+  color: #ffffff;
+  background: rgba(255, 255, 255, .06);
+
+  cursor: pointer;
+}
+
+.leaderboard-icon {
+  display: grid;
+  place-items: center;
+
+  width: 76px;
+  height: 76px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  color: #071126;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8d98b,
+      #d6b04a
+    );
+
+  font-size: 31px;
+}
+
+.leaderboard-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #f8d98b;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .75rem;
+  font-weight: 800;
+
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.leaderboard-modal-content h2 {
+  margin: 0 0 8px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+}
+
+.leaderboard-modal-content > p {
+  margin: 0 0 22px;
+
+  color: rgba(255, 255, 255, .72);
+}
+
+.leaderboard-loading,
+.leaderboard-empty {
+  padding: 18px;
+
+  color: rgba(255, 255, 255, .72);
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.leaderboard-list li {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 58px;
+  padding: 10px 14px;
+
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, .055);
+
+  text-align: left;
+}
+
+.leaderboard-position {
+  display: grid;
+  place-items: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+  background: rgba(255, 255, 255, .08);
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+}
+
+.leaderboard-player {
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-score {
+  color: #f8d98b;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .9rem;
+}
+
+.leaderboard-rank-1 {
+  border-color: rgba(248, 217, 139, .55) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(248, 217, 139, .18),
+      rgba(214, 176, 74, .08)
+    ) !important;
+
+  box-shadow:
+    0 8px 25px rgba(214, 176, 74, .12);
+}
+
+.leaderboard-rank-2 {
+  border-color: rgba(210, 220, 235, .4) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(210, 220, 235, .14),
+      rgba(255, 255, 255, .05)
+    ) !important;
+}
+
+.leaderboard-rank-3 {
+  border-color: rgba(205, 127, 50, .45) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(205, 127, 50, .16),
+      rgba(255, 255, 255, .04)
+    ) !important;
+}
+
+.leaderboard-open-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 46px;
+  padding: 11px 19px;
+
+  border: 1px solid rgba(214, 176, 74, .3);
+  border-radius: 999px;
+
+  color: #f8d98b;
+  background: rgba(214, 176, 74, .08);
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    color .2s ease;
+}
+
+.leaderboard-open-button:hover {
+  color: #071126;
+  background: #d6b04a;
+
+  transform: translateY(-2px);
+}
+
+@media (max-width: 520px) {
+
+  .leaderboard-modal {
+    padding: 12px;
+  }
+
+  .leaderboard-modal-content {
+    padding: 32px 18px 24px;
+    border-radius: 22px;
+  }
+
+  .leaderboard-list li {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 8px 10px;
+
+    padding: 10px;
+    }
+
+    .leaderboard-position {
+    grid-row: 1 / span 2;
+    }
+
+    .leaderboard-player {
+    grid-column: 2;
+
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+
+    .leaderboard-score {
+    grid-column: 2;
+
+    font-size: .78rem;
+    line-height: 1.35;
+
+    white-space: normal;
+    }
+
+}
+
+/*=========================================
+  Tablero del rompecabezas
+=========================================*/
+
+.puzzle-board {
+  position: relative;
+  z-index: 2;
+
+  display: none;
+
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: 14px;
+
+  gap: 4px;
+
+  border: 1px solid rgba(214, 176, 74, .2);
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, .06),
+      rgba(255, 255, 255, .02)
+    );
+
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, .34);
+}
+
+.love-game-stage.is-playing
+.puzzle-board {
+  display: grid;
+}
+
+.puzzle-piece {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  padding: 0;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 7px;
+
+  background-color: rgba(255, 255, 255, .05);
+  background-repeat: no-repeat;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .08);
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease,
+    opacity .2s ease;
+}
+
+.puzzle-piece:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(214, 176, 74, .5);
+}
+
+.puzzle-piece.is-selected {
+  z-index: 3;
+
+  border-color: #f8d98b;
+
+  box-shadow:
+    0 0 0 3px rgba(214, 176, 74, .2),
+    0 0 24px rgba(214, 176, 74, .28);
+}
+
+.puzzle-piece.is-correct {
+  border-color:
+    rgba(78, 203, 113, .42);
+}
+
+.puzzle-piece.is-swapping {
+  transform: scale(.9);
+  opacity: .65;
+}
+
+/*=========================================
+  Vista previa
+=========================================*/
+
+.puzzle-preview {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  background: rgba(3, 8, 20, .86);
+  backdrop-filter: blur(6px);
+
+  transition:
+    opacity .25s ease,
+    visibility .25s ease;
+}
+
+.puzzle-preview.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.puzzle-preview img {
+  width: min(100%, 720px);
+  max-height: 76vh;
+
+  object-fit: contain;
+
+  border: 2px solid rgba(214, 176, 74, .55);
+  border-radius: 20px;
+
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, .55);
+}
+
+/*=========================================
+  Mensajes de nivel
+=========================================*/
+
+.puzzle-level-message {
+  position: absolute;
+  z-index: 50;
+  top: 50%;
+  left: 50%;
+
+  max-width: min(90%, 430px);
+  padding: 16px 24px;
+
+  border: 1px solid rgba(214, 176, 74, .35);
+  border-radius: 18px;
+
+  color: #ffffff;
+  background: rgba(15, 23, 42, .96);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  font-weight: 800;
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform:
+    translate(-50%, -50%)
+    scale(.85);
+
+  transition:
+    opacity .25s ease,
+    visibility .25s ease,
+    transform .25s ease;
+}
+
+.puzzle-level-message.is-visible {
+  opacity: 1;
+  visibility: visible;
+
+  transform:
+    translate(-50%, -50%)
+    scale(1);
+}
+
+@media (max-width: 620px) {
+
+  .puzzle-board {
+    width: 100%;
+    padding: 7px;
+    gap: 2px;
+
+    border-radius: 15px;
+  }
+
+  .puzzle-piece {
+    border-radius: 3px;
+  }
+
+  .puzzle-preview {
+    padding: 12px;
+  }
+
+  .puzzle-preview img {
+    border-radius: 14px;
+  }
+
+}
+
+.puzzle-preview-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 10px 14px;
+
+  border: 1px solid rgba(214, 176, 74, .28);
+  border-radius: 999px;
+
+  color: #f8d98b;
+  background: rgba(214, 176, 74, .08);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    opacity .2s ease;
+}
+
+.puzzle-preview-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  color: #071126;
+  background: #d6b04a;
+}
+
+.puzzle-preview-button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+
+/* ==================================================
+   TABLERO DE TRIVIA
+================================================== */
+
+.trivia-board {
+  position: relative;
+  z-index: 3;
+
+  display: none;
+
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.love-game-stage.is-playing .trivia-board {
+  display: block;
+}
+
+.trivia-progress {
+  margin-bottom: 22px;
+}
+
+.trivia-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 10px;
+
+  color: rgba(255, 255, 255, .76);
+  font-family: "Montserrat", sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.trivia-time-bar {
+  width: 100%;
+  height: 10px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, .08);
+}
+
+.trivia-time-bar span {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #8d1f3f,
+      #d6b04a
+    );
+
+  transform-origin: left center;
+
+  transition:
+    width 1s linear,
+    background .25s ease;
+}
+
+.trivia-time-bar span.is-warning {
+  background:
+    linear-gradient(
+      90deg,
+      #d97706,
+      #f59e0b
+    );
+}
+
+.trivia-time-bar span.is-danger {
+  background:
+    linear-gradient(
+      90deg,
+      #b91c1c,
+      #ef4444
+    );
+}
+
+/* ==================================================
+   TARJETA DE PREGUNTA
+================================================== */
+
+.trivia-question-card {
+  position: relative;
+
+  padding: 34px;
+
+  border: 1px solid rgba(214, 176, 74, .24);
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(19, 31, 62, .97),
+      rgba(8, 16, 36, .98)
+    );
+
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, .32);
+}
+
+.trivia-question-label {
+  display: inline-flex;
+
+  margin-bottom: 16px;
+  padding: 8px 13px;
+
+  border: 1px solid rgba(214, 176, 74, .25);
+  border-radius: 999px;
+
+  background: rgba(214, 176, 74, .08);
+
+  color: #f5d98e;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.trivia-question {
+  min-height: 100px;
+  margin: 0 0 28px;
+
+  color: #ffffff;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  line-height: 1.42;
+}
+
+/* ==================================================
+   ALTERNATIVAS
+================================================== */
+
+.trivia-options {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.trivia-option {
+  display: grid;
+
+  min-height: 78px;
+  padding: 14px 16px;
+
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 18px;
+
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 12px;
+
+  background: rgba(255, 255, 255, .055);
+
+  color: #ffffff;
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background .2s ease,
+    opacity .2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .trivia-option:hover:not(:disabled) {
+    border-color: rgba(214, 176, 74, .55);
+    background: rgba(214, 176, 74, .1);
+    transform: translateY(-2px);
+  }
+
+}
+
+.trivia-option-letter {
+  display: grid;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: rgba(214, 176, 74, .12);
+
+  color: #f5d98e;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.trivia-option-text {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: .98rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.trivia-option.is-correct {
+  border-color: rgba(34, 197, 94, .7);
+
+  background: rgba(34, 197, 94, .16);
+}
+
+.trivia-option.is-correct
+.trivia-option-letter {
+  background: #22c55e;
+  color: #071126;
+}
+
+.trivia-option.is-wrong {
+  border-color: rgba(239, 68, 68, .75);
+
+  background: rgba(239, 68, 68, .15);
+
+  animation: triviaWrongShake .35s ease;
+}
+
+.trivia-option.is-wrong
+.trivia-option-letter {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.trivia-option:disabled {
+  cursor: default;
+  opacity: .72;
+}
+
+@keyframes triviaWrongShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-6px);
+  }
+
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+/* ==================================================
+   RETROALIMENTACIÓN
+================================================== */
+
+.trivia-feedback {
+  min-height: 28px;
+  margin-top: 18px;
+
+  color: rgba(255, 255, 255, .8);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .9rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.trivia-feedback.is-correct {
+  color: #86efac;
+}
+
+.trivia-feedback.is-wrong {
+  color: #fca5a5;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 720px) {
+
+  .trivia-board {
+    padding: 18px 14px;
+  }
+
+  .trivia-question-card {
+    padding: 24px 18px;
+    border-radius: 22px;
+  }
+
+  .trivia-question {
+    min-height: 0;
+    margin-bottom: 22px;
+
+    font-size: 1.01rem;
+  }
+
+  .trivia-options {
+    grid-template-columns: 1fr;
+  }
+
+  .trivia-option {
+    min-height: 68px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .trivia-progress-info {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .trivia-question-card {
+    padding: 22px 15px;
+  }
+
+  .trivia-option {
+    grid-template-columns: 36px 1fr;
+    padding: 12px;
+  }
+
+  .trivia-option-letter {
+    width: 34px;
+    height: 34px;
+  }
+
+}
+
+.trivia-option:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+.trivia-option:focus-visible {
+  outline: 2px solid #f5d98e;
+  outline-offset: 3px;
+}
+
+.score-container{
+
+    position:relative;
+
+}
+
+.score-animation{
+
+    position:absolute;
+
+    left:50%;
+
+    top:55%;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+
+    font-size:1.15rem;
+
+    font-weight:800;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:
+        all .75s ease;
+
+}
+
+.score-animation.positive{
+
+    color:#43a047;
+
+}
+
+.score-animation.negative{
+
+    color:#e53935;
+
+}
+
+.score-animation.show{
+
+    opacity:1;
+
+    transform:
+        translateX(-50%)
+        translateY(-28px)
+        scale(1.15);
+
+}

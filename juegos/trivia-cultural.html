@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trivia Cultural | PySC</title>
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/trivia-cultural.css">
+</head>
+
+<body>
+
+    <main class="love-game-page">
+
+        <section class="love-game-shell">
+
+            <header class="love-game-header">
+
+                <a href="../rincon-secreto.html" class="love-game-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al rincón</span>
+                </a>
+
+                <div class="love-game-title">
+
+                    <span class="love-game-eyebrow">
+                        Desafío 05
+                    </span>
+
+                    <h1>
+                        Trivia Cultural
+                    </h1>
+
+                    <p>
+                        Pon a prueba tus conocimientos sobre PySC,
+                        Catacaos, Piura y el folclore peruano.
+                        Responde 20 preguntas antes de perder tus
+                        tres vidas.
+                    </p>
+                </div>
+
+                <div class="love-game-logo">
+                    <img src="../img/logo-pasion-sentimiento.png" alt="Pasión y Sentimiento Cultural">
+                </div>
+
+            </header>
+
+            <section class="love-game-hud">
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Pregunta
+                    </span>
+
+                    <strong id="triviaQuestionNumber">
+                        1 / 20
+                    </strong>
+                </div>
+
+                <div class="love-hud-item score-container">
+                    <span class="love-hud-label">
+                        Puntaje
+                    </span>
+
+                    <strong id="triviaScore">
+                        0
+                    </strong>
+                    
+                    <span
+                        id="scoreAnimation"
+                        class="score-animation"
+                    ></span>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Vidas
+                    </span>
+
+                    <strong id="triviaLives">
+                        ❤️❤️❤️
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Tiempo
+                    </span>
+
+                    <strong id="triviaTime">
+                        15
+                    </strong>
+                </div>
+
+            </section>
+
+            <section class="love-game-stage" id="triviaGameStage">
+
+                <div class="love-stage-decoration">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="love-countdown" id="loveCountdown" aria-live="polite">
+                    <span id="loveCountdownText">
+                        3
+                    </span>
+                </div>
+
+                <div class="love-game-welcome">
+
+                    <div class="love-welcome-icon">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+
+                    <h2>
+                        ¿Cuánto sabes de nuestra cultura?
+                    </h2>
+
+                    <p>
+                        Responde 20 preguntas sobre PySC, Catacaos,
+                        Piura y el folclore peruano. Tendrás tres vidas
+                        y un tiempo limitado para responder cada pregunta.
+                    </p>
+
+                    <button type="button" class="love-start-button" id="triviaStartButton">
+                        <i class="fa-solid fa-circle-play"></i>
+                        Comenzar trivia
+                    </button>
+
+                </div>
+
+                <section class="trivia-board" id="triviaBoard" aria-live="polite">
+
+                    <div class="trivia-progress">
+
+                        <div class="trivia-time-bar" aria-hidden="true">
+                            <span id="triviaTimeBar"></span>
+                        </div>
+
+                    </div>
+
+                    <article class="trivia-question-card">
+
+                        <span class="trivia-question-label" id="triviaQuestionLabel">
+                            Pregunta 1 de 20
+                        </span>
+
+                        <h2 class="trivia-question" id="triviaQuestion">
+                            Aquí aparecerá la pregunta.
+                        </h2>
+
+                        <div class="trivia-options" id="triviaOptions">
+
+                            <button type="button" class="trivia-option" data-option-index="0">
+                                <span class="trivia-option-letter">
+                                    A
+                                </span>
+
+                                <span class="trivia-option-text">
+                                    Alternativa A
+                                </span>
+                            </button>
+
+                            <button type="button" class="trivia-option" data-option-index="1">
+                                <span class="trivia-option-letter">
+                                    B
+                                </span>
+
+                                <span class="trivia-option-text">
+                                    Alternativa B
+                                </span>
+                            </button>
+
+                            <button type="button" class="trivia-option" data-option-index="2">
+                                <span class="trivia-option-letter">
+                                    C
+                                </span>
+
+                                <span class="trivia-option-text">
+                                    Alternativa C
+                                </span>
+                            </button>
+
+                            <button type="button" class="trivia-option" data-option-index="3">
+                                <span class="trivia-option-letter">
+                                    D
+                                </span>
+
+                                <span class="trivia-option-text">
+                                    Alternativa D
+                                </span>
+                            </button>
+
+                        </div>
+
+                        <div class="trivia-feedback" id="triviaFeedback" aria-live="assertive"></div>
+
+                    </article>
+
+                </section>
+
+            </section>
+
+
+
+            <footer class="love-game-footer">
+
+                <p>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Elige una alternativa antes de que termine el tiempo.
+                </p>
+
+                <button type="button" class="love-reset-button" id="triviaResetButton">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reiniciar
+                </button>
+
+                <button type="button" class="leaderboard-open-button" id="leaderboardOpenButton">
+                    <i class="fa-solid fa-trophy"></i>
+                    Ver clasificación
+                </button>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DESBLOQUEO -->
+
+    <div class="love-unlock-modal" id="loveUnlockModal" aria-hidden="true">
+
+        <div class="love-unlock-backdrop"></div>
+
+        <div class="love-unlock-content" role="dialog" aria-modal="true" aria-labelledby="loveUnlockTitle">
+
+            <div class="love-unlock-icon" id="loveUnlockIcon">
+                <i class="fa-solid fa-lock-open"></i>
+            </div>
+
+            <span class="love-unlock-label" id="loveUnlockLabel">
+                Nuevo desafío desbloqueado
+            </span>
+
+            <h2 id="loveUnlockTitle">
+                ¡Desafío superado!
+            </h2>
+
+            <p id="loveUnlockText">
+                Has desbloqueado el siguiente desafío.
+            </p>
+
+            <button type="button" class="love-unlock-button" id="loveUnlockButton">
+                <span id="loveUnlockButtonText">
+                    Continuar
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+        <div class="ranking-modal-backdrop"></div>
+
+        <div class="ranking-modal-content" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+            <div class="ranking-modal-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="ranking-modal-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="rankingModalTitle">
+                ¡Nuevo récord!
+            </h2>
+
+            <p id="rankingModalText">
+                Has conseguido un nuevo récord personal.
+            </p>
+
+            <strong id="rankingModalScore">
+                0 puntos · 0 respuestas correctas · 3 vidas
+            </strong>
+
+            <div class="ranking-name-group" id="rankingNameGroup">
+                <label for="rankingPlayerName">
+                    ¿Cómo quieres aparecer?
+                </label>
+
+                <input type="text" id="rankingPlayerName" maxlength="24" autocomplete="nickname"
+                    placeholder="Nombre o apodo">
+
+                <small id="rankingNameError"></small>
+            </div>
+
+            <button type="button" class="ranking-save-button" id="rankingSaveButton">
+                Guardar resultado
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="leaderboard-modal" id="leaderboardModal" aria-hidden="true">
+        <div class="leaderboard-modal-backdrop"></div>
+
+        <div class="leaderboard-modal-content" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="leaderboard-close-button" id="leaderboardCloseButton"
+                aria-label="Cerrar clasificación">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="leaderboard-icon">
+                <i class="fa-solid fa-ranking-star"></i>
+            </div>
+
+            <span class="leaderboard-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="leaderboardTitle">
+                Top 10
+            </h2>
+
+            <p>
+                Trivia Cultural
+            </p>
+
+            <div class="leaderboard-loading" id="leaderboardLoading">
+                Cargando clasificación...
+            </div>
+
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden>
+                Todavía no hay resultados registrados.
+            </p>
+        </div>
+    </div>
+
+
+    <script type="module" src="../js/trivia-cultural.js"></script>
+
+</body>
+
+</html>
