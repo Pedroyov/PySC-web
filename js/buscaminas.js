@@ -27,27 +27,27 @@ document.addEventListener("DOMContentLoaded", () => {
     {
         rows: 8,
         columns: 8,
+        mines: 4
+    },
+    {
+        rows: 8,
+        columns: 8,
         mines: 5
     },
     {
         rows: 8,
         columns: 8,
-        mines: 7
-    },
-    {
-        rows: 8,
-        columns: 8,
-        mines: 9
+        mines: 6
     },
     {
         rows: 10,
         columns: 10,
-        mines: 15
+        mines: 10
     },
     {
         rows: 11,
         columns: 11,
-        mines: 18
+        mines: 15
     }
   ];
 
