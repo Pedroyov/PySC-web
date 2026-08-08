@@ -1181,15 +1181,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "is-wrong"
             );
 
-            const correctButton =
-                options[
-                currentData.correctAnswer
-                ];
-
-            correctButton.classList.add(
-                "is-correct"
-            );
-
             feedback.textContent =
                 "Incorrecto. -5 puntos";
 
