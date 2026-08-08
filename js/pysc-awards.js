@@ -60,6 +60,22 @@ const awardsEditionDescription =
 const awardsWinnersGrid =
   document.getElementById("awards-winners-grid");
 
+
+const awardsModal =
+  document.getElementById("awardsModal");
+
+const awardsModalClose =
+  document.getElementById("awardsModalClose");
+
+const awardsModalTitle =
+  document.getElementById("awardsModalTitle");
+
+const awardsModalWinner =
+  document.getElementById("awardsModalWinner");
+
+const awardsNomineesList =
+  document.getElementById("awardsNomineesList");
+
 /* =========================================================
    DATOS GLOBALES
    ========================================================= */
@@ -250,6 +266,121 @@ function getWinnerInitials(name = "") {
     .toUpperCase();
 }
 
+function openAwardsModal(categoryId) {
+  const winner =
+    awardsWinners.find(
+      (item) =>
+        item.id_categoria.trim() ===
+        categoryId.trim()
+    );
+
+  if (!winner) {
+    return;
+  }
+
+  const nominees =
+    awardsNominees
+      .filter((nominee) => {
+        return (
+          isAwardsVisible(nominee) &&
+          nominee.id_categoria.trim() ===
+          categoryId.trim() &&
+          nominee.nominado.trim() !== ""
+        );
+      })
+      .sort((first, second) => {
+        return (
+          getAwardsNumber(first.orden, 999) -
+          getAwardsNumber(second.orden, 999)
+        );
+      });
+
+  awardsModalTitle.textContent =
+    winner.categoria;
+
+  awardsModalWinner.textContent =
+    winner.ganador;
+
+
+  if (nominees.length === 0) {
+    awardsNomineesList.innerHTML = `
+      <p class="awards-no-nominees">
+        No hay nominados registrados para esta categoría.
+      </p>
+    `;
+  } else {
+    awardsNomineesList.innerHTML =
+      nominees
+        .map((nominee) => {
+          const isWinner =
+            nominee.nominado
+              .trim()
+              .toLowerCase() ===
+            winner.ganador
+              .trim()
+              .toLowerCase();
+
+          return `
+            <div
+              class="awards-nominee
+              ${isWinner
+              ? "awards-nominee-winner"
+              : ""}"
+            >
+              <span class="awards-nominee-name">
+                ${escapeAwardsHTML(
+                nominee.nominado
+              )}
+              </span>
+
+              ${isWinner
+              ? `
+                    <span
+                      class="awards-nominee-badge"
+                    >
+                      <i
+                        class="fa-solid fa-trophy"
+                      ></i>
+                      Ganador
+                    </span>
+                  `
+              : ""
+            }
+            </div>
+          `;
+        })
+        .join("");
+  }
+
+  awardsModal.classList.add("open");
+
+  awardsModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  document.body.classList.add(
+    "awards-modal-open"
+  );
+}
+
+function closeAwardsModal() {
+  if (!awardsModal) {
+    return;
+  }
+
+  awardsModal.classList.remove("open");
+
+  awardsModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  document.body.classList.remove(
+    "awards-modal-open"
+  );
+}
+
 /* =========================================================
    IMAGEN DEL GANADOR
    ========================================================= */
@@ -259,13 +390,13 @@ function createAwardsWinnerImage(winner) {
     return `
       <img
         src="${escapeAwardsHTML(
-          winner.imagen
-        )}"
+      winner.imagen
+    )}"
         alt="Ganador de ${escapeAwardsHTML(
-          winner.categoria
-        )}: ${escapeAwardsHTML(
-          winner.ganador
-        )}"
+      winner.categoria
+    )}: ${escapeAwardsHTML(
+      winner.ganador
+    )}"
         class="awards-winner-image"
         loading="lazy"
         decoding="async"
@@ -281,10 +412,10 @@ function createAwardsWinnerImage(winner) {
 
       <strong>
         ${escapeAwardsHTML(
-          getWinnerInitials(
-            winner.ganador
-          )
-        )}
+    getWinnerInitials(
+      winner.ganador
+    )
+  )}
       </strong>
     </div>
   `;
@@ -356,19 +487,18 @@ function renderAwardsWinners(year) {
         return `
           <article
             class="awards-winner-card
-            ${
-              isFeatured
-                ? "awards-winner-card-featured"
-                : ""
-            }"
+            ${isFeatured
+            ? "awards-winner-card-featured"
+            : ""
+          }"
             data-category-id="${escapeAwardsHTML(
-              winner.id_categoria
-            )}"
+            winner.id_categoria
+          )}"
             tabindex="0"
             role="button"
             aria-label="Ver información de ${escapeAwardsHTML(
-              winner.categoria
-            )}"
+            winner.categoria
+          )}"
           >
             <div
               class="awards-winner-image-wrapper"
@@ -376,16 +506,15 @@ function renderAwardsWinners(year) {
               <span
                 class="awards-winner-badge"
               >
-                ${
-                  isFeatured
-                    ? "Premio destacado"
-                    : "Ganador"
-                }
+                ${isFeatured
+            ? "Premio destacado"
+            : "Ganador"
+          }
               </span>
 
               ${createAwardsWinnerImage(
-                winner
-              )}
+            winner
+          )}
             </div>
 
             <div
@@ -395,32 +524,31 @@ function renderAwardsWinners(year) {
                 class="awards-winner-category"
               >
                 ${escapeAwardsHTML(
-                  winner.categoria
-                )}
+            winner.categoria
+          )}
               </span>
 
               <h3
                 class="awards-winner-name"
               >
                 ${escapeAwardsHTML(
-                  winner.ganador ||
-                  "Ganador pendiente"
-                )}
+            winner.ganador ||
+            "Ganador pendiente"
+          )}
               </h3>
 
-              ${
-                winner.descripcion
-                  ? `
+              ${winner.descripcion
+            ? `
                     <p
                       class="awards-winner-description"
                     >
                       ${escapeAwardsHTML(
-                        winner.descripcion
-                      )}
+              winner.descripcion
+            )}
                     </p>
                   `
-                  : ""
-              }
+            : ""
+          }
 
               <span
                 class="awards-card-details"
@@ -436,7 +564,63 @@ function renderAwardsWinners(year) {
         `;
       })
       .join("");
+
+  awardsWinnersGrid
+    .querySelectorAll(".awards-winner-card")
+    .forEach((card) => {
+      card.addEventListener("click", () => {
+        openAwardsModal(
+          card.dataset.categoryId
+        );
+      });
+
+      card.addEventListener(
+        "keydown",
+        (event) => {
+          if (
+            event.key === "Enter" ||
+            event.key === " "
+          ) {
+            event.preventDefault();
+
+            openAwardsModal(
+              card.dataset.categoryId
+            );
+          }
+        }
+      );
+    });
 }
+
+if (awardsModalClose) {
+  awardsModalClose.addEventListener(
+    "click",
+    closeAwardsModal
+  );
+}
+
+document
+  .querySelectorAll(
+    "[data-awards-modal-close]"
+  )
+  .forEach((element) => {
+    element.addEventListener(
+      "click",
+      closeAwardsModal
+    );
+  });
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+    if (
+      event.key === "Escape" &&
+      awardsModal?.classList.contains("open")
+    ) {
+      closeAwardsModal();
+    }
+  }
+);
 
 /* =========================================================
    EDICIÓN SELECCIONADA
@@ -517,21 +701,19 @@ function renderAwardsYearSelector() {
           <button
             type="button"
             class="awards-year-button
-            ${
-              index === 0
-                ? "active"
-                : ""
-            }"
+            ${index === 0
+            ? "active"
+            : ""
+          }"
             data-year="${escapeAwardsHTML(
-              edition.anio
-            )}"
-            aria-pressed="${
-              index === 0
-            }"
+            edition.anio
+          )}"
+            aria-pressed="${index === 0
+          }"
           >
             ${escapeAwardsHTML(
-              edition.anio
-            )}
+            edition.anio
+          )}
           </button>
         `;
       })

@@ -104,6 +104,23 @@
             <div class="awards-light awards-light-left"></div>
             <div class="awards-light awards-light-right"></div>
 
+            <div class="awards-statue awards-statue-left" aria-hidden="true">
+                🏆
+            </div>
+
+            <div class="awards-statue awards-statue-right" aria-hidden="true">
+                🏆
+            </div>
+
+            <div class="awards-sparkles" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
             <div class="awards-hero-content">
 
                 <span class="awards-eyebrow">
@@ -165,7 +182,7 @@
                     <div class="awards-intro-text">
 
                         <p>
-                            Los <strong>PySC Awards</strong> son nuestra gala anual para celebrar 
+                            Los <strong>PySC Awards</strong> son nuestra gala anual para celebrar
                             todo aquello que hace especial cada año en Pasión y Sentimiento Cultural.
                         </p>
 
@@ -176,8 +193,8 @@
                         </p>
 
                         <p>
-                            Con categorías que van desde los reconocimientos más especiales hasta los más divertidos, 
-                            y ganadores elegidos mediante votación, cada edición se convierte en una noche 
+                            Con categorías que van desde los reconocimientos más especiales hasta los más divertidos,
+                            y ganadores elegidos mediante votación, cada edición se convierte en una noche
                             para celebrar, reír y recordar juntos todo lo vivido durante el año.
                         </p>
 
@@ -323,6 +340,35 @@
         </section>
 
     </main>
+
+    <div class="awards-modal" id="awardsModal" aria-hidden="true">
+        <div class="awards-modal-backdrop" data-awards-modal-close></div>
+
+        <div class="awards-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="awardsModalTitle">
+            <button type="button" class="awards-modal-close" id="awardsModalClose" aria-label="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="awards-modal-kicker">
+                PySC Awards
+            </span>
+
+            <h2 id="awardsModalTitle">
+                Categoría
+            </h2>
+
+            <div class="awards-modal-winner">
+                <span>Ganador</span>
+                <strong id="awardsModalWinner"></strong>
+            </div>
+
+            <div class="awards-modal-nominees">
+                <h3>Nominados</h3>
+
+                <div class="awards-nominees-list" id="awardsNomineesList"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER ACTUAL DE PYSC -->
     <footer class="site-footer">
