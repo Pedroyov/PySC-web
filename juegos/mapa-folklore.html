@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mapa del Folklore | PySC</title>
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/mapa-folklore.css">
+</head>
+
+<body>
+
+    <main class="love-game-page">
+
+        <section class="love-game-shell">
+
+            <header class="love-game-header">
+
+                <a href="../rincon-secreto.html" class="love-game-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al rincón</span>
+                </a>
+
+                <div class="love-game-title">
+
+                    <span class="love-game-eyebrow">
+                        Desafío 07
+                    </span>
+
+                    <h1>
+                        Mapa del Folklore
+                    </h1>
+
+                    <p>
+                        Ubica de qué zona del Perú es cada danza
+                        o instrumento antes de quedarte sin vidas,
+                        contra el reloj.
+                    </p>
+                </div>
+
+                <div class="love-game-logo">
+                    <img src="../img/logo-pasion-sentimiento.png" alt="Pasión y Sentimiento Cultural">
+                </div>
+
+            </header>
+
+            <section class="love-game-hud">
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Ronda
+                    </span>
+
+                    <strong id="mapaRound">
+                        1 / 12
+                    </strong>
+                </div>
+
+                <div class="love-hud-item score-container">
+                    <span class="love-hud-label">
+                        Puntaje
+                    </span>
+
+                    <strong id="mapaScore">
+                        0
+                    </strong>
+
+                    <span
+                        id="scoreAnimation"
+                        class="score-animation"
+                    ></span>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Racha
+                    </span>
+
+                    <strong id="mapaStreak">
+                        0
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Vidas
+                    </span>
+
+                    <strong id="mapaLives">
+                        ❤️❤️❤️
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Tiempo
+                    </span>
+
+                    <strong id="mapaTime">
+                        00:00
+                    </strong>
+                </div>
+
+            </section>
+
+            <section class="love-game-stage" id="mapaGameStage">
+
+                <div class="love-stage-decoration">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="love-countdown" id="loveCountdown" aria-live="polite">
+                    <span id="loveCountdownText">
+                        3
+                    </span>
+                </div>
+
+                <div class="love-game-welcome">
+
+                    <div class="love-welcome-icon">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+
+                    <h2>
+                        ¿Conoces de dónde viene cada danza?
+                    </h2>
+
+                    <p>
+                        Te mostraremos una danza, instrumento o
+                        tradición y una pista. Elige de qué zona
+                        del Perú proviene. Tienes tres vidas.
+                    </p>
+
+                    <button type="button" class="love-start-button" id="mapaStartButton">
+                        <i class="fa-solid fa-circle-play"></i>
+                        Comenzar
+                    </button>
+
+                </div>
+
+                <section class="mapa-board" id="mapaBoard" aria-live="polite">
+
+                    <article class="mapa-prompt-card">
+
+                        <span class="mapa-prompt-label" id="mapaPromptLabel">
+                            Ronda 1 de 12
+                        </span>
+
+                        <h2 class="mapa-prompt" id="mapaPrompt">
+                            Aquí aparecerá la danza o instrumento.
+                        </h2>
+
+                        <p class="mapa-hint" id="mapaHint">
+                            Pista cultural.
+                        </p>
+
+                    </article>
+
+                    <p class="mapa-legend">
+                        Perú dividido en 9 zonas culturales:
+                        costa · sierra · selva, cada una en
+                        norte · centro · sur. Es un mapa
+                        esquemático, no político.
+                    </p>
+
+                    <div class="mapa-grid" id="mapaGrid">
+
+                        <button type="button" class="mapa-zone mapa-zone-costa" data-zone="costa-norte">
+                            <i class="fa-solid fa-water"></i>
+                            <span>Costa Norte</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-sierra" data-zone="sierra-norte">
+                            <i class="fa-solid fa-mountain"></i>
+                            <span>Sierra Norte</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-selva" data-zone="selva-norte">
+                            <i class="fa-solid fa-tree"></i>
+                            <span>Selva Norte</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-costa" data-zone="costa-centro">
+                            <i class="fa-solid fa-water"></i>
+                            <span>Costa Centro</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-sierra" data-zone="sierra-centro">
+                            <i class="fa-solid fa-mountain"></i>
+                            <span>Sierra Centro</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-selva" data-zone="selva-centro">
+                            <i class="fa-solid fa-tree"></i>
+                            <span>Selva Centro</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-costa" data-zone="costa-sur">
+                            <i class="fa-solid fa-water"></i>
+                            <span>Costa Sur</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-sierra" data-zone="sierra-sur">
+                            <i class="fa-solid fa-mountain"></i>
+                            <span>Sierra Sur</span>
+                        </button>
+
+                        <button type="button" class="mapa-zone mapa-zone-selva" data-zone="selva-sur">
+                            <i class="fa-solid fa-tree"></i>
+                            <span>Selva Sur</span>
+                        </button>
+
+                    </div>
+
+                    <div class="mapa-feedback" id="mapaFeedback" aria-live="assertive"></div>
+
+                </section>
+
+            </section>
+
+            <footer class="love-game-footer">
+
+                <p>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Lee la pista con calma antes de elegir una zona.
+                </p>
+
+                <button type="button" class="love-reset-button" id="mapaResetButton">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reiniciar
+                </button>
+
+                <button type="button" class="leaderboard-open-button" id="leaderboardOpenButton">
+                    <i class="fa-solid fa-trophy"></i>
+                    Ver clasificación
+                </button>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DESBLOQUEO -->
+
+    <div class="love-unlock-modal" id="loveUnlockModal" aria-hidden="true">
+
+        <div class="love-unlock-backdrop"></div>
+
+        <div class="love-unlock-content" role="dialog" aria-modal="true" aria-labelledby="loveUnlockTitle">
+
+            <div class="love-unlock-icon" id="loveUnlockIcon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="love-unlock-label" id="loveUnlockLabel">
+                Desafío completado
+            </span>
+
+            <h2 id="loveUnlockTitle">
+                ¡Excelente trabajo!
+            </h2>
+
+            <p id="loveUnlockText">
+                Completaste el Mapa del Folklore.
+            </p>
+
+            <button type="button" class="love-unlock-button" id="loveUnlockButton">
+                <span id="loveUnlockButtonText">
+                    Continuar
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+        <div class="ranking-modal-backdrop"></div>
+
+        <div class="ranking-modal-content" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+            <div class="ranking-modal-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="ranking-modal-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="rankingModalTitle">
+                ¡Nuevo récord!
+            </h2>
+
+            <p id="rankingModalText">
+                Has conseguido un nuevo récord personal.
+            </p>
+
+            <strong id="rankingModalScore">
+                0 puntos
+            </strong>
+
+            <div class="ranking-name-group" id="rankingNameGroup">
+                <label for="rankingPlayerName">
+                    ¿Cómo quieres aparecer?
+                </label>
+
+                <input type="text" id="rankingPlayerName" maxlength="24" autocomplete="nickname"
+                    placeholder="Nombre o apodo">
+
+                <small id="rankingNameError"></small>
+            </div>
+
+            <button type="button" class="ranking-save-button" id="rankingSaveButton">
+                Guardar resultado
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="leaderboard-modal" id="leaderboardModal" aria-hidden="true">
+        <div class="leaderboard-modal-backdrop"></div>
+
+        <div class="leaderboard-modal-content" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="leaderboard-close-button" id="leaderboardCloseButton"
+                aria-label="Cerrar clasificación">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="leaderboard-icon">
+                <i class="fa-solid fa-ranking-star"></i>
+            </div>
+
+            <span class="leaderboard-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="leaderboardTitle">
+                Top 10
+            </h2>
+
+            <p>
+                Mapa del Folklore
+            </p>
+
+            <div class="leaderboard-loading" id="leaderboardLoading">
+                Cargando clasificación...
+            </div>
+
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden>
+                Todavía no hay resultados registrados.
+            </p>
+        </div>
+    </div>
+
+
+    <script type="module" src="../js/mapa-folklore.js"></script>
+
+</body>
+
+</html>

@@ -2673,3 +2673,66 @@
     font-weight:800;
 
 }
+/* ==================================================
+   NUEVOS DESAFIOS Y ANIMACION DE DESBLOQUEO
+================================================== */
+
+.secret-new-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff6b6b, #d5ad55);
+  color: #1a0f0f;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(255, 107, 107, .35);
+  animation: secretNewBadgePulse 1.8s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes secretNewBadgePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+}
+
+@keyframes secretCardUnlockPulse {
+
+  0% {
+    box-shadow:
+      0 22px 55px rgba(0, 0, 0, .25),
+      0 0 0 rgba(45, 184, 107, 0);
+    border-color: var(--secret-border);
+  }
+
+  30% {
+    box-shadow:
+      0 22px 55px rgba(0, 0, 0, .25),
+      0 0 40px rgba(45, 184, 107, .55);
+    border-color: rgba(45, 184, 107, .8);
+  }
+
+  100% {
+    box-shadow:
+      0 22px 55px rgba(0, 0, 0, .25),
+      0 0 0 rgba(45, 184, 107, 0);
+    border-color: var(--secret-border);
+  }
+
+}
+
+.secret-game-just-unlocked {
+  animation: secretCardUnlockPulse 2.2s ease;
+}

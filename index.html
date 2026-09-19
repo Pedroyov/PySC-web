@@ -353,7 +353,34 @@
       </article>
     </div>
   </section>
-  
+
+  <script>
+    /*
+     * Oculta la sección de notificaciones de inmediato,
+     * antes de que se pinte la página, si el usuario ya
+     * había aceptado las notificaciones en una visita
+     * anterior. Así evitamos que se vea un parpadeo de la
+     * tarjeta mientras se cargan los demás scripts.
+     *
+     * Este script va justo después de la sección en el
+     * HTML para poder acceder al elemento ya existente en
+     * el DOM sin esperar a que termine de cargar la página.
+     */
+    (function () {
+      if (
+        "Notification" in window &&
+        Notification.permission === "granted"
+      ) {
+        const notificationsSection =
+          document.getElementById("notifications");
+
+        if (notificationsSection) {
+          notificationsSection.style.display = "none";
+        }
+      }
+    })();
+  </script>
+
   <section class="agenda-section section" id="agenda">
     <div class="agenda-decoration agenda-decoration-one"></div>
     <div class="agenda-decoration agenda-decoration-two"></div>
@@ -1544,6 +1571,17 @@
     if (
       Notification.permission === "granted"
     ) {
+      /*
+       * El usuario ya aceptó las notificaciones en el
+       * navegador, así que ocultamos la tarjeta de una vez.
+       * La actualización del token FCM se intenta después,
+       * en segundo plano: si falla (por ejemplo, por un
+       * bloqueador de anuncios o un problema de red), no
+       * queremos que la tarjeta reaparezca en cada visita,
+       * porque el permiso ya fue concedido.
+       */
+      setNotificationsActive();
+
       try {
         const token =
           await activateNotifications();
@@ -1552,16 +1590,10 @@
           "Token FCM comprobado:",
           token
         );
-
-        setNotificationsActive();
       } catch (error) {
         console.error(
-          "No se pudo comprobar la suscripción:",
+          "No se pudo actualizar la suscripción en segundo plano:",
           error
-        );
-
-        setNotificationsError(
-          "No se pudo actualizar la suscripción. Pulsa el botón para intentarlo nuevamente."
         );
       }
 

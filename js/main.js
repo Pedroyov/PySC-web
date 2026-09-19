@@ -1716,8 +1716,31 @@ if (galleryGrid) {
 
 
 if ("serviceWorker" in navigator) {
+
+    /*
+     * document.currentScript solo es confiable de forma
+     * síncrona, así que lo guardamos ahora y lo usamos
+     * despues dentro del listener de "load".
+     *
+     * Calculamos la ruta de sw.js a partir de la ubicación
+     * real de este script (js/main.js) en vez de una ruta
+     * absoluta fija, para que funcione sin importar si el
+     * sitio se sirve desde la raíz del dominio, desde un
+     * subdirectorio (por ejemplo /PySC-web/) o en local con
+     * Live Server.
+     */
+
+    const mainScriptUrl =
+        document.currentScript
+            ? document.currentScript.src
+            : `${window.location.origin}/js/main.js`;
+
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/PySC-web/sw.js")
+
+        const serviceWorkerUrl =
+            new URL("../sw.js", mainScriptUrl).href;
+
+        navigator.serviceWorker.register(serviceWorkerUrl)
             .then(() => {
                 console.log("Service Worker registrado");
             })

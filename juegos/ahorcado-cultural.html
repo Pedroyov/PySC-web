@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>El Ahorcado | PySC</title>
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/ahorcado-cultural.css">
+</head>
+
+<body>
+
+    <main class="love-game-page">
+
+        <section class="love-game-shell">
+
+            <header class="love-game-header">
+
+                <a href="../rincon-secreto.html" class="love-game-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al rincón</span>
+                </a>
+
+                <div class="love-game-title">
+
+                    <span class="love-game-eyebrow">
+                        Desafío 06
+                    </span>
+
+                    <h1>
+                        El Ahorcado
+                    </h1>
+
+                    <p>
+                        Adivina 15 palabras y frases sobre danzas,
+                        instrumentos, tradiciones y la vida de un
+                        bailarín, contra el reloj y con tres vidas.
+                    </p>
+                </div>
+
+                <div class="love-game-logo">
+                    <img src="../img/logo-pasion-sentimiento.png" alt="Pasión y Sentimiento Cultural">
+                </div>
+
+            </header>
+
+            <section class="love-game-hud">
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Palabra
+                    </span>
+
+                    <strong id="ahorcadoRound">
+                        1 / 15
+                    </strong>
+                </div>
+
+                <div class="love-hud-item score-container">
+                    <span class="love-hud-label">
+                        Puntaje
+                    </span>
+
+                    <strong id="ahorcadoScore">
+                        0
+                    </strong>
+
+                    <span
+                        id="scoreAnimation"
+                        class="score-animation"
+                    ></span>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Vidas
+                    </span>
+
+                    <strong id="ahorcadoLives">
+                        ❤️❤️❤️
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Tiempo
+                    </span>
+
+                    <strong id="ahorcadoTime">
+                        00:00
+                    </strong>
+                </div>
+
+            </section>
+
+            <section class="love-game-stage" id="ahorcadoGameStage">
+
+                <div class="love-stage-decoration">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="love-countdown" id="loveCountdown" aria-live="polite">
+                    <span id="loveCountdownText">
+                        3
+                    </span>
+                </div>
+
+                <div class="love-game-welcome">
+
+                    <div class="love-welcome-icon">
+                        <i class="fa-solid fa-spell-check"></i>
+                    </div>
+
+                    <h2>
+                        ¿Cuánto sabes de nuestro folclore?
+                    </h2>
+
+                    <p>
+                        Adivina 15 palabras y frases relacionadas a
+                        danzas, instrumentos, tradiciones y la vida
+                        de un bailarín. Cada palabra fallida por
+                        completo te cuesta una vida. Tienes tres
+                        vidas y el reloj corre desde que empiezas.
+                    </p>
+
+                    <button type="button" class="love-start-button" id="ahorcadoStartButton">
+                        <i class="fa-solid fa-circle-play"></i>
+                        Comenzar
+                    </button>
+
+                </div>
+
+                <section class="hangman-board" id="ahorcadoBoard" aria-live="polite">
+
+                    <span class="hangman-category-label" id="ahorcadoCategoryLabel">
+                        Categoría · Palabra 1 de 15
+                    </span>
+
+                    <p class="hangman-hint" id="ahorcadoHint">
+                        Aquí aparecerá la pista.
+                    </p>
+
+                    <div class="hangman-word" id="ahorcadoWord"></div>
+
+                    <div class="hangman-keyboard" id="ahorcadoKeyboard">
+
+                        <button type="button" class="hangman-key" data-letter="A">A</button>
+                        <button type="button" class="hangman-key" data-letter="B">B</button>
+                        <button type="button" class="hangman-key" data-letter="C">C</button>
+                        <button type="button" class="hangman-key" data-letter="D">D</button>
+                        <button type="button" class="hangman-key" data-letter="E">E</button>
+                        <button type="button" class="hangman-key" data-letter="F">F</button>
+                        <button type="button" class="hangman-key" data-letter="G">G</button>
+                        <button type="button" class="hangman-key" data-letter="H">H</button>
+                        <button type="button" class="hangman-key" data-letter="I">I</button>
+                        <button type="button" class="hangman-key" data-letter="J">J</button>
+                        <button type="button" class="hangman-key" data-letter="K">K</button>
+                        <button type="button" class="hangman-key" data-letter="L">L</button>
+                        <button type="button" class="hangman-key" data-letter="M">M</button>
+                        <button type="button" class="hangman-key" data-letter="N">N</button>
+                        <button type="button" class="hangman-key" data-letter="Ñ">Ñ</button>
+                        <button type="button" class="hangman-key" data-letter="O">O</button>
+                        <button type="button" class="hangman-key" data-letter="P">P</button>
+                        <button type="button" class="hangman-key" data-letter="Q">Q</button>
+                        <button type="button" class="hangman-key" data-letter="R">R</button>
+                        <button type="button" class="hangman-key" data-letter="S">S</button>
+                        <button type="button" class="hangman-key" data-letter="T">T</button>
+                        <button type="button" class="hangman-key" data-letter="U">U</button>
+                        <button type="button" class="hangman-key" data-letter="V">V</button>
+                        <button type="button" class="hangman-key" data-letter="W">W</button>
+                        <button type="button" class="hangman-key" data-letter="X">X</button>
+                        <button type="button" class="hangman-key" data-letter="Y">Y</button>
+                        <button type="button" class="hangman-key" data-letter="Z">Z</button>
+
+                    </div>
+
+                    <div class="hangman-feedback" id="ahorcadoFeedback" aria-live="assertive"></div>
+
+                </section>
+
+            </section>
+
+            <footer class="love-game-footer">
+
+                <p>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Elige una letra a la vez. Completa la palabra
+                    antes de quedarte sin intentos.
+                </p>
+
+                <button type="button" class="love-reset-button" id="ahorcadoResetButton">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reiniciar
+                </button>
+
+                <button type="button" class="leaderboard-open-button" id="leaderboardOpenButton">
+                    <i class="fa-solid fa-trophy"></i>
+                    Ver clasificación
+                </button>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DESBLOQUEO -->
+
+    <div class="love-unlock-modal" id="loveUnlockModal" aria-hidden="true">
+
+        <div class="love-unlock-backdrop"></div>
+
+        <div class="love-unlock-content" role="dialog" aria-modal="true" aria-labelledby="loveUnlockTitle">
+
+            <div class="love-unlock-icon" id="loveUnlockIcon">
+                <i class="fa-solid fa-lock-open"></i>
+            </div>
+
+            <span class="love-unlock-label" id="loveUnlockLabel">
+                Nuevo desafío desbloqueado
+            </span>
+
+            <h2 id="loveUnlockTitle">
+                ¡Desafío superado!
+            </h2>
+
+            <p id="loveUnlockText">
+                Has desbloqueado el siguiente desafío.
+            </p>
+
+            <button type="button" class="love-unlock-button" id="loveUnlockButton">
+                <span id="loveUnlockButtonText">
+                    Continuar
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+        <div class="ranking-modal-backdrop"></div>
+
+        <div class="ranking-modal-content" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+            <div class="ranking-modal-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="ranking-modal-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="rankingModalTitle">
+                ¡Nuevo récord!
+            </h2>
+
+            <p id="rankingModalText">
+                Has conseguido un nuevo récord personal.
+            </p>
+
+            <strong id="rankingModalScore">
+                0 puntos
+            </strong>
+
+            <div class="ranking-name-group" id="rankingNameGroup">
+                <label for="rankingPlayerName">
+                    ¿Cómo quieres aparecer?
+                </label>
+
+                <input type="text" id="rankingPlayerName" maxlength="24" autocomplete="nickname"
+                    placeholder="Nombre o apodo">
+
+                <small id="rankingNameError"></small>
+            </div>
+
+            <button type="button" class="ranking-save-button" id="rankingSaveButton">
+                Guardar resultado
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="leaderboard-modal" id="leaderboardModal" aria-hidden="true">
+        <div class="leaderboard-modal-backdrop"></div>
+
+        <div class="leaderboard-modal-content" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="leaderboard-close-button" id="leaderboardCloseButton"
+                aria-label="Cerrar clasificación">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="leaderboard-icon">
+                <i class="fa-solid fa-ranking-star"></i>
+            </div>
+
+            <span class="leaderboard-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="leaderboardTitle">
+                Top 10
+            </h2>
+
+            <p>
+                El Ahorcado
+            </p>
+
+            <div class="leaderboard-loading" id="leaderboardLoading">
+                Cargando clasificación...
+            </div>
+
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden>
+                Todavía no hay resultados registrados.
+            </p>
+        </div>
+    </div>
+
+
+    <script type="module" src="../js/ahorcado-cultural.js"></script>
+
+</body>
+
+</html>

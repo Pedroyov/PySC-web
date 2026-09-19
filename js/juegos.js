@@ -72,284 +72,78 @@ document.addEventListener("DOMContentLoaded", () => {
   const secretToastText =
     document.getElementById("secretToastText");
 
-  const secondGameCard =
-    document.querySelector(
-      ".secret-games-grid .secret-game-card:nth-child(2)"
-    );
+  const gameUnlockSequence = [
+    { unlockedKey: "secondGameUnlocked", cardIndex: 2 },
+    { unlockedKey: "thirdGameUnlocked", cardIndex: 3 },
+    { unlockedKey: "fourthGameUnlocked", cardIndex: 4 },
+    { unlockedKey: "fifthGameUnlocked", cardIndex: 5 },
+    { unlockedKey: "sixthGameUnlocked", cardIndex: 6 },
+    { unlockedKey: "seventhGameUnlocked", cardIndex: 7 }
+  ];
 
-  const secondGameUnlocked =
-    localStorage.getItem(
-      "secondGameUnlocked"
-    ) === "true";
+  function unlockGameCard(card) {
+    if (!card) {
+      return;
+    }
 
-  const thirdGameCard =
-    document.querySelector(
-      ".secret-games-grid .secret-game-card:nth-child(3)"
-    );
-
-  const thirdGameUnlocked =
-    localStorage.getItem(
-      "thirdGameUnlocked"
-    ) === "true";
-
-  const fourthGameCard =
-    document.querySelector(
-      ".secret-games-grid .secret-game-card:nth-child(4)"
-    );
-
-  const fourthGameUnlocked =
-    localStorage.getItem(
-      "fourthGameUnlocked"
-    ) === "true";
-
-  const fifthGameCard =
-    document.querySelector(
-      ".secret-games-grid .secret-game-card:nth-child(5)"
-    );
-
-  const fifthGameUnlocked =
-    localStorage.getItem(
-      "fifthGameUnlocked"
-    ) === "true";
-
-
-
-  if (
-    secondGameUnlocked &&
-    secondGameCard
-  ) {
-
-    secondGameCard.classList.remove(
-      "secret-game-locked"
-    );
+    card.classList.remove("secret-game-locked");
+    card.classList.add("secret-game-just-unlocked");
 
     const status =
-      secondGameCard.querySelector(
-        ".secret-game-status"
-      );
+      card.querySelector(".secret-game-status");
 
     if (status) {
-
-      status.textContent =
-        "Listo para jugar";
-
-      status.classList.remove(
-        "secret-status-locked"
-      );
-
-      status.classList.add(
-        "secret-status-ready"
-      );
-
-    }
-
-    const button =
-      secondGameCard.querySelector(
-        ".secret-game-button"
-      );
-
-    if (button) {
-
-      button.removeAttribute(
-        "aria-disabled"
-      );
-
-      button.classList.remove(
-        "secret-locked-button",
-        "secret-coming-button"
-      );
-
-      button.innerHTML = `
-        <i class="fa-solid fa-play"></i>
-        Jugar ahora
-      `;
-
-    }
-    enableCardEffect(secondGameCard);
-
-  }
-
-  if (
-    thirdGameUnlocked &&
-    thirdGameCard
-  ) {
-
-    thirdGameCard.classList.remove(
-      "secret-game-locked"
-    );
-
-    const status =
-      thirdGameCard.querySelector(
-        ".secret-game-status"
-      );
-
-    if (status) {
-
-      status.textContent =
-        "Listo para jugar";
-
-      status.classList.remove(
-        "secret-status-locked"
-      );
-
-      status.classList.add(
-        "secret-status-ready"
-      );
-
-    }
-
-    const button =
-      thirdGameCard.querySelector(
-        ".secret-game-button"
-      );
-
-    if (button) {
-
-      button.removeAttribute(
-        "aria-disabled"
-      );
-
-      button.classList.remove(
-        "secret-locked-button",
-        "secret-coming-button"
-      );
-
-      button.innerHTML = `
-        <i class="fa-solid fa-play"></i>
-        Jugar ahora
-      `;
-
-    }
-
-    enableCardEffect(
-      thirdGameCard
-    );
-
-  }
-
-  if (
-    fourthGameUnlocked &&
-    fourthGameCard
-  ) {
-
-    fourthGameCard.classList.remove(
-      "secret-game-locked"
-    );
-
-    const status =
-      fourthGameCard.querySelector(
-        ".secret-game-status"
-      );
-
-    if (status) {
-
-      status.textContent =
-        "Listo para jugar";
+      status.textContent = "Listo para jugar";
 
       status.classList.remove(
         "secret-status-locked",
         "secret-status-development"
       );
 
-      status.classList.add(
-        "secret-status-ready"
-      );
-
+      status.classList.add("secret-status-ready");
     }
 
     const button =
-      fourthGameCard.querySelector(
-        ".secret-game-button"
-      );
+      card.querySelector(".secret-game-button");
 
     if (button) {
-
-      button.removeAttribute(
-        "aria-disabled"
-      );
-
-      button.classList.remove(
-        "secret-locked-button",
-        "secret-coming-button"
-      );
-
-      button.innerHTML = `
-        <i class="fa-solid fa-play"></i>
-        Jugar ahora
-      `;
-
-    }
-
-    enableCardEffect(
-      fourthGameCard
-    );
-
-  }
-
-  if (
-    fifthGameUnlocked &&
-    fifthGameCard
-  ) {
-
-    fifthGameCard.classList.remove(
-      "secret-game-locked"
-    );
-
-    const status =
-      fifthGameCard.querySelector(
-        ".secret-game-status"
-      );
-
-    if (status) {
-
-      status.textContent =
-        "Listo para jugar";
-
-      status.classList.remove(
-        "secret-status-locked",
-        "secret-status-development"
-      );
-
-      status.classList.add(
-        "secret-status-ready"
-      );
-
-    }
-
-    const button =
-      fifthGameCard.querySelector(
-        ".secret-game-button"
-      );
-
-    if (button) {
-
       button.disabled = false;
 
-      button.removeAttribute(
-        "aria-disabled"
-      );
+      button.removeAttribute("aria-disabled");
+      button.removeAttribute("data-game-name");
 
       button.classList.remove(
         "secret-locked-button",
         "secret-coming-button"
       );
 
-      button.removeAttribute(
-        "data-game-name"
-      );
-
       button.innerHTML = `
-      <i class="fa-solid fa-play"></i>
-      Jugar ahora
-    `;
-
+        <i class="fa-solid fa-play"></i>
+        Jugar ahora
+      `;
     }
 
-    enableCardEffect(
-      fifthGameCard
+    enableCardEffect(card);
+
+    window.setTimeout(() => {
+      card.classList.remove("secret-game-just-unlocked");
+    }, 2400);
+  }
+
+  gameUnlockSequence.forEach(({ unlockedKey, cardIndex }) => {
+    const isUnlocked =
+      localStorage.getItem(unlockedKey) === "true";
+
+    if (!isUnlocked) {
+      return;
+    }
+
+    const card = document.querySelector(
+      `.secret-games-grid .secret-game-card:nth-child(${cardIndex})`
     );
 
-  }
+    unlockGameCard(card);
+  });
 
   /*
    * Para volver a ver la introducción durante las pruebas:

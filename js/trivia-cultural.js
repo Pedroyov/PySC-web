@@ -332,6 +332,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "is-visible"
             );
 
+            if (resultModal.contains(document.activeElement)) {
+
+                document.activeElement.blur();
+
+            }
+
             resultModal.setAttribute(
                 "aria-hidden",
                 "true"
@@ -396,6 +402,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     "is-visible"
                 );
 
+                if (rankingModal.contains(document.activeElement)) {
+
+                    document.activeElement.blur();
+
+                }
+
                 rankingModal.setAttribute(
                     "aria-hidden",
                     "true"
@@ -453,6 +465,12 @@ document.addEventListener("DOMContentLoaded", () => {
             leaderboardModal.classList.remove(
                 "is-visible"
             );
+
+            if (leaderboardModal.contains(document.activeElement)) {
+
+                document.activeElement.blur();
+
+            }
 
             leaderboardModal.setAttribute(
                 "aria-hidden",
@@ -929,6 +947,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "is-visible"
         );
 
+        if (resultModal.contains(document.activeElement)) {
+
+            document.activeElement.blur();
+
+        }
+
         resultModal.setAttribute(
             "aria-hidden",
             "true"
@@ -938,6 +962,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "is-visible"
         );
 
+        if (rankingModal.contains(document.activeElement)) {
+
+            document.activeElement.blur();
+
+        }
+
         rankingModal.setAttribute(
             "aria-hidden",
             "true"
@@ -946,6 +976,12 @@ document.addEventListener("DOMContentLoaded", () => {
         leaderboardModal.classList.remove(
             "is-visible"
         );
+
+        if (leaderboardModal.contains(document.activeElement)) {
+
+            document.activeElement.blur();
+
+        }
 
         leaderboardModal.setAttribute(
             "aria-hidden",

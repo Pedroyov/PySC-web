@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
         rows: 10,
         columns: 10,
-        mines: 12
+        mines: 10
     }
   ];
 
@@ -1560,6 +1560,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "is-visible"
         );
 
+        if (rankingModal.contains(document.activeElement)) {
+
+            document.activeElement.blur();
+
+        }
+
         rankingModal.setAttribute(
             "aria-hidden",
             "true"
@@ -1604,6 +1610,12 @@ document.addEventListener("DOMContentLoaded", () => {
         leaderboardModal.classList.remove(
         "is-visible"
         );
+
+        if (leaderboardModal.contains(document.activeElement)) {
+
+            document.activeElement.blur();
+
+        }
 
         leaderboardModal.setAttribute(
         "aria-hidden",

@@ -354,6 +354,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "is-visible"
             );
 
+            if (puzzlePreview.contains(document.activeElement)) {
+
+                document.activeElement.blur();
+
+            }
+
             puzzlePreview.setAttribute(
                 "aria-hidden",
                 "true"
@@ -419,6 +425,12 @@ document.addEventListener("DOMContentLoaded", () => {
         puzzlePreview.classList.remove(
             "is-visible"
         );
+
+        if (puzzlePreview.contains(document.activeElement)) {
+
+            document.activeElement.blur();
+
+        }
 
         puzzlePreview.setAttribute(
             "aria-hidden",
@@ -1195,6 +1207,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "is-visible"
             );
 
+            if (unlockModal.contains(document.activeElement)) {
+
+                document.activeElement.blur();
+
+            }
+
             unlockModal.setAttribute(
                 "aria-hidden",
                 "true"
@@ -1241,6 +1259,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 puzzlePreview.classList.remove(
                     "is-visible"
                 );
+
+                if (puzzlePreview.contains(document.activeElement)) {
+
+                    document.activeElement.blur();
+
+                }
 
                 puzzlePreview.setAttribute(
                     "aria-hidden",
@@ -1302,6 +1326,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     "is-visible"
                 );
 
+                if (rankingModal.contains(document.activeElement)) {
+
+                    document.activeElement.blur();
+
+                }
+
                 rankingModal.setAttribute(
                     "aria-hidden",
                     "true"
@@ -1357,6 +1387,12 @@ document.addEventListener("DOMContentLoaded", () => {
             leaderboardModal.classList.remove(
                 "is-visible"
             );
+
+            if (leaderboardModal.contains(document.activeElement)) {
+
+                document.activeElement.blur();
+
+            }
 
             leaderboardModal.setAttribute(
                 "aria-hidden",
