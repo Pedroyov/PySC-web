@@ -67,6 +67,33 @@ const RANKINGS = {
     direction2: "asc",
     field3: "lives",
     direction3: "desc"
+  },
+
+  "lluvia-talentos": {
+    field1: "score",
+    direction1: "desc",
+    field2: "time",
+    direction2: "asc",
+    field3: "lives",
+    direction3: "desc"
+  },
+
+  "arma-la-fiesta": {
+    field1: "time",
+    direction1: "asc",
+    field2: "moves",
+    direction2: "asc",
+    field3: "lives",
+    direction3: "desc"
+  },
+
+  "serpiente": {
+    field1: "score",
+    direction1: "desc",
+    field2: "time",
+    direction2: "asc",
+    field3: "lives",
+    direction3: "desc"
   }
 
 };
@@ -300,6 +327,33 @@ document.addEventListener(
                       ? "vida"
                       : "vidas"
                   }`;
+
+                break;
+
+              case "lluvia-talentos":
+
+                scoreText =
+                  `${data.score} puntos · ` +
+                  `${formatTime(data.time)} · ` +
+                  `${data.lives} ${
+                    data.lives === 1
+                      ? "vida"
+                      : "vidas"
+                  }`;
+
+                break;
+
+              case "arma-la-fiesta":
+
+                scoreText =
+                  `${formatTime(data.time)} · ${data.moves} movim`;
+
+                break;
+
+              case "serpiente":
+
+                scoreText =
+                  `${data.score} puntos · ${formatTime(data.time)}`;
 
                 break;
 

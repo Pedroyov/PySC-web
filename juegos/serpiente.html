@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Serpiente | PySC</title>
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/serpiente.css">
+</head>
+
+<body>
+
+    <main class="love-game-page">
+
+        <section class="love-game-shell">
+
+            <header class="love-game-header">
+
+                <a href="../rincon-secreto.html" class="love-game-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al rincón</span>
+                </a>
+
+                <div class="love-game-title">
+
+                    <span class="love-game-eyebrow">
+                        Desafío 10
+                    </span>
+
+                    <h1>
+                        Serpiente
+                    </h1>
+
+                    <p>
+                        Recoge las pelotas brillantes y esquiva las
+                        paredes y tu propia cola antes de que la
+                        velocidad te gane.
+                    </p>
+                </div>
+
+                <div class="love-game-logo">
+                    <img src="../img/logo-pasion-sentimiento.png" alt="Pasión y Sentimiento Cultural">
+                </div>
+
+            </header>
+
+            <section class="love-game-hud">
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Nivel
+                    </span>
+
+                    <strong id="snakeLevel">
+                        1
+                    </strong>
+                </div>
+
+                <div class="love-hud-item score-container">
+                    <span class="love-hud-label">
+                        Puntaje
+                    </span>
+
+                    <strong id="snakeScore">
+                        0 / 300
+                    </strong>
+
+                    <span
+                        id="scoreAnimation"
+                        class="score-animation"
+                    ></span>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Tiempo
+                    </span>
+
+                    <strong id="snakeTime">
+                        00:00
+                    </strong>
+                </div>
+
+            </section>
+
+            <section class="love-game-stage" id="snakeGameStage">
+
+                <div class="love-stage-decoration">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="love-countdown" id="loveCountdown" aria-live="polite">
+                    <span id="loveCountdownText">
+                        3
+                    </span>
+                </div>
+
+                <div class="love-game-welcome">
+
+                    <div class="love-welcome-icon">
+                        <i class="fa-solid fa-worm"></i>
+                    </div>
+
+                    <h2>
+                        ¿Lista tu serpiente?
+                    </h2>
+
+                    <p>
+                        Recoge pelotas brillantes (+10) y, cuando
+                        aparezca, el trofeo especial (+50) antes de
+                        que desaparezca. Cada cierto tiempo la
+                        velocidad aumenta. Llega a 300 puntos sin
+                        tocar las paredes ni tu propia cola.
+                    </p>
+
+                    <p>
+                        Muévete con las flechas del teclado (o WASD),
+                        con los botones en pantalla, o deslizando el
+                        dedo sobre el tablero.
+                    </p>
+
+                    <button type="button" class="love-start-button" id="snakeStartButton">
+                        <i class="fa-solid fa-circle-play"></i>
+                        Comenzar
+                    </button>
+
+                </div>
+
+                <section class="snake-board-wrap" id="snakeBoardWrap">
+
+                    <div class="snake-board" id="snakeBoard" aria-label="Tablero de Serpiente"></div>
+
+                    <div class="snake-controls" id="snakeControls">
+
+                        <button type="button" class="snake-dpad-button snake-dpad-up" data-direction="up"
+                            aria-label="Mover arriba">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </button>
+
+                        <button type="button" class="snake-dpad-button snake-dpad-left" data-direction="left"
+                            aria-label="Mover izquierda">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button type="button" class="snake-dpad-button snake-dpad-down" data-direction="down"
+                            aria-label="Mover abajo">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+
+                        <button type="button" class="snake-dpad-button snake-dpad-right" data-direction="right"
+                            aria-label="Mover derecha">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+            <footer class="love-game-footer">
+
+                <p>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Desliza el dedo, usa los botones o las flechas
+                    del teclado para cambiar de dirección.
+                </p>
+
+                <button type="button" class="love-reset-button" id="snakeResetButton">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reiniciar
+                </button>
+
+                <button type="button" class="leaderboard-open-button" id="leaderboardOpenButton">
+                    <i class="fa-solid fa-trophy"></i>
+                    Ver clasificación
+                </button>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DESBLOQUEO -->
+
+    <div class="love-unlock-modal" id="loveUnlockModal" aria-hidden="true">
+
+        <div class="love-unlock-backdrop"></div>
+
+        <div class="love-unlock-content" role="dialog" aria-modal="true" aria-labelledby="loveUnlockTitle">
+
+            <div class="love-unlock-icon" id="loveUnlockIcon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="love-unlock-label" id="loveUnlockLabel">
+                Desafío completado
+            </span>
+
+            <h2 id="loveUnlockTitle">
+                ¡Excelente trabajo!
+            </h2>
+
+            <p id="loveUnlockText">
+                Completaste el desafío de la Serpiente.
+            </p>
+
+            <button type="button" class="love-unlock-button" id="loveUnlockButton">
+                <span id="loveUnlockButtonText">
+                    Continuar
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+        <div class="ranking-modal-backdrop"></div>
+
+        <div class="ranking-modal-content" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+            <div class="ranking-modal-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="ranking-modal-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="rankingModalTitle">
+                ¡Nuevo récord!
+            </h2>
+
+            <p id="rankingModalText">
+                Has conseguido un nuevo récord personal.
+            </p>
+
+            <strong id="rankingModalScore">
+                0 puntos
+            </strong>
+
+            <div class="ranking-name-group" id="rankingNameGroup">
+                <label for="rankingPlayerName">
+                    ¿Cómo quieres aparecer?
+                </label>
+
+                <input type="text" id="rankingPlayerName" maxlength="24" autocomplete="nickname"
+                    placeholder="Nombre o apodo">
+
+                <small id="rankingNameError"></small>
+            </div>
+
+            <button type="button" class="ranking-save-button" id="rankingSaveButton">
+                Guardar resultado
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="leaderboard-modal" id="leaderboardModal" aria-hidden="true">
+        <div class="leaderboard-modal-backdrop"></div>
+
+        <div class="leaderboard-modal-content" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="leaderboard-close-button" id="leaderboardCloseButton"
+                aria-label="Cerrar clasificación">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="leaderboard-icon">
+                <i class="fa-solid fa-ranking-star"></i>
+            </div>
+
+            <span class="leaderboard-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="leaderboardTitle">
+                Top 10
+            </h2>
+
+            <p>
+                Serpiente
+            </p>
+
+            <div class="leaderboard-loading" id="leaderboardLoading">
+                Cargando clasificación...
+            </div>
+
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden>
+                Todavía no hay resultados registrados.
+            </p>
+        </div>
+    </div>
+
+
+    <script type="module" src="../js/serpiente.js"></script>
+
+</body>
+
+</html>

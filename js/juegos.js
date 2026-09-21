@@ -78,7 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
     { unlockedKey: "fourthGameUnlocked", cardIndex: 4 },
     { unlockedKey: "fifthGameUnlocked", cardIndex: 5 },
     { unlockedKey: "sixthGameUnlocked", cardIndex: 6 },
-    { unlockedKey: "seventhGameUnlocked", cardIndex: 7 }
+    { unlockedKey: "seventhGameUnlocked", cardIndex: 7 },
+    { unlockedKey: "eighthGameUnlocked", cardIndex: 8 },
+    { unlockedKey: "ninthGameUnlocked", cardIndex: 9 },
+    { unlockedKey: "tenthGameUnlocked", cardIndex: 10 }
   ];
 
   function unlockGameCard(card) {

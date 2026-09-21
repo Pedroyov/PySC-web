@@ -4,104 +4,69 @@ import {
     getTriviaRanking
 } from "./firebase-ranking.js";
 
-const GAME_ID = "mapa-folklore";
+const GAME_ID = "lluvia-talentos";
 
+const TARGET_SCORE = 500;
 const MAX_LIVES = 3;
 
-const ZONE_NAMES = {
-    "costa-norte": "Costa Norte",
-    "costa-centro": "Costa Centro",
-    "costa-sur": "Costa Sur",
-    "sierra-norte": "Sierra Norte",
-    "sierra-centro": "Sierra Centro",
-    "sierra-sur": "Sierra Sur",
-    "selva-norte": "Selva Norte",
-    "selva-centro": "Selva Centro",
-    "selva-sur": "Selva Sur"
-};
+const FACES = [
+    { name: "Eileen", image: "../img/juegos/personajes/eileen.png" },
+    { name: "Jayro", image: "../img/juegos/personajes/jayro.png" },
+    { name: "Josema", image: "../img/juegos/personajes/josema.png" },
+    { name: "Luis", image: "../img/juegos/personajes/luis.png" },
+    { name: "Omar", image: "../img/juegos/personajes/omar.png" },
+    { name: "Ricardo", image: "../img/juegos/personajes/ricardo.png" },
+    { name: "Snaider", image: "../img/juegos/personajes/snaider.png" },
+    { name: "Sol", image: "../img/juegos/personajes/sol.png" },
+    { name: "Yanira", image: "../img/juegos/personajes/yanira.png" }
+];
+
+const OBJECTS = [
+    { name: "Audífonos", image: "../img/juegos/objetos/audifonos.png" },
+    { name: "Cama", image: "../img/juegos/objetos/cama.png" },
+    { name: "Celular", image: "../img/juegos/objetos/celular.png" },
+    { name: "Cerveza", image: "../img/juegos/objetos/cerveza.png" },
+    { name: "Dinero", image: "../img/juegos/objetos/dinero.png" },
+    { name: "Hamburguesa", image: "../img/juegos/objetos/hamburguesa.png" },
+    { name: "Piedra", image: "../img/juegos/objetos/piedra.png" },
+    { name: "Sombrero", image: "../img/juegos/objetos/sombrero.png" },
+    { name: "Televisor", image: "../img/juegos/objetos/tele.png" },
+    { name: "Tijera", image: "../img/juegos/objetos/tijera.png" }
+];
 
 /*
- * Las pistas describen clima, geografía, instrumentos u
- * origen histórico de cada danza o tradición, pero evitan
- * nombrar la región, ciudad o departamento exactos: si la
- * pista dijera "Piura" o "Puno", la zona quedaría resuelta
- * de inmediato sin necesidad de conocer el folclore.
+ * Parámetros de dificultad. Van cambiando con el tiempo
+ * transcurrido de la partida (no con el puntaje), desde
+ * el valor "inicial" hasta el "mínimo/máximo" según
+ * corresponda, usando DIFFICULTY_RAMP_SECONDS como el
+ * tiempo que toma llegar al límite más difícil.
  */
 
-const ROUNDS = [
-    {
-        type: "Danza",
-        name: "Marinera Norteña",
-        hint: "Se baila con un pañuelo blanco, mucha elegancia y un juego de miradas entre la pareja, sin taconeo fuerte. Es propia de tierras cálidas y desérticas junto al mar, en el extremo norte del país.",
-        zone: "costa-norte"
-    },
-    {
-        type: "Danza",
-        name: "Tondero",
-        hint: "Danza descalza, alegre y coqueta, hermana de la marinera. Nació en haciendas rodeadas de algarrobos, en tierras cálidas y áridas del norte.",
-        zone: "costa-norte"
-    },
-    {
-        type: "Danza",
-        name: "Festejo",
-        hint: "Danza afroperuana de ritmo alegre, mucho zapateo y presencia del cajón. Surgió en haciendas costeñas de clima templado, cerca de la capital del país.",
-        zone: "costa-centro"
-    },
-    {
-        type: "Danza",
-        name: "Landó",
-        hint: "Ritmo afroperuano de raíces africanas, hermano del festejo pero de compás más lento y sensual. También nació cerca de la capital, en la costa central.",
-        zone: "costa-centro"
-    },
-    {
-        type: "Danza",
-        name: "Alcatraz",
-        hint: "Danza afroperuana juguetona en la que se intenta quemar con una vela un papel en forma de ave atado a la cintura de la pareja. Es típica de valles costeños productores de uva y pisco, al sur de la capital.",
-        zone: "costa-sur"
-    },
-    {
-        type: "Danza",
-        name: "Huayno Cajamarquino",
-        hint: "Variante del huayno propia de tierras altas del norte del país, muy ligada a un carnaval famoso en toda la región por sus comparsas, coplas pícaras y juegos con agua y talco.",
-        zone: "sierra-norte"
-    },
-    {
-        type: "Danza",
-        name: "Huaylarsh",
-        hint: "Danza agrícola y muy enérgica, con zapateo fuerte y saltos, propia de un valle andino central conocido por su producción agropecuaria y su cercanía a la capital por tren.",
-        zone: "sierra-centro"
-    },
-    {
-        type: "Danza",
-        name: "Danza de las Tijeras",
-        hint: "Danza acrobática declarada Patrimonio Cultural Inmaterial de la Humanidad. Los danzantes compiten al ritmo de un violín y un arpa en tierras altas del sur andino.",
-        zone: "sierra-sur"
-    },
-    {
-        type: "Danza",
-        name: "Diablada",
-        hint: "Danza de máscaras y trajes muy vistosos que representan la lucha entre el bien y el mal. Se baila en el altiplano, a más de 3800 metros de altura, junto a un enorme lago compartido con un país vecino.",
-        zone: "sierra-sur"
-    },
-    {
-        type: "Danza",
-        name: "Chunchada",
-        hint: "Danza con plumas, lanzas y pintura corporal que representa a pueblos indígenas amazónicos. Se baila en una zona de selva alta ubicada en el centro del país.",
-        zone: "selva-centro"
-    },
-    {
-        type: "Danza",
-        name: "Changanacuy",
-        hint: "Danza guerrera y burlesca de la Amazonía baja, propia de la selva más extensa del país, en el extremo norte.",
-        zone: "selva-norte"
-    },
-    {
-        type: "Tradición",
-        name: "Fiesta de San Juan",
-        hint: "Gran fiesta amazónica del 24 de junio con danzas, comida típica y baños rituales en los ríos. Se vive con fuerza especial en la selva más biodiversa del país, cerca de importantes reservas naturales del sur.",
-        zone: "selva-sur"
-    }
-];
+const DIFFICULTY_RAMP_SECONDS = 32;
+
+const SPAWN_INTERVAL_START = 950;
+const SPAWN_INTERVAL_MIN = 360;
+
+const FALL_SPEED_START = 0.14;
+const FALL_SPEED_MAX = 0.34;
+
+const OBJECT_CHANCE_START = 0.3;
+const OBJECT_CHANCE_MAX = 0.6;
+
+const CATCH_RADIUS = 58;
+const ITEM_SIZE = 62;
+
+/*
+ * Desvío de rumbo: cada objeto que cae tiene una
+ * probabilidad de, en algún punto de su caída, empezar
+ * a moverse también hacia un lado (no siempre recto).
+ * DRIFT_CHANCE = probabilidad de que un ítem desvíe.
+ * DRIFT_SPEED_MIN/MAX = velocidad horizontal del desvío.
+ */
+
+const DRIFT_CHANCE = 0.55;
+const DRIFT_SPEED_MIN = 0.045;
+const DRIFT_SPEED_MAX = 0.11;
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -116,13 +81,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const gameStage =
-        document.getElementById("mapaGameStage");
+        document.getElementById("talentosGameStage");
 
     const startButton =
-        document.getElementById("mapaStartButton");
+        document.getElementById("talentosStartButton");
 
     const resetButton =
-        document.getElementById("mapaResetButton");
+        document.getElementById("talentosResetButton");
 
     const countdown =
         document.getElementById("loveCountdown");
@@ -130,35 +95,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const countdownText =
         document.getElementById("loveCountdownText");
 
-    const promptLabel =
-        document.getElementById("mapaPromptLabel");
+    const board =
+        document.getElementById("talentosBoard");
 
-    const promptElement =
-        document.getElementById("mapaPrompt");
+    const fallLayer =
+        document.getElementById("talentosFallLayer");
 
-    const hintElement =
-        document.getElementById("mapaHint");
-
-    const zoneButtons =
-        document.querySelectorAll(".mapa-zone");
+    const basket =
+        document.getElementById("talentosBasket");
 
     const feedback =
-        document.getElementById("mapaFeedback");
-
-    const roundLabel =
-        document.getElementById("mapaRound");
+        document.getElementById("talentosFeedback");
 
     const scoreElement =
-        document.getElementById("mapaScore");
-
-    const streakElement =
-        document.getElementById("mapaStreak");
+        document.getElementById("talentosScore");
 
     const livesElement =
-        document.getElementById("mapaLives");
+        document.getElementById("talentosLives");
 
     const timeElement =
-        document.getElementById("mapaTime");
+        document.getElementById("talentosTime");
 
     const scoreAnimation =
         document.getElementById("scoreAnimation");
@@ -247,14 +203,11 @@ document.addEventListener("DOMContentLoaded", () => {
         !resetButton ||
         !countdown ||
         !countdownText ||
-        !promptLabel ||
-        !promptElement ||
-        !hintElement ||
-        !zoneButtons.length ||
+        !board ||
+        !fallLayer ||
+        !basket ||
         !feedback ||
-        !roundLabel ||
         !scoreElement ||
-        !streakElement ||
         !livesElement ||
         !timeElement ||
         !scoreAnimation ||
@@ -282,26 +235,37 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
 
         console.error(
-            "No se encontraron todos los elementos necesarios del Mapa del Folklore."
+            "No se encontraron todos los elementos necesarios de Atrápalo."
         );
 
         throw new Error(
-            "Faltan elementos HTML del Mapa del Folklore."
+            "Faltan elementos HTML de Atrápalo."
         );
 
     }
 
     let gameStarted = false;
-    let gameRounds = [];
-    let roundIndex = 0;
-    let currentRoundData = null;
     let score = 0;
-    let streak = 0;
     let lives = MAX_LIVES;
+    let streak = 0;
     let totalGameSeconds = 0;
     let totalTimerInterval = null;
     let pendingRankingResult = null;
     let passed = false;
+
+    let boardWidth = 0;
+    let boardHeight = 0;
+    let catchLineY = 0;
+
+    let basketX = 0;
+
+    let fallingItems = [];
+    let nextItemId = 0;
+
+    let animationFrameId = null;
+    let lastFrameTime = 0;
+    let spawnAccumulator = 0;
+    let feedbackTimeout = null;
 
     startButton.addEventListener(
         "click",
@@ -312,22 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "click",
         restartGame
     );
-
-    zoneButtons.forEach((button) => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                handleZoneGuess(
-                    button.dataset.zone,
-                    button
-                );
-
-            }
-        );
-
-    });
 
     resultButton.addEventListener(
         "click",
@@ -426,49 +374,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-    function shuffleArray(items) {
+    board.addEventListener(
+        "mousemove",
+        (event) => {
+            updateBasketFromClientX(event.clientX);
+        }
+    );
 
-        const shuffledItems =
-            [...items];
+    board.addEventListener(
+        "touchmove",
+        (event) => {
 
-        for (
-            let index = shuffledItems.length - 1;
-            index > 0;
-            index--
-        ) {
+            if (!event.touches.length) {
+                return;
+            }
 
-            const randomIndex =
-                Math.floor(
-                    Math.random() * (index + 1)
-                );
+            updateBasketFromClientX(
+                event.touches[0].clientX
+            );
 
-            [
-                shuffledItems[index],
-                shuffledItems[randomIndex]
-            ] = [
-                    shuffledItems[randomIndex],
-                    shuffledItems[index]
-                ];
+            event.preventDefault();
 
+        },
+        { passive: false }
+    );
+
+    function updateBasketFromClientX(clientX) {
+
+        if (!gameStarted) {
+            return;
         }
 
-        return shuffledItems;
+        const boardRect =
+            board.getBoundingClientRect();
+
+        const relativeX =
+            clientX - boardRect.left;
+
+        basketX =
+            clamp(
+                relativeX,
+                0,
+                boardWidth
+            );
+
+        basket.style.left = `${basketX}px`;
 
     }
 
-    function formatTime(totalSeconds) {
+    function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+    }
 
-        const minutes =
-            Math.floor(totalSeconds / 60);
-
-        const seconds =
-            totalSeconds % 60;
-
-        return (
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`
-        );
-
+    function randomItem(items) {
+        return items[
+            Math.floor(Math.random() * items.length)
+        ];
     }
 
     function showCountdownStep(text, isFinal) {
@@ -548,22 +509,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         gameStarted = true;
         score = 0;
-        streak = 0;
         lives = MAX_LIVES;
+        streak = 0;
         totalGameSeconds = 0;
         pendingRankingResult = null;
         passed = false;
-        roundIndex = 0;
 
-        gameRounds = shuffleArray(ROUNDS);
+        fallingItems.forEach((item) => {
+            item.element.remove();
+        });
+
+        fallingItems = [];
 
         gameStage.classList.add("is-playing");
         resetButton.classList.add("is-visible");
 
-        scoreElement.textContent = score;
-        streakElement.textContent = streak;
+        scoreElement.textContent = `0 / ${TARGET_SCORE}`;
         livesElement.textContent = "❤️".repeat(lives);
         timeElement.textContent = formatTime(0);
+
+        const boardRect =
+            board.getBoundingClientRect();
+
+        boardWidth = boardRect.width;
+        boardHeight = boardRect.height;
+        catchLineY = boardHeight - 74;
+
+        basketX = boardWidth / 2;
+        basket.style.left = `${basketX}px`;
 
         clearInterval(totalTimerInterval);
 
@@ -579,128 +552,339 @@ document.addEventListener("DOMContentLoaded", () => {
         startSound.currentTime = 0;
         startSound.play().catch(() => { });
 
-        loadRound();
+        spawnAccumulator = 0;
+        lastFrameTime = performance.now();
+
+        cancelAnimationFrame(animationFrameId);
+
+        animationFrameId =
+            requestAnimationFrame(gameLoop);
 
     }
 
-    function loadRound() {
+    function getDifficultyProgress() {
 
-        currentRoundData = gameRounds[roundIndex];
+        return clamp(
+            totalGameSeconds / DIFFICULTY_RAMP_SECONDS,
+            0,
+            1
+        );
 
-        roundLabel.textContent =
-            `${roundIndex + 1} / ${gameRounds.length}`;
+    }
 
-        promptLabel.textContent =
-            `${currentRoundData.type} · Ronda ${roundIndex + 1} de ${gameRounds.length}`;
+    function getCurrentSpawnInterval() {
 
-        promptElement.textContent =
-            currentRoundData.name;
+        const progress =
+            getDifficultyProgress();
 
-        hintElement.textContent =
-            currentRoundData.hint;
+        return (
+            SPAWN_INTERVAL_START -
+            (SPAWN_INTERVAL_START - SPAWN_INTERVAL_MIN) *
+            progress
+        );
 
-        feedback.textContent = "";
-        feedback.className = "mapa-feedback";
+    }
 
-        zoneButtons.forEach((button) => {
-            button.disabled = false;
-            button.classList.remove("is-correct", "is-wrong");
+    function getCurrentFallSpeed() {
+
+        const progress =
+            getDifficultyProgress();
+
+        return (
+            FALL_SPEED_START +
+            (FALL_SPEED_MAX - FALL_SPEED_START) *
+            progress
+        );
+
+    }
+
+    function getCurrentObjectChance() {
+
+        const progress =
+            getDifficultyProgress();
+
+        return (
+            OBJECT_CHANCE_START +
+            (OBJECT_CHANCE_MAX - OBJECT_CHANCE_START) *
+            progress
+        );
+
+    }
+
+    function spawnItem() {
+
+        const isObject =
+            Math.random() < getCurrentObjectChance();
+
+        const data =
+            isObject
+                ? randomItem(OBJECTS)
+                : randomItem(FACES);
+
+        const element =
+            document.createElement("div");
+
+        element.className =
+            isObject
+                ? "talentos-item talentos-item-object"
+                : "talentos-item talentos-item-face";
+
+        const image =
+            document.createElement("img");
+
+        image.src = data.image;
+        image.alt = data.name;
+
+        element.appendChild(image);
+
+        const margin = ITEM_SIZE / 2;
+
+        const x =
+            margin +
+            Math.random() * Math.max(0, boardWidth - margin * 2);
+
+        element.style.left = `${x}px`;
+        element.style.top = "-80px";
+
+        fallLayer.appendChild(element);
+
+        const willDrift =
+            Math.random() < DRIFT_CHANCE;
+
+        const driftVx =
+            willDrift
+                ? (Math.random() < 0.5 ? -1 : 1) *
+                  (DRIFT_SPEED_MIN +
+                      Math.random() * (DRIFT_SPEED_MAX - DRIFT_SPEED_MIN))
+                : 0;
+
+        const driftTriggerY =
+            willDrift
+                ? catchLineY * (0.22 + Math.random() * 0.4)
+                : Infinity;
+
+        fallingItems.push({
+            id: nextItemId++,
+            element,
+            image,
+            data,
+            isObject,
+            x,
+            y: -80,
+            speed: getCurrentFallSpeed(),
+            willDrift,
+            driftVx,
+            driftTriggerY,
+            resolved: false
         });
 
     }
 
-    function handleZoneGuess(zone, button) {
+    function gameLoop(timestamp) {
 
         if (!gameStarted) {
             return;
         }
 
-        const isCorrect =
-            zone === currentRoundData.zone;
+        const deltaTime =
+            timestamp - lastFrameTime;
 
-        zoneButtons.forEach((zoneButton) => {
-            zoneButton.disabled = true;
+        lastFrameTime = timestamp;
+
+        spawnAccumulator += deltaTime;
+
+        const spawnInterval =
+            getCurrentSpawnInterval();
+
+        if (spawnAccumulator >= spawnInterval) {
+
+            spawnAccumulator = 0;
+
+            spawnItem();
+
+        }
+
+        fallingItems.forEach((item) => {
+
+            if (item.resolved) {
+                return;
+            }
+
+            item.y += item.speed * deltaTime;
+
+            item.element.style.top = `${item.y}px`;
+
+            if (item.willDrift && item.y >= item.driftTriggerY) {
+
+                item.x += item.driftVx * deltaTime;
+
+                const margin = ITEM_SIZE / 2;
+                const minX = margin;
+                const maxX = Math.max(margin, boardWidth - margin);
+
+                if (item.x <= minX) {
+                    item.x = minX;
+                    item.driftVx = Math.abs(item.driftVx);
+                } else if (item.x >= maxX) {
+                    item.x = maxX;
+                    item.driftVx = -Math.abs(item.driftVx);
+                }
+
+                item.element.style.left = `${item.x}px`;
+
+            }
+
+            if (item.y >= catchLineY) {
+
+                resolveItem(item);
+
+            }
+
         });
 
-        if (isCorrect) {
+        fallingItems =
+            fallingItems.filter(
+                (item) => !item.readyToRemove
+            );
 
-            streak++;
+        if (gameStarted) {
 
-            const bonus =
-                Math.min(streak * 10, 50);
+            animationFrameId =
+                requestAnimationFrame(gameLoop);
 
-            const points = 100 + bonus;
+        }
 
-            score += points;
+    }
 
-            scoreElement.textContent = score;
-            streakElement.textContent = streak;
+    function resolveItem(item) {
 
-            animateScore(points);
+        item.resolved = true;
 
-            button.classList.add("is-correct");
+        const horizontalDistance =
+            Math.abs(item.x - basketX);
 
-            correctSound.currentTime = 0;
-            correctSound.play().catch(() => { });
+        const wasCaught =
+            horizontalDistance <= CATCH_RADIUS;
 
-            feedback.textContent =
-                `¡Correcto! Es de la ${ZONE_NAMES[zone]}. +${points} puntos.`;
+        if (wasCaught) {
 
-            feedback.className =
-                "mapa-feedback is-correct";
+            if (item.isObject) {
+
+                handleWrongCatch(item);
+
+            } else {
+
+                handleGoodCatch(item);
+
+            }
+
+            item.element.classList.add("is-caught");
 
         } else {
 
-            streak = 0;
-            lives--;
+            if (!item.isObject) {
+                streak = 0;
+            }
 
-            streakElement.textContent = streak;
-
-            livesElement.textContent =
-                lives > 0 ? "❤️".repeat(lives) : "💔";
-
-            button.classList.add("is-wrong");
-
-            const correctButton =
-                document.querySelector(
-                    `.mapa-zone[data-zone="${currentRoundData.zone}"]`
-                );
-
-            correctButton?.classList.add("is-correct");
-
-            wrongSound.currentTime = 0;
-            wrongSound.play().catch(() => { });
-
-            feedback.textContent =
-                `No era ahí. ${currentRoundData.name} es de la ${ZONE_NAMES[currentRoundData.zone]}.`;
-
-            feedback.className =
-                "mapa-feedback is-wrong";
+            item.element.classList.add("is-missed");
 
         }
 
         setTimeout(() => {
 
-            if (lives <= 0) {
-                finishGame(false);
-            } else {
-                advanceRound();
-            }
+            item.readyToRemove = true;
+            item.element.remove();
 
-        }, isCorrect ? 1000 : 1500);
+        }, 350);
 
     }
 
-    function advanceRound() {
+    function handleGoodCatch(item) {
 
-        roundIndex++;
+        streak++;
 
-        if (roundIndex >= gameRounds.length) {
+        const bonus =
+            Math.min(streak * 1, 12);
+
+        const points = 8 + bonus;
+
+        score += points;
+
+        showFeedback(`+${points}`, "is-correct");
+
+        animateScore(points);
+
+        correctSound.currentTime = 0;
+        correctSound.play().catch(() => { });
+
+        scoreElement.textContent =
+            `${Math.min(score, TARGET_SCORE)} / ${TARGET_SCORE}`;
+
+        if (score >= TARGET_SCORE) {
+
             finishGame(true);
-            return;
+
         }
 
-        loadRound();
+    }
+
+    function handleWrongCatch(item) {
+
+        streak = 0;
+        lives--;
+
+        livesElement.textContent =
+            lives > 0 ? "❤️".repeat(lives) : "💔";
+
+        showFeedback(
+            `¡${item.data.name}! -1 vida`,
+            "is-wrong"
+        );
+
+        wrongSound.currentTime = 0;
+        wrongSound.play().catch(() => { });
+
+        basket.classList.remove("is-hit");
+        void basket.offsetWidth;
+        basket.classList.add("is-hit");
+
+        if (lives <= 0) {
+
+            finishGame(false);
+
+        }
+
+    }
+
+    function showFeedback(text, className) {
+
+        feedback.textContent = text;
+
+        feedback.className =
+            `talentos-feedback is-visible ${className}`;
+
+        window.clearTimeout(feedbackTimeout);
+
+        feedbackTimeout = window.setTimeout(() => {
+
+            feedback.classList.remove("is-visible");
+
+        }, 700);
+
+    }
+
+    function formatTime(totalSeconds) {
+
+        const minutes =
+            Math.floor(totalSeconds / 60);
+
+        const seconds =
+            totalSeconds % 60;
+
+        return (
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`
+        );
 
     }
 
@@ -709,19 +893,22 @@ document.addEventListener("DOMContentLoaded", () => {
         gameStarted = false;
         passed = didWin;
 
+        cancelAnimationFrame(animationFrameId);
+
         clearInterval(totalTimerInterval);
         totalTimerInterval = null;
 
-        const finalScore = score;
+        const finalScore =
+            Math.min(score, TARGET_SCORE);
+
         const finalTime = totalGameSeconds;
         const finalLives = lives;
-        const finalRoundIndex = roundIndex;
         const formattedTime = formatTime(finalTime);
 
         if (didWin) {
 
             localStorage.setItem(
-                "eighthGameUnlocked",
+                "ninthGameUnlocked",
                 "true"
             );
 
@@ -732,13 +919,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 '<i class="fa-solid fa-trophy"></i>';
 
             resultLabel.textContent =
-                "Desafío completado";
+                "Desafío superado";
 
             resultTitle.textContent =
-                "¡Conoces bien nuestro folclore!";
+                "¡Los atrapaste a todos!";
 
             resultText.textContent =
-                `Completaste las ${gameRounds.length} rondas en ${formattedTime} y obtuviste ${finalScore} puntos.`;
+                `Llegaste a ${finalScore} puntos en ${formattedTime}.`;
 
             resultButtonText.textContent =
                 "Continuar";
@@ -758,7 +945,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "¡Te quedaste sin vidas!";
 
             resultText.textContent =
-                `Llegaste a la ronda ${finalRoundIndex + 1} de ${gameRounds.length} con ${finalScore} puntos en ${formattedTime}.`;
+                `Llegaste a ${finalScore} de ${TARGET_SCORE} puntos en ${formattedTime}.`;
 
             resultButtonText.textContent =
                 "Intentar nuevamente";
@@ -809,7 +996,7 @@ document.addEventListener("DOMContentLoaded", () => {
             pendingRankingResult = {
                 ...result,
                 score: finalScore,
-                correctAnswers: gameRounds.length,
+                correctAnswers: 0,
                 time: finalTime,
                 lives: finalLives
             };
@@ -847,7 +1034,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 rankingModalText.textContent =
                     result.qualifiesTop10
-                        ? `Tu nuevo resultado ocuparía el puesto ${result.position} del ranking.`
+                        ? `Tu resultado ocuparía el puesto ${result.position} del ranking.`
                         : "Has superado tu mejor puntaje anterior.";
 
                 rankingNameGroup.hidden = true;
@@ -955,16 +1142,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         gameStarted = false;
         score = 0;
-        streak = 0;
         lives = MAX_LIVES;
-        roundIndex = 0;
+        streak = 0;
         totalGameSeconds = 0;
-        gameRounds = [];
         pendingRankingResult = null;
         passed = false;
 
+        cancelAnimationFrame(animationFrameId);
+
         clearInterval(totalTimerInterval);
         totalTimerInterval = null;
+
+        fallingItems.forEach((item) => {
+            item.element.remove();
+        });
+
+        fallingItems = [];
 
         correctSound.pause();
         correctSound.currentTime = 0;
@@ -991,19 +1184,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         startButton.disabled = false;
 
-        scoreElement.textContent = "0";
-        streakElement.textContent = "0";
+        scoreElement.textContent = `0 / ${TARGET_SCORE}`;
         livesElement.textContent = "❤️❤️❤️";
         timeElement.textContent = formatTime(0);
-        roundLabel.textContent = `1 / ${ROUNDS.length}`;
 
         feedback.textContent = "";
-        feedback.className = "mapa-feedback";
-
-        zoneButtons.forEach((button) => {
-            button.disabled = false;
-            button.classList.remove("is-correct", "is-wrong");
-        });
+        feedback.className = "talentos-feedback";
 
     }
 

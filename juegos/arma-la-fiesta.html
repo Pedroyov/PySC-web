@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arma la Fiesta | PySC</title>
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/arma-la-fiesta.css">
+</head>
+
+<body>
+
+    <main class="love-game-page">
+
+        <section class="love-game-shell">
+
+            <header class="love-game-header">
+
+                <a href="../rincon-secreto.html" class="love-game-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al rincón</span>
+                </a>
+
+                <div class="love-game-title">
+
+                    <span class="love-game-eyebrow">
+                        Desafío 09
+                    </span>
+
+                    <h1>
+                        Arma la Fiesta
+                    </h1>
+
+                    <p>
+                        Empuja las cajas de adornos hasta las marcas en
+                        el piso para dejar todo listo para la fiesta.
+                        Completa los 5 salones.
+                    </p>
+                </div>
+
+                <div class="love-game-logo">
+                    <img src="../img/logo-pasion-sentimiento.png" alt="Pasión y Sentimiento Cultural">
+                </div>
+
+            </header>
+
+            <section class="love-game-hud">
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Salón
+                    </span>
+
+                    <strong id="fiestaLevel">
+                        1 / 5
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Movimientos
+                    </span>
+
+                    <strong id="fiestaMoves">
+                        0
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Tiempo
+                    </span>
+
+                    <strong id="fiestaTime">
+                        00:00
+                    </strong>
+                </div>
+
+            </section>
+
+            <section class="love-game-stage" id="fiestaGameStage">
+
+                <div class="love-stage-decoration">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="love-countdown" id="loveCountdown" aria-live="polite">
+                    <span id="loveCountdownText">
+                        3
+                    </span>
+                </div>
+
+                <div class="love-game-welcome">
+
+                    <div class="love-welcome-icon">
+                        <i class="fa-solid fa-gifts"></i>
+                    </div>
+
+                    <h2>
+                        ¿Listo para organizar la fiesta?
+                    </h2>
+
+                    <p>
+                        Tu personaje solo puede <strong>empujar</strong> las
+                        cajas, nunca jalarlas: camina hacia una caja y,
+                        si sigues caminando en esa misma dirección, la
+                        irás empujando hasta que quede exactamente sobre
+                        una marca dorada en el piso. Ten mucho cuidado de
+                        no acorralar una caja contra una pared o una
+                        esquina: si eso pasa, queda atascada para
+                        siempre y tendrás que reiniciar el salón.
+                    </p>
+
+                    <p>
+                        Muévete con las flechas del teclado (o WASD),
+                        con los botones en pantalla, o deslizando el
+                        dedo sobre el tablero. Son 5 salones, cada uno
+                        un poco más grande y difícil que el anterior.
+                    </p>
+
+                    <button type="button" class="love-start-button" id="fiestaStartButton">
+                        <i class="fa-solid fa-circle-play"></i>
+                        Comenzar
+                    </button>
+
+                </div>
+
+                <section class="fiesta-board-wrap" id="fiestaBoardWrap">
+
+                    <div class="fiesta-level-message" id="fiestaLevelMessage"></div>
+
+                    <div class="fiesta-board" id="fiestaBoard" aria-label="Tablero de Arma la Fiesta"></div>
+
+                    <div class="fiesta-controls" id="fiestaControls">
+
+                        <button type="button" class="fiesta-dpad-button fiesta-dpad-up" data-direction="up"
+                            aria-label="Mover arriba">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </button>
+
+                        <button type="button" class="fiesta-dpad-button fiesta-dpad-left" data-direction="left"
+                            aria-label="Mover izquierda">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button type="button" class="fiesta-dpad-button fiesta-dpad-down" data-direction="down"
+                            aria-label="Mover abajo">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+
+                        <button type="button" class="fiesta-dpad-button fiesta-dpad-right" data-direction="right"
+                            aria-label="Mover derecha">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+            <footer class="love-game-footer">
+
+                <p>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Desliza el dedo, usa los botones o las flechas del
+                    teclado para moverte.
+                </p>
+
+                <button type="button" class="love-reset-button" id="fiestaResetButton">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reiniciar salón
+                </button>
+
+                <button type="button" class="leaderboard-open-button" id="leaderboardOpenButton">
+                    <i class="fa-solid fa-trophy"></i>
+                    Ver clasificación
+                </button>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DESBLOQUEO -->
+
+    <div class="love-unlock-modal" id="loveUnlockModal" aria-hidden="true">
+
+        <div class="love-unlock-backdrop"></div>
+
+        <div class="love-unlock-content" role="dialog" aria-modal="true" aria-labelledby="loveUnlockTitle">
+
+            <div class="love-unlock-icon" id="loveUnlockIcon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="love-unlock-label" id="loveUnlockLabel">
+                Desafío completado
+            </span>
+
+            <h2 id="loveUnlockTitle">
+                ¡La fiesta está lista!
+            </h2>
+
+            <p id="loveUnlockText">
+                Completaste los 5 salones de Arma la Fiesta.
+            </p>
+
+            <button type="button" class="love-unlock-button" id="loveUnlockButton">
+                <span id="loveUnlockButtonText">
+                    Continuar
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+        <div class="ranking-modal-backdrop"></div>
+
+        <div class="ranking-modal-content" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+            <div class="ranking-modal-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="ranking-modal-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="rankingModalTitle">
+                ¡Nuevo récord!
+            </h2>
+
+            <p id="rankingModalText">
+                Has conseguido un nuevo récord personal.
+            </p>
+
+            <strong id="rankingModalScore">
+                00:00 · 0 movimientos
+            </strong>
+
+            <div class="ranking-name-group" id="rankingNameGroup">
+                <label for="rankingPlayerName">
+                    ¿Cómo quieres aparecer?
+                </label>
+
+                <input type="text" id="rankingPlayerName" maxlength="24" autocomplete="nickname"
+                    placeholder="Nombre o apodo">
+
+                <small id="rankingNameError"></small>
+            </div>
+
+            <button type="button" class="ranking-save-button" id="rankingSaveButton">
+                Guardar resultado
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="leaderboard-modal" id="leaderboardModal" aria-hidden="true">
+        <div class="leaderboard-modal-backdrop"></div>
+
+        <div class="leaderboard-modal-content" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="leaderboard-close-button" id="leaderboardCloseButton"
+                aria-label="Cerrar clasificación">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="leaderboard-icon">
+                <i class="fa-solid fa-ranking-star"></i>
+            </div>
+
+            <span class="leaderboard-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="leaderboardTitle">
+                Top 10
+            </h2>
+
+            <p>
+                Arma la Fiesta
+            </p>
+
+            <div class="leaderboard-loading" id="leaderboardLoading">
+                Cargando clasificación...
+            </div>
+
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden>
+                Todavía no hay resultados registrados.
+            </p>
+        </div>
+    </div>
+
+
+    <script type="module" src="../js/arma-la-fiesta.js"></script>
+
+</body>
+
+</html>
