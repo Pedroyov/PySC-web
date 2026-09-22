@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mastermind Cultural | PySC</title>
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/mastermind.css">
+</head>
+
+<body>
+
+    <main class="love-game-page">
+
+        <section class="love-game-shell">
+
+            <header class="love-game-header">
+
+                <a href="../rincon-secreto.html" class="love-game-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al rincón</span>
+                </a>
+
+                <div class="love-game-title">
+
+                    <span class="love-game-eyebrow">
+                        Desafío 12
+                    </span>
+
+                    <h1>
+                        Mastermind Cultural
+                    </h1>
+
+                    <p>
+                        Descubre la combinación secreta usando la
+                        lógica y las pistas de cada intento.
+                    </p>
+                </div>
+
+                <div class="love-game-logo">
+                    <img src="../img/logo-pasion-sentimiento.png" alt="Pasión y Sentimiento Cultural">
+                </div>
+
+            </header>
+
+            <section class="love-game-hud">
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Ronda
+                    </span>
+
+                    <strong id="mastermindRound">
+                        1 / 5
+                    </strong>
+                </div>
+
+                <div class="love-hud-item score-container">
+                    <span class="love-hud-label">
+                        Puntaje
+                    </span>
+
+                    <strong id="mastermindScore">
+                        0
+                    </strong>
+
+                    <span
+                        id="scoreAnimation"
+                        class="score-animation"
+                    ></span>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Intentos
+                    </span>
+
+                    <strong id="mastermindAttempts">
+                        0 / 0
+                    </strong>
+                </div>
+
+                <div class="love-hud-item">
+                    <span class="love-hud-label">
+                        Tiempo
+                    </span>
+
+                    <strong id="mastermindTime">
+                        00:00
+                    </strong>
+                </div>
+
+            </section>
+
+            <section class="love-game-stage" id="mastermindGameStage">
+
+                <div class="love-stage-decoration">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="love-countdown" id="loveCountdown" aria-live="polite">
+                    <span id="loveCountdownText">
+                        3
+                    </span>
+                </div>
+
+                <div class="love-game-welcome">
+
+                    <div class="love-welcome-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+
+                    <h2>
+                        ¿Lista tu lógica?
+                    </h2>
+
+                    <p>
+                        En cada ronda el juego elige en secreto una temática
+                        (instrumentos, danzas, regiones, colores o personajes
+                        de PySC) y arma una combinación oculta con esos
+                        elementos. Tu trabajo es descubrirla armando intentos
+                        con el selector de abajo.
+                    </p>
+
+                    <p>
+                        Después de cada intento verás pistas:
+                        <strong>🟢 verde</strong> significa elemento correcto
+                        en la posición correcta, <strong>🟡 amarillo</strong>
+                        significa que el elemento está en la combinación
+                        pero en otra posición, y <strong>⚫ negro</strong>
+                        significa que no está presente. Las pistas no te
+                        dicen a qué posición corresponde cada una, solo
+                        cuántas hay de cada tipo.
+                    </p>
+
+                    <p>
+                        Son 5 rondas, cada una con una temática distinta y
+                        un poco más difícil (combinaciones más largas y
+                        menos intentos disponibles). Si se te acaban los
+                        intentos en una ronda, pierdes la partida. Entre
+                        menos intentos uses, más puntos ganas.
+                    </p>
+
+                    <button type="button" class="love-start-button" id="mastermindStartButton">
+                        <i class="fa-solid fa-circle-play"></i>
+                        Comenzar
+                    </button>
+
+                </div>
+
+                <section class="mastermind-board-wrap" id="mastermindBoardWrap">
+
+                    <div class="mastermind-theme-banner" id="mastermindThemeBanner">
+                        Temática: <strong id="mastermindThemeName">—</strong>
+                    </div>
+
+                    <ol class="mastermind-history" id="mastermindHistory"></ol>
+
+                    <div class="mastermind-current-row">
+
+                        <div class="mastermind-slots" id="mastermindSlots"></div>
+
+                        <div class="mastermind-current-actions">
+
+                            <button type="button" class="mastermind-clear-button" id="mastermindClearButton">
+                                <i class="fa-solid fa-eraser"></i>
+                                Borrar
+                            </button>
+
+                            <button type="button" class="mastermind-guess-button" id="mastermindGuessButton" disabled>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Adivinar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mastermind-palette" id="mastermindPalette"></div>
+
+                </section>
+
+            </section>
+
+            <footer class="love-game-footer">
+
+                <p>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Toca un símbolo del selector para llenar la
+                    combinación actual, casilla por casilla.
+                </p>
+
+                <button type="button" class="love-reset-button" id="mastermindResetButton">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Reiniciar
+                </button>
+
+                <button type="button" class="leaderboard-open-button" id="leaderboardOpenButton">
+                    <i class="fa-solid fa-trophy"></i>
+                    Ver clasificación
+                </button>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DESBLOQUEO -->
+
+    <div class="love-unlock-modal" id="loveUnlockModal" aria-hidden="true">
+
+        <div class="love-unlock-backdrop"></div>
+
+        <div class="love-unlock-content" role="dialog" aria-modal="true" aria-labelledby="loveUnlockTitle">
+
+            <div class="love-unlock-icon" id="loveUnlockIcon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="love-unlock-label" id="loveUnlockLabel">
+                Desafío completado
+            </span>
+
+            <h2 id="loveUnlockTitle">
+                ¡Descifraste todas las combinaciones!
+            </h2>
+
+            <p id="loveUnlockText">
+                Completaste Mastermind Cultural.
+            </p>
+
+            <button type="button" class="love-unlock-button" id="loveUnlockButton">
+                <span id="loveUnlockButtonText">
+                    Continuar
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+        <div class="ranking-modal-backdrop"></div>
+
+        <div class="ranking-modal-content" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+            <div class="ranking-modal-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <span class="ranking-modal-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="rankingModalTitle">
+                ¡Nuevo récord!
+            </h2>
+
+            <p id="rankingModalText">
+                Has conseguido un nuevo récord personal.
+            </p>
+
+            <strong id="rankingModalScore">
+                0 puntos
+            </strong>
+
+            <div class="ranking-name-group" id="rankingNameGroup">
+                <label for="rankingPlayerName">
+                    ¿Cómo quieres aparecer?
+                </label>
+
+                <input type="text" id="rankingPlayerName" maxlength="24" autocomplete="nickname"
+                    placeholder="Nombre o apodo">
+
+                <small id="rankingNameError"></small>
+            </div>
+
+            <button type="button" class="ranking-save-button" id="rankingSaveButton">
+                Guardar resultado
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="leaderboard-modal" id="leaderboardModal" aria-hidden="true">
+        <div class="leaderboard-modal-backdrop"></div>
+
+        <div class="leaderboard-modal-content" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="leaderboard-close-button" id="leaderboardCloseButton"
+                aria-label="Cerrar clasificación">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="leaderboard-icon">
+                <i class="fa-solid fa-ranking-star"></i>
+            </div>
+
+            <span class="leaderboard-label">
+                Salón de la Fama
+            </span>
+
+            <h2 id="leaderboardTitle">
+                Top 10
+            </h2>
+
+            <p>
+                Mastermind Cultural
+            </p>
+
+            <div class="leaderboard-loading" id="leaderboardLoading">
+                Cargando clasificación...
+            </div>
+
+            <ol class="leaderboard-list" id="leaderboardList"></ol>
+
+            <p class="leaderboard-empty" id="leaderboardEmpty" hidden>
+                Todavía no hay resultados registrados.
+            </p>
+        </div>
+    </div>
+
+
+    <script type="module" src="../js/mastermind.js"></script>
+
+</body>
+
+</html>

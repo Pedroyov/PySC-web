@@ -796,7 +796,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (didWin) {
 
-            localStorage.setItem("tenthGameUnlocked", "true");
+            localStorage.setItem("eleventhGameUnlocked", "true");
 
             victorySound.currentTime = 0;
             victorySound.play().catch(() => { });
