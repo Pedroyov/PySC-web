@@ -93,11 +93,11 @@ const THEMES = [
 ================================================== */
 
 const ROUND_CONFIGS = [
-    { codeLength: 4, maxAttempts: 10 },
-    { codeLength: 4, maxAttempts: 9 },
+    { codeLength: 5, maxAttempts: 10 },
     { codeLength: 5, maxAttempts: 9 },
     { codeLength: 5, maxAttempts: 8 },
-    { codeLength: 6, maxAttempts: 8 }
+    { codeLength: 6, maxAttempts: 8 },
+    { codeLength: 6, maxAttempts: 7 }
 ];
 
 const TOTAL_ROUNDS = ROUND_CONFIGS.length;
@@ -115,17 +115,36 @@ function pickRandomTheme() {
 
 function generateSecretCode(symbols, codeLength) {
 
-    const code = [];
+    /*
+     * Los símbolos nunca se repiten dentro de una misma
+     * combinación, así que se baraja la lista de símbolos
+     * (Fisher-Yates) y se toman los primeros "codeLength".
+     */
 
-    for (let index = 0; index < codeLength; index++) {
-        code.push(symbols[Math.floor(Math.random() * symbols.length)].id);
+    const shuffled = symbols.map((symbol) => symbol.id);
+
+    for (let index = shuffled.length - 1; index > 0; index--) {
+
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+
+        [shuffled[index], shuffled[swapIndex]] =
+            [shuffled[swapIndex], shuffled[index]];
+
     }
 
-    return code;
+    return shuffled.slice(0, codeLength);
 
 }
 
 function computeFeedback(secret, guess) {
+
+    /*
+     * Formato clásico de Mastermind: las pistas son solo
+     * totales (cuántos verdes/amarillos/negros hay), sin
+     * indicar a qué posición corresponde cada una. Eso
+     * obliga a cruzar pistas entre varios intentos para
+     * deducir la combinación.
+     */
 
     const codeLength = secret.length;
 
@@ -493,6 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             button.type = "button";
             button.className = "mastermind-palette-button";
+            button.dataset.symbolId = symbol.id;
             button.setAttribute("aria-label", symbol.label);
             button.innerHTML = renderSymbolMarkup(symbol);
 
@@ -529,6 +549,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const config = ROUND_CONFIGS[currentRoundIndex];
 
         if (currentGuess.length >= config.codeLength) {
+            return;
+        }
+
+        /*
+         * Los símbolos no se repiten dentro de la misma
+         * combinación, así que uno ya usado en el intento
+         * actual no se puede volver a elegir.
+         */
+        if (currentGuess.includes(symbolId)) {
             return;
         }
 
@@ -580,6 +609,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         guessButton.disabled = currentGuess.length !== config.codeLength;
+
+        updatePaletteAvailability();
+
+    }
+
+    function updatePaletteAvailability() {
+
+        palette.querySelectorAll(".mastermind-palette-button").forEach((button) => {
+
+            const isUsed = currentGuess.includes(button.dataset.symbolId);
+
+            button.disabled = isUsed;
+            button.classList.toggle("is-used", isUsed);
+
+        });
 
     }
 

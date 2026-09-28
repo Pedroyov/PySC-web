@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mastermind Cultural | PySC</title>
+    <title>Pac-Mac | PySC</title>
 
     <link rel="icon" href="../img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/mastermind.css">
+    <link rel="stylesheet" href="../css/devora-talentos.css">
 </head>
 
 <body>
@@ -34,16 +34,17 @@
                 <div class="love-game-title">
 
                     <span class="love-game-eyebrow">
-                        Desafío 12
+                        Desafío 13
                     </span>
 
                     <h1>
-                        Mastermind Cultural
+                        Pac-Mac
                     </h1>
 
                     <p>
-                        Descubre la combinación secreta usando la
-                        lógica y las pistas de cada intento.
+                        Recorre el laberinto, come todas las pastillas y
+                        aprovecha las especiales para devorar a los
+                        integrantes antes de que te atrapen a ti.
                     </p>
                 </div>
 
@@ -57,11 +58,11 @@
 
                 <div class="love-hud-item">
                     <span class="love-hud-label">
-                        Ronda
+                        Nivel
                     </span>
 
-                    <strong id="mastermindRound">
-                        1 / 5
+                    <strong id="devoraLevel">
+                        1 / 3
                     </strong>
                 </div>
 
@@ -70,7 +71,7 @@
                         Puntaje
                     </span>
 
-                    <strong id="mastermindScore">
+                    <strong id="devoraScore">
                         0
                     </strong>
 
@@ -82,11 +83,11 @@
 
                 <div class="love-hud-item">
                     <span class="love-hud-label">
-                        Intentos
+                        Vidas
                     </span>
 
-                    <strong id="mastermindAttempts">
-                        0 / 0
+                    <strong id="devoraLives">
+                        ❤️❤️❤️
                     </strong>
                 </div>
 
@@ -95,14 +96,14 @@
                         Tiempo
                     </span>
 
-                    <strong id="mastermindTime">
+                    <strong id="devoraTime">
                         00:00
                     </strong>
                 </div>
 
             </section>
 
-            <section class="love-game-stage" id="mastermindGameStage">
+            <section class="love-game-stage" id="devoraGameStage">
 
                 <div class="love-stage-decoration">
                     <span></span>
@@ -119,77 +120,68 @@
                 <div class="love-game-welcome">
 
                     <div class="love-welcome-icon">
-                        <i class="fa-solid fa-brain"></i>
+                        <i class="fa-solid fa-circle-notch"></i>
                     </div>
 
                     <h2>
-                        ¿Lista tu lógica?
+                        ¿Listo para devorar?
                     </h2>
 
                     <p>
-                        En cada ronda el juego elige en secreto una temática
-                        (instrumentos, danzas, regiones, colores o personajes
-                        de PySC) y arma una combinación oculta con esos
-                        elementos. Tu trabajo es descubrirla armando intentos
-                        con el selector de abajo.
+                        Muévete por el laberinto comiendo todas las
+                        pastillas (+10) para limpiar el salón. Cuatro
+                        integrantes te persiguen: si te tocan pierdes una
+                        vida, y sin vidas pierdes la partida.
                     </p>
 
                     <p>
-                        Después de cada intento verás pistas:
-                        <strong>🟢 verde</strong> significa elemento correcto
-                        en la posición correcta, <strong>🟡 amarillo</strong>
-                        significa que el elemento está en la combinación
-                        pero en otra posición, y <strong>⚫ negro</strong>
-                        significa que no está presente. Las pistas no te
-                        dicen a qué posición corresponde cada una, solo
-                        cuántas hay de cada tipo. Los símbolos nunca se
-                        repiten dentro de una misma combinación.
+                        Las pastillas especiales (+50) te dan poder por
+                        unos segundos: mientras dura, los integrantes se
+                        vuelven vulnerables y puedes devorarlos para ganar
+                        puntos extra (cada uno que comas de corrido vale
+                        más). Al pasar el efecto, vuelven a perseguirte.
                     </p>
 
                     <p>
-                        Son 5 rondas, cada una con una temática distinta y
-                        un poco más difícil (combinaciones más largas y
-                        menos intentos disponibles). Si se te acaban los
-                        intentos en una ronda, pierdes la partida. Entre
-                        menos intentos uses, más puntos ganas.
+                        Son 3 salones, cada uno más grande y con
+                        integrantes más rápidos. Limpia los tres para
+                        completar el desafío.
                     </p>
 
-                    <button type="button" class="love-start-button" id="mastermindStartButton">
+                    <button type="button" class="love-start-button" id="devoraStartButton">
                         <i class="fa-solid fa-circle-play"></i>
                         Comenzar
                     </button>
 
                 </div>
 
-                <section class="mastermind-board-wrap" id="mastermindBoardWrap">
+                <section class="devora-board-wrap" id="devoraBoardWrap">
 
-                    <div class="mastermind-theme-banner" id="mastermindThemeBanner">
-                        Temática: <strong id="mastermindThemeName">—</strong>
+                    <div class="devora-board" id="devoraBoard" aria-label="Laberinto de Pac-Mac"></div>
+
+                    <div class="devora-controls" id="devoraControls">
+
+                        <button type="button" class="devora-dpad-button devora-dpad-up" data-direction="up"
+                            aria-label="Mover arriba">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </button>
+
+                        <button type="button" class="devora-dpad-button devora-dpad-left" data-direction="left"
+                            aria-label="Mover izquierda">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button type="button" class="devora-dpad-button devora-dpad-down" data-direction="down"
+                            aria-label="Mover abajo">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+
+                        <button type="button" class="devora-dpad-button devora-dpad-right" data-direction="right"
+                            aria-label="Mover derecha">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
                     </div>
-
-                    <ol class="mastermind-history" id="mastermindHistory"></ol>
-
-                    <div class="mastermind-current-row">
-
-                        <div class="mastermind-slots" id="mastermindSlots"></div>
-
-                        <div class="mastermind-current-actions">
-
-                            <button type="button" class="mastermind-clear-button" id="mastermindClearButton">
-                                <i class="fa-solid fa-eraser"></i>
-                                Borrar
-                            </button>
-
-                            <button type="button" class="mastermind-guess-button" id="mastermindGuessButton" disabled>
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                Adivinar
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <div class="mastermind-palette" id="mastermindPalette"></div>
 
                 </section>
 
@@ -199,11 +191,11 @@
 
                 <p>
                     <i class="fa-solid fa-lightbulb"></i>
-                    Toca un símbolo del selector para llenar la
-                    combinación actual, casilla por casilla.
+                    Desliza el dedo, usa los botones o las flechas del
+                    teclado para moverte por el laberinto.
                 </p>
 
-                <button type="button" class="love-reset-button" id="mastermindResetButton">
+                <button type="button" class="love-reset-button" id="devoraResetButton">
                     <i class="fa-solid fa-rotate-right"></i>
                     Reiniciar
                 </button>
@@ -236,11 +228,11 @@
             </span>
 
             <h2 id="loveUnlockTitle">
-                ¡Descifraste todas las combinaciones!
+                ¡Limpiaste los 3 salones!
             </h2>
 
             <p id="loveUnlockText">
-                Completaste Mastermind Cultural.
+                Completaste Pac-Mac.
             </p>
 
             <button type="button" class="love-unlock-button" id="loveUnlockButton">
@@ -319,7 +311,7 @@
             </h2>
 
             <p>
-                Mastermind Cultural
+                Pac-Mac
             </p>
 
             <div class="leaderboard-loading" id="leaderboardLoading">
@@ -335,7 +327,7 @@
     </div>
 
 
-    <script type="module" src="../js/mastermind.js"></script>
+    <script type="module" src="../js/devora-talentos.js"></script>
 
 </body>
 

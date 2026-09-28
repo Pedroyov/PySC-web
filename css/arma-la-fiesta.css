@@ -2268,8 +2268,13 @@ button{
   }
 
   .fiesta-controls {
-    grid-template-columns: repeat(3, 48px);
-    grid-template-rows: repeat(2, 48px);
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(2, 60px);
+    gap: 14px;
+  }
+
+  .fiesta-dpad-button {
+    font-size: 1.4rem;
   }
 
 }

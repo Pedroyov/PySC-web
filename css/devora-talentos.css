@@ -2042,337 +2042,269 @@ button{
 }
 
 /* ==================================================
-   TABLERO DE MASTERMIND CULTURAL
+   TABLERO DE DEVORA TALENTOS
 ================================================== */
 
-.mastermind-board-wrap {
+.devora-board-wrap {
   position: relative;
   z-index: 3;
 
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
 
   width: 100%;
-  max-width: 560px;
-
-  margin: 0 auto;
 }
 
-.love-game-stage.is-playing .mastermind-board-wrap {
+.love-game-stage.is-playing .devora-board-wrap {
   display: flex;
 }
 
-.mastermind-theme-banner {
-  font-family: "Nunito Sans", sans-serif;
-  font-size: .9rem;
-  color: var(--love-text-soft, #6b6b7a);
+.devora-board {
+  --devora-cell-size: 30px;
 
-  text-align: center;
-}
+  position: relative;
 
-.mastermind-theme-banner strong {
-  color: var(--love-accent, #b3833c);
-  font-family: "Montserrat", sans-serif;
-  text-transform: capitalize;
-}
+  display: grid;
 
-.mastermind-history {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  max-height: 320px;
-  overflow-y: auto;
-}
-
-.mastermind-history-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-
-  padding: 8px 12px;
-
-  background: rgba(255, 255, 255, .6);
-  border: 1px solid var(--love-border, #e7ded0);
   border-radius: 12px;
+  overflow: hidden;
 
-  animation: mastermindRowIn .35s ease;
+  background: #0b1220;
+
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, .45),
+    inset 0 0 0 2px rgba(214, 176, 74, .25);
 }
 
-@keyframes mastermindRowIn {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
+.devora-cell {
+  position: relative;
 
-  to {
+  width: var(--devora-cell-size);
+  height: var(--devora-cell-size);
+}
+
+.devora-cell.is-wall {
+  background: #16233f;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .04);
+}
+
+.devora-cell.has-pellet::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+
+  background: #f5d98e;
+}
+
+.devora-cell.has-power::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+
+  background: #f5d98e;
+
+  animation: devoraPowerPulse 1s ease-in-out infinite;
+}
+
+@keyframes devoraPowerPulse {
+
+  0%, 100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%) scale(1);
   }
+
+  50% {
+    opacity: .55;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+
 }
 
-.mastermind-history-attempt {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: .78rem;
-  color: var(--love-text-soft, #6b6b7a);
+.devora-player {
+  position: relative;
+  z-index: 5;
 
-  min-width: 20px;
-}
+  width: var(--devora-cell-size);
+  height: var(--devora-cell-size);
 
-.mastermind-history-symbols {
   display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.mastermind-history-symbol {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
+}
 
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
+.devora-player-shape {
+  width: 78%;
+  height: 78%;
 
-  font-size: 1rem;
-  line-height: 1;
+  background: #ffd54a;
+  border-radius: 50%;
+
+  clip-path: polygon(
+    100% 74%, 43% 50%, 100% 26%,
+    100% 0%, 0% 0%, 0% 100%, 100% 100%
+  );
+
+  transition: transform .12s ease;
+}
+
+.devora-player[data-direction="up"] .devora-player-shape {
+  transform: rotate(-90deg);
+}
+
+.devora-player[data-direction="down"] .devora-player-shape {
+  transform: rotate(90deg);
+}
+
+.devora-player[data-direction="left"] .devora-player-shape {
+  transform: rotate(180deg);
+}
+
+.devora-player[data-direction="right"] .devora-player-shape {
+  transform: rotate(0deg);
+}
+
+.devora-enemy {
+  position: relative;
+  z-index: 4;
+
+  width: var(--devora-cell-size);
+  height: var(--devora-cell-size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.devora-enemy-shape {
+  width: 82%;
+  height: 82%;
 
   border-radius: 50%;
   overflow: hidden;
+
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, .55);
 }
 
-.mastermind-history-symbol img {
+.devora-enemy-shape img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
 }
 
-.mastermind-history-feedback {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-
-  min-width: 68px;
-  justify-content: flex-end;
+.devora-enemy.is-vulnerable .devora-enemy-shape {
+  box-shadow: 0 0 0 2px #1e88e5;
+  filter: grayscale(0.5) brightness(0.85);
 }
 
-.mastermind-peg {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15);
+.devora-enemy.is-blinking .devora-enemy-shape {
+  animation: devoraBlink .3s steps(1) infinite;
 }
 
-.mastermind-peg.is-exact {
-  background: #43a047;
+@keyframes devoraBlink {
+
+  0%, 100% {
+    box-shadow: 0 0 0 2px #1e88e5;
+  }
+
+  50% {
+    box-shadow: 0 0 0 2px #f5d98e;
+  }
+
 }
 
-.mastermind-peg.is-partial {
-  background: #fdd835;
-}
+.devora-controls {
+  display: grid;
 
-.mastermind-peg.is-absent {
-  background: #333;
-}
-
-.mastermind-current-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-
-  width: 100%;
-
-  padding: 16px;
-
-  background: rgba(255, 255, 255, .75);
-  border: 2px dashed var(--love-accent, #b3833c);
-  border-radius: 16px;
-}
-
-.mastermind-slots {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.mastermind-slot {
-  width: 44px;
-  height: 44px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-  border: 2px solid var(--love-border, #e7ded0);
-  background: #fff;
-
-  font-size: 1.3rem;
-
-  cursor: pointer;
-
-  transition:
-    transform .15s ease,
-    border-color .15s ease;
-}
-
-.mastermind-slot.is-filled {
-  border-style: solid;
-  border-color: var(--love-accent, #b3833c);
-}
-
-.mastermind-slot.is-filled:hover {
-  transform: scale(1.08);
-}
-
-.mastermind-slot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.mastermind-current-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.mastermind-clear-button,
-.mastermind-guess-button {
-  display: inline-flex;
-  align-items: center;
+  grid-template-columns: repeat(3, 54px);
+  grid-template-rows: repeat(2, 54px);
   gap: 8px;
 
-  padding: 10px 18px;
-
-  border: none;
-  border-radius: 999px;
-
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: .85rem;
-
-  cursor: pointer;
-
-  transition:
-    transform .15s ease,
-    opacity .15s ease;
-}
-
-.mastermind-clear-button {
-  background: rgba(0, 0, 0, .06);
-  color: var(--love-text, #2b2b33);
-}
-
-.mastermind-clear-button:hover {
-  transform: translateY(-2px);
-}
-
-.mastermind-guess-button {
-  background: var(--love-accent, #b3833c);
-  color: #fff;
-}
-
-.mastermind-guess-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-}
-
-.mastermind-guess-button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-.mastermind-palette {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
   justify-content: center;
 }
 
-.mastermind-palette-button {
-  width: 52px;
-  height: 52px;
-
+.devora-dpad-button {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 50%;
-  border: 2px solid var(--love-border, #e7ded0);
-  background: #fff;
+  border: 1px solid rgba(214, 176, 74, .3);
+  border-radius: 14px;
 
-  font-size: 1.4rem;
+  background: rgba(255, 255, 255, .06);
+
+  color: #f5d98e;
+  font-size: 1.2rem;
 
   cursor: pointer;
 
   transition:
-    transform .15s ease,
-    box-shadow .15s ease;
+    transform .12s ease,
+    background .2s ease,
+    border-color .2s ease;
 }
 
-.mastermind-palette-button:hover:not(:disabled) {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, .12);
+.devora-dpad-button:active {
+  transform: scale(.92);
+  background: rgba(214, 176, 74, .22);
 }
 
-.mastermind-palette-button:disabled {
-  opacity: .35;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+@media (hover: hover) and (pointer: fine) {
+
+  .devora-dpad-button:hover {
+    border-color: rgba(214, 176, 74, .6);
+    background: rgba(214, 176, 74, .14);
+  }
+
 }
 
-.mastermind-palette-button img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+.devora-dpad-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.devora-dpad-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.devora-dpad-down {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.devora-dpad-right {
+  grid-column: 3;
+  grid-row: 2;
 }
 
 @media (max-width: 620px) {
 
-  .mastermind-slots {
-    gap: 12px;
+  .devora-board {
+    --devora-cell-size: 22px;
   }
 
-  .mastermind-slot {
-    width: 42px;
-    height: 42px;
-    font-size: 1.1rem;
+  .devora-controls {
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(2, 60px);
+    gap: 14px;
   }
 
-  .mastermind-palette {
-    gap: 16px;
-  }
-
-  .mastermind-palette-button {
-    width: 54px;
-    height: 54px;
-    font-size: 1.3rem;
-  }
-
-  .mastermind-current-actions {
-    gap: 16px;
-  }
-
-  .mastermind-clear-button,
-  .mastermind-guess-button {
-    padding: 13px 20px;
-    font-size: .9rem;
+  .devora-dpad-button {
+    font-size: 1.4rem;
   }
 
 }

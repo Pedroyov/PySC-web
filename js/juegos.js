@@ -83,7 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { unlockedKey: "ninthGameUnlocked", cardIndex: 9 },
     { unlockedKey: "tenthGameUnlocked", cardIndex: 10 },
     { unlockedKey: "eleventhGameUnlocked", cardIndex: 11 },
-    { unlockedKey: "twelfthGameUnlocked", cardIndex: 12 }
+    { unlockedKey: "twelfthGameUnlocked", cardIndex: 12 },
+    { unlockedKey: "thirteenthGameUnlocked", cardIndex: 13 }
   ];
 
   function unlockGameCard(card) {
@@ -133,6 +134,35 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(() => {
       card.classList.remove("secret-game-just-unlocked");
     }, 2400);
+  }
+
+  /*
+   * Desbloqueo automático por mes de aniversario:
+   * durante esta ventana de fechas, todos los desafíos del
+   * 02 al 12 se desbloquean solos para cualquier visitante,
+   * sin necesidad de haber completado los anteriores en
+   * orden. El juego misterioso (Archivo Secreto) queda fuera
+   * a propósito: todavía no está listo.
+   *
+   * Pasada la fecha final, los visitantes nuevos vuelven a
+   * ver el orden normal de desbloqueo. Quien haya entrado
+   * durante la ventana conserva sus desafíos desbloqueados
+   * (los localStorage no se borran al terminar la promo).
+   */
+  const AUTO_UNLOCK_START_DATE = new Date("2026-10-01T00:00:00");
+  const AUTO_UNLOCK_END_DATE = new Date("2026-10-17T23:59:59");
+
+  const now = Date.now();
+
+  if (
+    now >= AUTO_UNLOCK_START_DATE.getTime() &&
+    now <= AUTO_UNLOCK_END_DATE.getTime()
+  ) {
+    gameUnlockSequence.forEach(({ unlockedKey }) => {
+      if (localStorage.getItem(unlockedKey) !== "true") {
+        localStorage.setItem(unlockedKey, "true");
+      }
+    });
   }
 
   gameUnlockSequence.forEach(({ unlockedKey, cardIndex }) => {
