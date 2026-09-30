@@ -2035,6 +2035,82 @@ el fondo seguirá viéndose azul gracias al color inferior.
   gap: 17px;
 }
 
+/* ===== Agenda en modo slide (cuando hay más de 4 actividades) ===== */
+.agenda-grid.agenda-slider {
+  --agenda-visible: 4;
+
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  /* espacio para que el efecto hover no se recorte */
+  padding: 14px 4px 22px;
+  margin: -14px -4px -22px;
+}
+
+.agenda-grid.agenda-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.agenda-grid.agenda-slider .agenda-card {
+  flex: 0 0 calc(
+    (100% - (var(--agenda-visible) - 1) * 17px) / var(--agenda-visible)
+  );
+  scroll-snap-align: start;
+}
+
+.agenda-slider-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.agenda-slider-btn {
+  display: grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+
+  color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.agenda-slider-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.06);
+}
+
+.agenda-slider-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (max-width: 1000px) {
+  .agenda-grid.agenda-slider {
+    --agenda-visible: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .agenda-grid.agenda-slider .agenda-card {
+    flex-basis: 88%;
+  }
+}
+
 .agenda-loading {
   grid-column: 1 / -1;
 

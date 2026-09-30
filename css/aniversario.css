@@ -1,0 +1,269 @@
+/* =========================
+   ANIVERSARIO PySC
+   Solo aplica cuando js/aniversario.js agrega
+   la clase .pysc-aniversario (octubre).
+========================= */
+
+/* ---------- Franja festiva sobre el header ---------- */
+
+.pysc-aniversario .site-header::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--wine) 0%,
+    var(--gold) 25%,
+    var(--gold-light) 50%,
+    var(--gold) 75%,
+    var(--wine) 100%
+  );
+  background-size: 200% 100%;
+  animation: aniv-shine 6s linear infinite;
+  z-index: 2;
+}
+
+/* ---------- Sello "17 años" junto al logo ---------- */
+
+.aniv-seal {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+  margin-left: -4px;
+
+  border-radius: 50%;
+  border: 2px solid var(--gold-light);
+  background: radial-gradient(circle at 30% 30%, var(--gold-light), var(--gold) 70%);
+  color: var(--wine-dark);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+
+  font-family: "Montserrat", sans-serif;
+  line-height: 1;
+  transform: rotate(-10deg);
+}
+
+.aniv-seal strong {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.aniv-seal small {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 560px) {
+  .aniv-seal {
+    width: 38px;
+    height: 38px;
+  }
+
+  .aniv-seal strong {
+    font-size: 0.9rem;
+  }
+}
+
+/* ---------- Cinta del hero con brillo ---------- */
+
+.pysc-aniversario .hero-ribbon-gold {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  background-size: 200% 100%;
+  animation: aniv-shine 5s linear infinite;
+}
+
+/* ---------- Banner con cuenta regresiva ---------- */
+
+.aniv-banner {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  max-width: 620px;
+  margin-top: 2.2rem;
+  padding: 18px 22px;
+
+  border: 1px solid rgba(242, 209, 112, 0.45);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(140, 24, 50, 0.72), rgba(12, 34, 66, 0.72));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+
+  animation: aniv-rise 0.9s ease 0.9s both;
+}
+
+.aniv-banner-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 88px;
+  height: 88px;
+
+  border-radius: 50%;
+  border: 3px solid var(--gold-light);
+  background: radial-gradient(circle at 30% 30%, var(--gold-light), var(--gold) 70%);
+  color: var(--wine-dark);
+  font-family: "Montserrat", sans-serif;
+  line-height: 1;
+}
+
+.aniv-banner-number {
+  font-size: 2.3rem;
+  font-weight: 800;
+}
+
+.aniv-banner-years {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.aniv-banner-body {
+  min-width: 0;
+}
+
+.aniv-banner-kicker {
+  color: var(--gold-light);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.aniv-banner-title {
+  margin: 2px 0 10px;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.aniv-banner.is-today .aniv-banner-title {
+  font-size: 1.3rem;
+  margin-bottom: 0;
+}
+
+.aniv-countdown {
+  display: flex;
+  gap: 10px;
+}
+
+.aniv-countdown[hidden] {
+  display: none;
+}
+
+.aniv-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 58px;
+  padding: 6px 8px;
+
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.aniv-unit-value {
+  color: var(--gold-light);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.aniv-unit-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 560px) {
+  .aniv-banner {
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .aniv-banner-badge {
+    width: 64px;
+    height: 64px;
+  }
+
+  .aniv-banner-number {
+    font-size: 1.7rem;
+  }
+
+  .aniv-banner-years {
+    font-size: 0.55rem;
+  }
+
+  .aniv-banner-title {
+    font-size: 0.92rem;
+  }
+
+  .aniv-countdown {
+    gap: 6px;
+  }
+
+  .aniv-unit {
+    min-width: 0;
+    flex: 1;
+    padding: 5px 4px;
+  }
+
+  .aniv-unit-value {
+    font-size: 1.1rem;
+  }
+
+  .aniv-unit-label {
+    font-size: 0.55rem;
+  }
+}
+
+/* ---------- Confeti ---------- */
+
+.aniv-confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3000;
+}
+
+/* ---------- Animaciones ---------- */
+
+@keyframes aniv-shine {
+  from { background-position: 0% 0; }
+  to   { background-position: 200% 0; }
+}
+
+@keyframes aniv-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pysc-aniversario .site-header::before,
+  .pysc-aniversario .hero-ribbon-gold,
+  .aniv-banner {
+    animation: none;
+  }
+}

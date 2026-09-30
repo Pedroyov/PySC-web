@@ -266,41 +266,121 @@ function getWinnerInitials(name = "") {
     .toUpperCase();
 }
 
-function openAwardsModal(categoryId) {
-  const winner =
-    awardsWinners.find(
-      (item) =>
-        item.id_categoria.trim() ===
-        categoryId.trim()
-    );
+/* =========================================================
+   YOUTUBE
+   Acepta: enlace normal, youtu.be, shorts, embed o solo el ID.
+   ========================================================= */
 
-  if (!winner) {
+function getYouTubeId(value = "") {
+  const text = String(value).trim();
+
+  if (!text) {
+    return "";
+  }
+
+  if (/^[\w-]{11}$/.test(text)) {
+    return text;
+  }
+
+  const match = text.match(
+    /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/|v\/))([\w-]{11})/
+  );
+
+  return match ? match[1] : "";
+}
+
+function getYouTubeThumb(id) {
+  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+
+function getYouTubeEmbed(id) {
+  return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+}
+
+/* =========================================================
+   MODAL DE CATEGORÍA
+   ========================================================= */
+
+const awardsModalVideo =
+  document.getElementById("awardsModalVideo");
+
+const awardsModalDescription =
+  document.getElementById("awardsModalDescription");
+
+const awardsModalKicker =
+  document.getElementById("awardsModalKicker");
+
+function setAwardsModalVideo(videoId, title) {
+  if (!awardsModalVideo) {
     return;
   }
 
-  const nominees =
-    awardsNominees
-      .filter((nominee) => {
-        return (
-          isAwardsVisible(nominee) &&
-          nominee.id_categoria.trim() ===
-          categoryId.trim() &&
-          nominee.nominado.trim() !== ""
-        );
-      })
-      .sort((first, second) => {
-        return (
-          getAwardsNumber(first.orden, 999) -
-          getAwardsNumber(second.orden, 999)
-        );
-      });
+  if (!videoId) {
+    awardsModalVideo.innerHTML = "";
+    awardsModalVideo.hidden = true;
+    awardsModal?.classList.remove("has-video");
+    return;
+  }
 
-  awardsModalTitle.textContent =
-    winner.categoria;
+  awardsModalVideo.hidden = false;
+  awardsModal?.classList.add("has-video");
 
-  awardsModalWinner.textContent =
-    winner.ganador;
+  awardsModalVideo.innerHTML = `
+    <iframe
+      src="${getYouTubeEmbed(videoId)}"
+      title="Video: ${escapeAwardsHTML(title)}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  `;
+}
 
+function getAwardsNominees(categoryId) {
+  return awardsNominees
+    .filter((nominee) => {
+      return (
+        isAwardsVisible(nominee) &&
+        (nominee.id_categoria || "").trim() === categoryId.trim() &&
+        (nominee.nominado || "").trim() !== ""
+      );
+    })
+    .sort(
+      (first, second) =>
+        getAwardsNumber(first.orden, 999) -
+        getAwardsNumber(second.orden, 999)
+    );
+}
+
+function openAwardsModal(categoryId) {
+  const winner = awardsWinners.find(
+    (item) =>
+      (item.id_categoria || "").trim() === categoryId.trim()
+  );
+
+  if (!winner || !awardsModal) {
+    return;
+  }
+
+  const nominees = getAwardsNominees(categoryId);
+  const winnerName = (winner.ganador || "").trim();
+
+  if (awardsModalKicker) {
+    awardsModalKicker.textContent =
+      `PySC Awards ${winner.anio || ""}`.trim();
+  }
+
+  awardsModalTitle.textContent = winner.categoria;
+  awardsModalWinner.textContent = winnerName || "Ganador pendiente";
+
+  if (awardsModalDescription) {
+    awardsModalDescription.textContent = winner.descripcion || "";
+    awardsModalDescription.hidden = !winner.descripcion;
+  }
+
+  setAwardsModalVideo(
+    getYouTubeId(winner.video),
+    winner.categoria
+  );
 
   if (nominees.length === 0) {
     awardsNomineesList.innerHTML = `
@@ -309,59 +389,36 @@ function openAwardsModal(categoryId) {
       </p>
     `;
   } else {
-    awardsNomineesList.innerHTML =
-      nominees
-        .map((nominee) => {
-          const isWinner =
-            nominee.nominado
-              .trim()
-              .toLowerCase() ===
-            winner.ganador
-              .trim()
-              .toLowerCase();
+    awardsNomineesList.innerHTML = nominees
+      .map((nominee) => {
+        const isWinner =
+          nominee.nominado.trim().toLowerCase() ===
+          winnerName.toLowerCase();
 
-          return `
-            <div
-              class="awards-nominee
-              ${isWinner
-              ? "awards-nominee-winner"
-              : ""}"
-            >
-              <span class="awards-nominee-name">
-                ${escapeAwardsHTML(
-                nominee.nominado
-              )}
-              </span>
-
-              ${isWinner
-              ? `
-                    <span
-                      class="awards-nominee-badge"
-                    >
-                      <i
-                        class="fa-solid fa-trophy"
-                      ></i>
-                      Ganador
-                    </span>
-                  `
-              : ""
+        return `
+          <div class="awards-nominee ${isWinner ? "awards-nominee-winner" : ""}">
+            <span class="awards-nominee-name">
+              ${escapeAwardsHTML(nominee.nominado)}
+            </span>
+            ${
+              isWinner
+                ? `<span class="awards-nominee-badge">
+                     <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+                     Ganador
+                   </span>`
+                : ""
             }
-            </div>
-          `;
-        })
-        .join("");
+          </div>
+        `;
+      })
+      .join("");
   }
 
   awardsModal.classList.add("open");
+  awardsModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("awards-modal-open");
 
-  awardsModal.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-  document.body.classList.add(
-    "awards-modal-open"
-  );
+  awardsModalClose?.focus({ preventScroll: true });
 }
 
 function closeAwardsModal() {
@@ -370,59 +427,87 @@ function closeAwardsModal() {
   }
 
   awardsModal.classList.remove("open");
+  awardsModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("awards-modal-open");
 
-  awardsModal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  document.body.classList.remove(
-    "awards-modal-open"
-  );
+  // Detiene el video al cerrar
+  setAwardsModalVideo("");
 }
 
 /* =========================================================
-   IMAGEN DEL GANADOR
+   TARJETAS
    ========================================================= */
 
-function createAwardsWinnerImage(winner) {
-  if (winner.imagen) {
+function createAwardsMedia(winner, size) {
+  const videoId = getYouTubeId(winner.video);
+  const image = (winner.imagen || "").trim();
+
+  if (image) {
     return `
-      <img
-        src="${escapeAwardsHTML(
-      winner.imagen
-    )}"
-        alt="Ganador de ${escapeAwardsHTML(
-      winner.categoria
-    )}: ${escapeAwardsHTML(
-      winner.ganador
-    )}"
-        class="awards-winner-image"
-        loading="lazy"
-        decoding="async"
-      >
+      <div class="aw-media">
+        <img src="${escapeAwardsHTML(image)}"
+             alt="${escapeAwardsHTML(winner.ganador)}"
+             loading="lazy" decoding="async">
+        ${videoId ? '<span class="aw-play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>' : ""}
+      </div>
+    `;
+  }
+
+  if (videoId) {
+    return `
+      <div class="aw-media">
+        <img src="${getYouTubeThumb(videoId)}"
+             alt="Video de ${escapeAwardsHTML(winner.categoria)}"
+             loading="lazy" decoding="async">
+        <span class="aw-play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
+      </div>
     `;
   }
 
   return `
-    <div class="awards-winner-placeholder">
-      <span aria-hidden="true">
-        🏆
+    <div class="aw-media aw-media-empty" aria-hidden="true">
+      <span class="aw-medal ${size === "major" ? "aw-medal-lg" : ""}">
+        <i class="fa-solid fa-trophy"></i>
       </span>
-
-      <strong>
-        ${escapeAwardsHTML(
-    getWinnerInitials(
-      winner.ganador
-    )
-  )}
-      </strong>
     </div>
   `;
 }
 
+function createAwardsCard(winner, size) {
+  const videoId = getYouTubeId(winner.video);
+  const category = escapeAwardsHTML((winner.categoria || "").trim());
+  const name = escapeAwardsHTML((winner.ganador || "").trim() || "Ganador pendiente");
+
+  return `
+    <article
+      class="aw-card aw-card-${size}"
+      data-category-id="${escapeAwardsHTML(winner.id_categoria)}"
+      tabindex="0"
+      role="button"
+      aria-label="${category}: ${name}. Ver detalle${videoId ? " y video" : ""}"
+    >
+      ${createAwardsMedia(winner, size)}
+
+      <div class="aw-body">
+        <span class="aw-category">${category}</span>
+        <h4 class="aw-winner">${name}</h4>
+        ${
+          size === "major" && winner.descripcion
+            ? `<p class="aw-desc">${escapeAwardsHTML(winner.descripcion)}</p>`
+            : ""
+        }
+        <span class="aw-more">
+          ${videoId ? '<i class="fa-brands fa-youtube" aria-hidden="true"></i> Ver video y nominados' : "Ver nominados"}
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </span>
+      </div>
+    </article>
+  `;
+}
+
 /* =========================================================
-   GANADORES
+   GANADORES DE LA EDICIÓN
+   Premios mayores (destacado = SI) y premios del año.
    ========================================================= */
 
 function renderAwardsWinners(year) {
@@ -430,249 +515,181 @@ function renderAwardsWinners(year) {
     return;
   }
 
-  const currentWinners =
-    awardsWinners
-      .filter((winner) => {
-        return (
-          isAwardsVisible(winner) &&
-          getAwardsNumber(
-            winner.anio
-          ) === Number(year)
-        );
-      })
-      .sort((first, second) => {
-        return (
-          getAwardsNumber(
-            first.orden,
-            999
-          ) -
-          getAwardsNumber(
-            second.orden,
-            999
-          )
-        );
-      });
+  const currentWinners = awardsWinners
+    .filter(
+      (winner) =>
+        isAwardsVisible(winner) &&
+        (winner.id_categoria || "").trim() !== "" &&
+        getAwardsNumber(winner.anio) === Number(year)
+    )
+    .sort(
+      (first, second) =>
+        getAwardsNumber(first.orden, 999) -
+        getAwardsNumber(second.orden, 999)
+    );
 
-  if (
-    currentWinners.length === 0
-  ) {
+  if (currentWinners.length === 0) {
+    awardsWinnersGrid.classList.remove("aw-layout");
     awardsWinnersGrid.innerHTML = `
       <article class="awards-empty-state">
-        <div class="awards-empty-icon">
-          🏆
-        </div>
-
-        <h3>
-          Todavía no hay ganadores registrados
-        </h3>
-
-        <p>
-          Los resultados de esta edición
-          se publicarán próximamente.
-        </p>
+        <div class="awards-empty-icon">🏆</div>
+        <h3>Todavía no hay ganadores registrados</h3>
+        <p>Los resultados de esta edición se publicarán próximamente.</p>
       </article>
     `;
-
     return;
   }
 
-  awardsWinnersGrid.innerHTML =
-    currentWinners
-      .map((winner) => {
-        const isFeatured =
-          winner.destacado
-            ?.trim()
-            .toUpperCase() === "SI";
+  const isMajor = (winner) =>
+    (winner.destacado || "").trim().toUpperCase() === "SI";
 
-        return `
-          <article
-            class="awards-winner-card
-            ${isFeatured
-            ? "awards-winner-card-featured"
-            : ""
-          }"
-            data-category-id="${escapeAwardsHTML(
-            winner.id_categoria
-          )}"
-            tabindex="0"
-            role="button"
-            aria-label="Ver información de ${escapeAwardsHTML(
-            winner.categoria
-          )}"
-          >
-            <div
-              class="awards-winner-image-wrapper"
-            >
-              <span
-                class="awards-winner-badge"
-              >
-                ${isFeatured
-            ? "Premio destacado"
-            : "Ganador"
-          }
-              </span>
+  const major = currentWinners.filter(isMajor);
+  const minor = currentWinners.filter((winner) => !isMajor(winner));
 
-              ${createAwardsWinnerImage(
-            winner
-          )}
-            </div>
+  awardsWinnersGrid.classList.add("aw-layout");
 
-            <div
-              class="awards-winner-content"
-            >
-              <span
-                class="awards-winner-category"
-              >
-                ${escapeAwardsHTML(
-            winner.categoria
-          )}
-              </span>
+  awardsWinnersGrid.innerHTML = `
+    ${
+      major.length
+        ? `<div class="aw-block">
+             <div class="aw-block-head">
+               <span class="aw-block-icon" aria-hidden="true"><i class="fa-solid fa-crown"></i></span>
+               <h3>Premios mayores</h3>
+               <span class="aw-block-count">${major.length}</span>
+             </div>
+             <div class="aw-major-grid">
+               ${major.map((winner) => createAwardsCard(winner, "major")).join("")}
+             </div>
+           </div>`
+        : ""
+    }
+    ${
+      minor.length
+        ? `<div class="aw-block">
+             <div class="aw-block-head">
+               <span class="aw-block-icon" aria-hidden="true"><i class="fa-solid fa-face-laugh-beam"></i></span>
+               <h3>Premios del año</h3>
+               <span class="aw-block-count">${minor.length}</span>
+             </div>
+             <div class="aw-minor-grid">
+               ${minor.map((winner) => createAwardsCard(winner, "minor")).join("")}
+             </div>
+           </div>`
+        : ""
+    }
+  `;
 
-              <h3
-                class="awards-winner-name"
-              >
-                ${escapeAwardsHTML(
-            winner.ganador ||
-            "Ganador pendiente"
-          )}
-              </h3>
-
-              ${winner.descripcion
-            ? `
-                    <p
-                      class="awards-winner-description"
-                    >
-                      ${escapeAwardsHTML(
-              winner.descripcion
-            )}
-                    </p>
-                  `
-            : ""
-          }
-
-              <span
-                class="awards-card-details"
-              >
-                Ver nominados
-                <i
-                  class="fa-solid fa-arrow-right"
-                  aria-hidden="true"
-                ></i>
-              </span>
-            </div>
-          </article>
-        `;
-      })
-      .join("");
-
-  awardsWinnersGrid
-    .querySelectorAll(".awards-winner-card")
-    .forEach((card) => {
-      card.addEventListener("click", () => {
-        openAwardsModal(
-          card.dataset.categoryId
-        );
-      });
-
-      card.addEventListener(
-        "keydown",
-        (event) => {
-          if (
-            event.key === "Enter" ||
-            event.key === " "
-          ) {
-            event.preventDefault();
-
-            openAwardsModal(
-              card.dataset.categoryId
-            );
-          }
-        }
-      );
+  awardsWinnersGrid.querySelectorAll(".aw-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      openAwardsModal(card.dataset.categoryId);
     });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openAwardsModal(card.dataset.categoryId);
+      }
+    });
+  });
 }
 
 if (awardsModalClose) {
-  awardsModalClose.addEventListener(
-    "click",
-    closeAwardsModal
-  );
+  awardsModalClose.addEventListener("click", closeAwardsModal);
 }
 
 document
-  .querySelectorAll(
-    "[data-awards-modal-close]"
-  )
+  .querySelectorAll("[data-awards-modal-close]")
   .forEach((element) => {
-    element.addEventListener(
-      "click",
-      closeAwardsModal
-    );
+    element.addEventListener("click", closeAwardsModal);
   });
 
-document.addEventListener(
-  "keydown",
-  (event) => {
-    if (
-      event.key === "Escape" &&
-      awardsModal?.classList.contains("open")
-    ) {
-      closeAwardsModal();
-    }
+document.addEventListener("keydown", (event) => {
+  if (
+    event.key === "Escape" &&
+    awardsModal?.classList.contains("open")
+  ) {
+    closeAwardsModal();
   }
-);
+});
 
 /* =========================================================
    EDICIÓN SELECCIONADA
    ========================================================= */
 
+const awardsEditionMeta =
+  document.getElementById("awards-edition-meta");
+
+function formatAwardsDate(value = "") {
+  const match = String(value).trim().match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+
+  if (!match) {
+    return value;
+  }
+
+  const months = [
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+  ];
+
+  return `${Number(match[1])} de ${months[Number(match[2]) - 1] || ""} de ${match[3]}`;
+}
+
 function renderAwardsEdition(year) {
-  const edition =
-    awardsEditions.find(
-      (item) =>
-        getAwardsNumber(
-          item.anio
-        ) === Number(year)
-    );
+  const edition = awardsEditions.find(
+    (item) => getAwardsNumber(item.anio) === Number(year)
+  );
 
   if (!edition) {
     return;
   }
 
-  awardsCurrentYear.textContent =
-    edition.anio;
+  awardsCurrentYear.textContent = edition.anio;
 
   awardsEditionTitle.textContent =
-    edition.titulo ||
-    `PySC Awards ${edition.anio}`;
+    edition.titulo || `PySC Awards ${edition.anio}`;
 
   awardsEditionDescription.textContent =
-    edition.descripcion ||
-    "Una edición especial de los PySC Awards.";
+    edition.descripcion || "Una edición especial de los PySC Awards.";
 
-  document
-    .querySelectorAll(
-      ".awards-year-button"
-    )
-    .forEach((button) => {
-      const isActive =
-        Number(button.dataset.year) ===
-        Number(edition.anio);
+  if (awardsEditionMeta) {
+    const total = awardsWinners.filter(
+      (winner) =>
+        isAwardsVisible(winner) &&
+        (winner.id_categoria || "").trim() !== "" &&
+        getAwardsNumber(winner.anio) === Number(edition.anio)
+    ).length;
 
-      button.classList.toggle(
-        "active",
-        isActive
-      );
+    const galaVideo = getYouTubeId(edition.video);
 
-      button.setAttribute(
-        "aria-pressed",
-        String(isActive)
-      );
-    });
+    const chips = [];
 
-  renderAwardsWinners(
-    edition.anio
-  );
+    if (edition.fecha) {
+      chips.push(`<span class="aw-chip"><i class="fa-regular fa-calendar" aria-hidden="true"></i>${escapeAwardsHTML(formatAwardsDate(edition.fecha))}</span>`);
+    }
+
+    if (edition.lugar) {
+      chips.push(`<span class="aw-chip"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>${escapeAwardsHTML(edition.lugar)}</span>`);
+    }
+
+    if (total) {
+      chips.push(`<span class="aw-chip"><i class="fa-solid fa-trophy" aria-hidden="true"></i>${total} categorías</span>`);
+    }
+
+    if (galaVideo) {
+      chips.push(`<a class="aw-chip aw-chip-video" href="https://www.youtube.com/watch?v=${galaVideo}" target="_blank" rel="noopener"><i class="fa-brands fa-youtube" aria-hidden="true"></i>Ver la gala</a>`);
+    }
+
+    awardsEditionMeta.innerHTML = chips.join("");
+    awardsEditionMeta.hidden = chips.length === 0;
+  }
+
+  document.querySelectorAll(".awards-year-button").forEach((button) => {
+    const isActive = Number(button.dataset.year) === Number(edition.anio);
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  renderAwardsWinners(edition.anio);
 }
 
 /* =========================================================

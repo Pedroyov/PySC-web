@@ -434,6 +434,22 @@ function getAgendaType(typeValue = "") {
   );
 }
 
+/* En octubre (mes con muchas actividades) se muestran más tarjetas.
+   8 = 2 filas completas en escritorio (4 columnas) y 4 en tablet (2 columnas). */
+const AGENDA_LIMIT_DEFAULT = 4;
+const AGENDA_LIMIT_OCTOBER = 10;
+
+function getAgendaLimit(date) {
+  /* Vista previa: index.html?octubre muestra la versión de octubre */
+  if (new URLSearchParams(window.location.search).has("octubre")) {
+    return AGENDA_LIMIT_OCTOBER;
+  }
+
+  return date.getMonth() === 9
+    ? AGENDA_LIMIT_OCTOBER
+    : AGENDA_LIMIT_DEFAULT;
+}
+
 function renderAgenda(items) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -453,7 +469,7 @@ function renderAgenda(items) {
       );
     })
     .sort((a, b) => a.parsedDate - b.parsedDate)
-    .slice(0, 4);
+    .slice(0, getAgendaLimit(today));
 
   if (upcomingItems.length === 0) {
     agendaGrid.innerHTML = `
@@ -568,6 +584,65 @@ function renderAgenda(items) {
       `;
     })
     .join("");
+
+  setupAgendaSlider(upcomingItems.length);
+}
+
+/* Si hay más actividades de las que caben en una fila (4),
+   la agenda se convierte en un slide horizontal con flechas. */
+function setupAgendaSlider(count) {
+  const existingNav = document.getElementById("agendaSliderNav");
+
+  if (count <= AGENDA_LIMIT_DEFAULT) {
+    agendaGrid.classList.remove("agenda-slider");
+    existingNav?.remove();
+    return;
+  }
+
+  agendaGrid.classList.add("agenda-slider");
+
+  if (existingNav) {
+    return;
+  }
+
+  const nav = document.createElement("div");
+  nav.id = "agendaSliderNav";
+  nav.className = "agenda-slider-nav";
+  nav.innerHTML = `
+    <button type="button" class="agenda-slider-btn" data-dir="-1" aria-label="Actividades anteriores">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button type="button" class="agenda-slider-btn" data-dir="1" aria-label="Más actividades">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  `;
+
+  agendaGrid.after(nav);
+
+  const [prevBtn, nextBtn] = nav.querySelectorAll("button");
+
+  const updateButtons = () => {
+    const maxScroll = agendaGrid.scrollWidth - agendaGrid.clientWidth;
+    prevBtn.disabled = agendaGrid.scrollLeft <= 5;
+    nextBtn.disabled = agendaGrid.scrollLeft >= maxScroll - 5;
+  };
+
+  nav.addEventListener("click", (event) => {
+    const button = event.target.closest(".agenda-slider-btn");
+
+    if (!button) {
+      return;
+    }
+
+    agendaGrid.scrollBy({
+      left: Number(button.dataset.dir) * agendaGrid.clientWidth,
+      behavior: "smooth"
+    });
+  });
+
+  agendaGrid.addEventListener("scroll", updateButtons, { passive: true });
+  window.addEventListener("resize", updateButtons);
+  updateButtons();
 }
 
 async function loadAgenda() {

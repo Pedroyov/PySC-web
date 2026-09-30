@@ -121,6 +121,15 @@ const RANKINGS = {
     direction2: "asc",
     field3: "lives",
     direction3: "desc"
+  },
+
+  "cruzando": {
+    field1: "time",
+    direction1: "asc",
+    field2: "moves",
+    direction2: "asc",
+    field3: "lives",
+    direction3: "desc"
   }
 
 };
@@ -416,6 +425,14 @@ document.addEventListener(
                       ? "vida"
                       : "vidas"
                   }`;
+
+                break;
+
+              case "cruzando":
+
+                scoreText =
+                  `${Number(data.time).toFixed(1)} s · ` +
+                  `${data.moves} movim`;
 
                 break;
 

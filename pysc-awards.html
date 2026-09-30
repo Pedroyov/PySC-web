@@ -33,6 +33,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/aniversario.css">
     <link rel="stylesheet" href="css/pysc-awards.css">
 </head>
 
@@ -280,6 +281,8 @@
                             Estamos preparando la información de esta edición.
                         </p>
 
+                        <div class="aw-edition-meta" id="awards-edition-meta" hidden></div>
+
                     </div>
 
                 </div>
@@ -349,7 +352,9 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <span class="awards-modal-kicker">
+            <div class="aw-modal-video" id="awardsModalVideo" hidden></div>
+
+            <span class="awards-modal-kicker" id="awardsModalKicker">
                 PySC Awards
             </span>
 
@@ -361,6 +366,8 @@
                 <span>Ganador</span>
                 <strong id="awardsModalWinner"></strong>
             </div>
+
+            <p class="awards-modal-description" id="awardsModalDescription" hidden></p>
 
             <div class="awards-modal-nominees">
                 <h3>Nominados</h3>
@@ -407,6 +414,7 @@
     </footer>
 
     <script src="js/main.js"></script>
+<script src="js/aniversario.js"></script>
     <script src="js/pysc-awards.js"></script>
 
 </body>
