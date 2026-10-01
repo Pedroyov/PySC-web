@@ -369,7 +369,9 @@ function computeChainPoints(chainIndex) {
 const LEVEL_CONFIGS = [
     { cellCols: 6, cellRows: 6, loopChance: 0.12, enemyCount: 3, enemyTickMs: 320, powerDurationMs: 8000 },
     { cellCols: 7, cellRows: 6, loopChance: 0.14, enemyCount: 4, enemyTickMs: 280, powerDurationMs: 6500 },
-    { cellCols: 7, cellRows: 7, loopChance: 0.16, enemyCount: 4, enemyTickMs: 240, powerDurationMs: 5500 }
+    { cellCols: 7, cellRows: 7, loopChance: 0.16, enemyCount: 4, enemyTickMs: 240, powerDurationMs: 5500 },
+    { cellCols: 8, cellRows: 7, loopChance: 0.18, enemyCount: 5, enemyTickMs: 210, powerDurationMs: 5000 },
+    { cellCols: 8, cellRows: 8, loopChance: 0.20, enemyCount: 5, enemyTickMs: 190, powerDurationMs: 4500 }
 ];
 
 const TOTAL_LEVELS = LEVEL_CONFIGS.length;
@@ -1386,7 +1388,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             resultIcon.innerHTML = '<i class="fa-solid fa-trophy"></i>';
             resultLabel.textContent = "Desafío superado";
-            resultTitle.textContent = "¡Limpiaste los 3 salones!";
+            resultTitle.textContent = `¡Limpiaste los ${TOTAL_LEVELS} salones!`;
 
             resultText.textContent =
                 `Conseguiste ${finalScore} puntos en ${formattedTime} con ${lives} ${lives === 1 ? "vida" : "vidas"} de sobra.`;
