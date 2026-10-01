@@ -1038,8 +1038,11 @@ document.addEventListener("DOMContentLoaded", () => {
             shape.className = "devora-player-shape";
 
             playerElement.appendChild(shape);
-            board.appendChild(playerElement);
 
+        }
+
+        if (!board.contains(playerElement)) {
+            board.appendChild(playerElement);
         }
 
         updatePlayerElementPosition();
